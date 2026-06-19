@@ -1,3 +1,18 @@
 import { Routes } from '@angular/router';
+import { Home } from './features/home/home';
+import { Eventos } from './features/eventos/eventos';
+import { Register } from './features/register/register';
+import { Login } from './features/login/login';
+import { Checkout } from './features/checkout/checkout';
+import { PageNotFound } from './features/page-not-found/page-not-found';
 
-export const routes: Routes = [];
+export const routes: Routes = [
+    {path: 'home', component: Home },
+    {path: 'eventos', component: Eventos},
+    {path: 'register', component: Register},
+    {path: 'login', component: Login},
+    {path: 'checkout', component: Checkout},
+    {path: '404', component: PageNotFound},
+    {path: '', redirectTo: 'home', pathMatch: 'full'},
+    {path: '**', redirectTo: '404', pathMatch: 'full'}
+];
