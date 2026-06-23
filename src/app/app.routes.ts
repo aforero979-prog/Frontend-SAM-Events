@@ -1,18 +1,29 @@
 import { Routes } from '@angular/router';
 import { Home } from './features/home/home';
-import { Eventos } from './features/eventos/eventos';
-import { Register } from './features/register/register';
-import { Login } from './features/login/login';
-import { Checkout } from './features/checkout/checkout';
-import { PageNotFound } from './features/page-not-found/page-not-found';
 
 export const routes: Routes = [
+    //Paths:
+    //Esta ruta carga por defecto el componente asociado a la ruta
     {path: 'home', component: Home },
-    {path: 'eventos', component: Eventos},
-    {path: 'register', component: Register},
-    {path: 'login', component: Login},
-    {path: 'checkout', component: Checkout},
-    {path: '404', component: PageNotFound},
+    //Rutas con LazyLoad 
+    {path: 'eventos', 
+        loadComponent: () => import('./features/eventos/eventos').then(m => m.Eventos) 
+    },
+    {path: 'register',
+        loadComponent: () => import('./features/register/register').then(m => m.Register)
+    },
+    {path: 'login', 
+        loadComponent: () => import('./features/login/login').then(m => m.Login)
+    },
+    {path: 'checkout', 
+        loadComponent: () => import('./features/checkout/checkout').then(m => m.Checkout)
+    },
+    //Para importar la ruta sin resolver la promesa unsando then/catch, se debe exportar ka cakse cini default (ver en PageNotFound.ts)
+    //Al exportar con default desde PageNotFound.ts se resuelve la promesa desde ese momento por lo cual no es necesario utilizar en then/catch
+    {path: '404', 
+        loadComponent: () => import('./features/page-not-found/page-not-found')
+    },
+    //Redirections:
     {path: '', redirectTo: 'home', pathMatch: 'full'},
     {path: '**', redirectTo: '404', pathMatch: 'full'}
 ];

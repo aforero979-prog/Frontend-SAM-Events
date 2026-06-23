@@ -1,0 +1,20 @@
+main{
+    background-color: #23005C;
+}
+
+h1{
+    color: #e5c992;
+    background-color: #23005C;
+}
+
+h2{
+    color: #e5c992c9;
+}
+
+p{
+    color: #e5c992;
+}
+
+.entradas{
+    border: .5rem solid black;
+}
