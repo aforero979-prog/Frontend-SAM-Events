@@ -1,11 +1,16 @@
 import { Routes } from '@angular/router';
 import { Home } from './features/home/home';
+import { UserList } from './features/users/user-list/user-list';
 
 export const routes: Routes = [
     //Paths:
     //Esta ruta carga por defecto el componente asociado a la ruta
     {path: 'home', component: Home },
+    {path: 'users-list', component: UserList},
     //Rutas con LazyLoad 
+    {path: 'user/list',
+        loadComponent: () => import('./features/users/user-list/user-list').then(m => m.UserList)
+    },
     {path: 'eventos', 
         loadComponent: () => import('./features/eventos/eventos').then(m => m.Eventos) 
     },

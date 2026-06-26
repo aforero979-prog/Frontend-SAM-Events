@@ -1,20 +1,93 @@
-main{
-    background-color: #23005C;
-}
-
-h1{
-    color: #e5c992;
-    background-color: #23005C;
-}
-
-h2{
-    color: #e5c992c9;
-}
-
 p{
-    color: #e5c992;
+    color: aliceblue;
+}
+h1{
+    color: rgb(83, 149, 207);
+    background-color: rgba(0, 0, 0, 0.795);
+}
+h2{
+    color: aliceblue;
 }
 
-.entradas{
-    border: .5rem solid black;
+.eventos1{
+    background-color: rgba(0, 0, 0, 0.795);
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    padding: 1rem 1rem 1rem 1rem;
+}
+
+.indecorumdiv{
+    padding: 1rem 1rem 1rem;
+    border: .1rem solid black;
+    background-color: black;
+}
+
+.indecorumimagen{
+    width: 40rem;
+    height: 40rem;
+}
+
+.r44div{
+    padding: 1rem 1rem 1rem;
+    border: .1rem solid black;
+    background-color: black;
+
+}
+.r44imagen{
+    width: 40rem;
+    height: 40rem;
+}
+
+.slvldiv{
+    padding: 1rem 1rem 1rem;
+    border: .1rem solid black;
+    background-color: black;
+
+}
+
+.slvlimagen{
+    width: 40rem;
+    height: 40rem;
+}
+
+.eventos2{
+    background-color: rgba(0, 0, 0, 0.795);
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    padding: 0rem 1rem 1rem 1rem;
+}
+
+.rebekahdiv{
+    padding: 1rem 1rem 1rem;
+    border: .1rem solid black;
+    background-color: black;
+}
+
+.rebekahimagen{
+    width: 40rem;
+    height: 40rem;
+}
+
+.orquideadiv{
+    padding: 1rem 1rem 1rem;
+    border: .1rem solid black;
+    background-color: black;
+}
+
+.orquideaimagen{
+    width: 40rem;
+    height: 40rem;
+}
+
+.carlcoxdiv{
+    padding: 1rem 1rem 1rem;
+    border: .1rem solid black;
+    background-color: black;
+}
+
+.carlcoximagen{
+    width: 40rem;
+    height: 40rem;
 }
