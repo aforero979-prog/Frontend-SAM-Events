@@ -29,4 +29,5 @@ export class App {
     
     person: Person = person
 
+    eventos: string[] = [ 'Marco Carola', 'Maceo Plex', 'Carl Cox']
   }

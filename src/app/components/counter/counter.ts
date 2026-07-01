@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, Input } from "@angular/core";
 
 // Decorador para definir un componente
 @Component({
@@ -9,6 +9,8 @@ import { Component } from "@angular/core";
 
 
 export class Counter {
+
+    @Input() name: string = 'PeggyU'
     counter: number 
 
     constructor() { 

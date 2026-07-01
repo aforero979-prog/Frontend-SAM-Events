@@ -1,8 +1,19 @@
 <h1 class="title">APP</h1>
 
-<h1>Bienvenido {{ name }} {{ lastName}}</h1>
+<div class="bienvenida">
+<h1>Bienvenido {{ name }} {{ lastName }}</h1>
 <h2 class="title">Counter</h2>
+</div>
 
+@if( eventos.length > 0) {
+
+    @for (eventosName of eventos; track $index) {
+    <kounter [name] = "eventosName"/>
+    }
+} @else {
+    <h3>No hay Candidatos</h3>
+    <p>Registre candidatos</p>
+}
 
 
 <kounter> </kounter>
