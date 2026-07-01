@@ -1,93 +1,91 @@
-p{
-    color: aliceblue;
+p {
+  color: aliceblue;
 }
-h1{
-    color: rgb(83, 149, 207);
-    background-color: rgba(0, 0, 0, 0.795);
+h1 {
+  color: rgb(83, 149, 207);
+  background-color: rgba(0, 0, 0, 0.795);
 }
-h2{
-    color: aliceblue;
-}
-
-.eventos1{
-    background-color: rgba(0, 0, 0, 0.795);
-    display: flex;
-    gap: 2rem;
-    justify-content: center;
-    padding: 1rem 1rem 1rem 1rem;
+h2 {
+  color: aliceblue;
 }
 
-.indecorumdiv{
-    padding: 1rem 1rem 1rem;
-    border: .1rem solid black;
-    background-color: black;
+.eventos1 {
+  background-color: rgba(0, 0, 0, 0.795);
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  padding: 1rem 1rem 1rem 1rem;
 }
 
-.indecorumimagen{
-    width: 40rem;
-    height: 40rem;
+.indecorumdiv {
+  padding: 1rem 1rem 1rem;
+  border: 0.1rem solid black;
+  background-color: black;
 }
 
-.r44div{
-    padding: 1rem 1rem 1rem;
-    border: .1rem solid black;
-    background-color: black;
-
-}
-.r44imagen{
-    width: 40rem;
-    height: 40rem;
+.indecorumimagen {
+  width: 40rem;
+  height: 40rem;
 }
 
-.slvldiv{
-    padding: 1rem 1rem 1rem;
-    border: .1rem solid black;
-    background-color: black;
-
+.r44div {
+  padding: 1rem 1rem 1rem;
+  border: 0.1rem solid black;
+  background-color: black;
+}
+.r44imagen {
+  width: 40rem;
+  height: 40rem;
 }
 
-.slvlimagen{
-    width: 40rem;
-    height: 40rem;
+.slvldiv {
+  padding: 1rem 1rem 1rem;
+  border: 0.1rem solid black;
+  background-color: black;
 }
 
-.eventos2{
-    background-color: rgba(0, 0, 0, 0.795);
-    display: flex;
-    gap: 2rem;
-    justify-content: center;
-    padding: 0rem 1rem 1rem 1rem;
+.slvlimagen {
+  width: 40rem;
+  height: 40rem;
 }
 
-.rebekahdiv{
-    padding: 1rem 1rem 1rem;
-    border: .1rem solid black;
-    background-color: black;
+.eventos2 {
+  background-color: rgba(0, 0, 0, 0.795);
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  padding: 0rem 1rem 1rem 1rem;
 }
 
-.rebekahimagen{
-    width: 40rem;
-    height: 40rem;
+.rebekahdiv {
+  padding: 1rem 1rem 1rem;
+  border: 0.1rem solid black;
+  background-color: black;
 }
 
-.orquideadiv{
-    padding: 1rem 1rem 1rem;
-    border: .1rem solid black;
-    background-color: black;
+.rebekahimagen {
+  width: 40rem;
+  height: 40rem;
 }
 
-.orquideaimagen{
-    width: 40rem;
-    height: 40rem;
+.orquideadiv {
+  padding: 1rem 1rem 1rem;
+  border: 0.1rem solid black;
+  background-color: black;
 }
 
-.carlcoxdiv{
-    padding: 1rem 1rem 1rem;
-    border: .1rem solid black;
-    background-color: black;
+.orquideaimagen {
+  width: 40rem;
+  height: 40rem;
 }
 
-.carlcoximagen{
-    width: 40rem;
-    height: 40rem;
+.carlcoxdiv {
+  padding: 1rem 1rem 1rem;
+  border: 0.1rem solid black;
+  background-color: black;
+}
+
+.carlcoximagen {
+  width: 40rem;
+  height: 40rem;
 }
