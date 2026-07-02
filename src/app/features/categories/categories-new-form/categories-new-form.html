@@ -1,28 +1,40 @@
-<p>categories-new-form works!</p>
+<h2>Crea una categoria:</h2>
+<p></p>
 
-<form class="form">
-
-    <h2>Crea una categoria:</h2>
-    <p></p>
+<form [formGroup]="formData" (ngSubmit)="onEnviar()" class="form">
 
     <div class="field">
-        <label for="nombre">Nombre</label>
-        <input type="text" placeholder="Nombre de la categoria" id="nombre" required>
+        <label for="nombre">Nombre:</label>
+        <input formControlName="name" type="text" placeholder="Nombre de la categoria" id="nombre" required>
     </div>
-        
+
     <div class="field">
-        <label for="status">Categroia status</label>
-        <input class="checkbox" type="radio">
-        <input class="chackbox" type="radio">
+        <label for="status">Status de la categoria:</label>
+        <div class="options">
+            <input formControlName="status" type="radio"><label for="categorie-status-enable">Activo</label>
+            <input formControlName="status" type="radio"><label for="categorie-status-disable">InActivo</label>
+        </div>
 
     </div>
 
-    <div>
-        <label for="nombre">Nombre</label>
-        <textarea name="descripcion" id="Descripcion"></textarea>
+    <div class="field">
+        <label for="description">Descripción:</label>
+        <textarea formControlName="description" id="descripcion" rows="4" cols="50" maxlength="150" style="resize: none;"
+            placeholder="Escribe la descripcion de la categoria"></textarea>
     </div>
 
-    <button class="button">Enviar</button>
+    <!-- <div class="field">
+        <label for="ciudad">Ciudades</label>
+        <select name="ciudades" id="ciudades">
+            <option value="">Select...</option>
+            <option value="bog">Bogotá</option>
+            <option value="mede">Medellín</option>
+        </select>
 
+    </div> -->
+
+    <div class="button">
+    <button>Enviar</button>
+    </div>
 
 </form>

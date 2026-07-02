@@ -7,7 +7,7 @@ export const routes: Routes = [
     //Esta ruta carga por defecto el componente asociado a la ruta
     {path: 'home', component: Home },
     //Rutas con LazyLoad 
-    {path: 'categorie-new',
+    {   path: 'categorie-new',
         loadComponent: () => import('./features/categories/categories-new-form/categories-new-form').then(m => m.CategoriesNewForm)
     },
     {path: 'user/list',
