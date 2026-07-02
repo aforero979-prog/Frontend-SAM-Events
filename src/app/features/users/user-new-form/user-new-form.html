@@ -1,0 +1,34 @@
+<h2 class="form-title">Crear nuevo usuario</h2>
+<form [formGroup]="formData" (ngSubmit)="onSubmit()" class="form">
+    <div class="field">
+        <label for="name">Nombre</label>
+        <input type="text" id="name" formControlName="name" placeholder="John Doe" required>
+    </div>
+    <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" formControlName="email" placeholder="jhondoe@email.com" required>
+    </div>
+    <div class="field">
+        <label for="password">Contraseña</label>
+        <input type="password" id="password" formControlName="password" placeholder="**********" required>
+    </div>
+    <div class="checkbox">
+        <label for="roles">Rol</label>
+        <select id="roles" formControlName="role" required>
+            <option value="admin">Admin</option>
+            <option value="user">User</option>
+        </select>
+    </div>
+    <div class="field">
+        <label for="avatar">Avatar</label>
+        <input type="file" id="avatar" formControlName="avatar" required>
+    </div>
+    <div class="checkbox">
+        <label for="isActive">Activo</label>
+        <input type="checkbox" id="isActive" formControlName="isActive">
+    </div>
+    <div class="button">
+        <button class="btn" type="submit">Guardar</button>
+    </div>
+
+</form>

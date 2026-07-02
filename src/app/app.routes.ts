@@ -7,12 +7,14 @@ import { Checkout } from './features/checkout/checkout';
 import { PageNotFound } from './features/page-not-found/page-not-found';
 
 export const routes: Routes = [
-    {path: 'home', component: Home },
-    {path: 'eventos', component: Eventos},
-    {path: 'register', component: Register},
-    {path: 'login', component: Login},
-    {path: 'checkout', component: Checkout},
-    {path: '404', component: PageNotFound},
-    {path: '', redirectTo: 'home', pathMatch: 'full'},
-    {path: '**', redirectTo: '404', pathMatch: 'full'}
+    { path: 'home', component: Home },
+    { path: 'user-new-form', loadComponent: () => import('./features/users/user-new-form/user-new-form').then(m => m.UserNewForm) },
+
+    { path: 'eventos', component: Eventos },
+    { path: 'register', component: Register },
+    { path: 'login', component: Login },
+    { path: 'checkout', component: Checkout },
+    { path: '404', component: PageNotFound },
+    { path: '', redirectTo: 'home', pathMatch: 'full' },
+    { path: '**', redirectTo: '404', pathMatch: 'full' }
 ];
