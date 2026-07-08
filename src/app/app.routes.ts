@@ -10,6 +10,9 @@ export const routes: Routes = [
     {   path: 'categorie-new',
         loadComponent: () => import('./features/categories/categories-new-form/categories-new-form').then(m => m.CategoriesNewForm)
     },
+    { path: 'event-new',
+        loadComponent: () => import('./features/eventos/evento-new-form/evento-new-form').then(m => m.EventoNewForm)
+    },
     {path: 'user/list',
         loadComponent: () => import('./features/users/user-list/user-list').then(m => m.UserList)
     },
