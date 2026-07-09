@@ -1,0 +1,181 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=JetBrains+Mono:wght@500;700&display=swap');
+
+/* ── Variables S.A.M. ───────────────────────────── */
+:host {
+  --accent: #e8ff00;
+  --text:   #e4e2e1;
+  --muted:  #c4c9ac;
+  --border: #2a2a2a;
+
+  display: block;
+}
+
+/* ── Footer shell ───────────────────────────────── */
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 96px 6vw 120px;
+  background: #000;
+  font-family: 'JetBrains Mono', monospace;
+
+  /* ── Giant brand ────────────────────────────── */
+  .foot-giant {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(60px, 13vw, 130px);
+    color: var(--accent);
+    letter-spacing: 0.02em;
+    line-height: 0.88;
+    text-align: center;
+    margin-bottom: 12px;
+    text-shadow: 0 0 40px rgba(232, 255, 0, 0.15);
+  }
+
+  /* ── Subtitle ───────────────────────────────── */
+  .foot-subtitle {
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+
+  /* ── Tag line ───────────────────────────────── */
+  .foot-tag {
+    text-align: center;
+    margin-bottom: 40px;
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    opacity: 0.6;
+  }
+
+  /* ── Accent line ────────────────────────────── */
+  .foot-line {
+    height: 2px;
+    background: var(--accent);
+    margin-bottom: 52px;
+    opacity: 0.8;
+  }
+
+  /* ── Links grid ─────────────────────────────── */
+  .foot-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 36px;
+    max-width: 1100px;
+    margin: 0 auto 72px;
+
+    .foot-col {
+
+      h4 {
+        font-weight: 700;
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        color: var(--accent);
+        margin-bottom: 20px;
+        text-transform: uppercase;
+      }
+
+      a {
+        display: block;
+        font-weight: 500;
+        font-size: 13px;
+        color: var(--muted);
+        text-decoration: none;
+        padding: 7px 0;
+        border-bottom: 1px solid transparent;
+        transition: color 0.2s, border-color 0.2s;
+
+        &:hover {
+          color: var(--text);
+          border-bottom-color: rgba(232, 255, 0, 0.2);
+        }
+      }
+    }
+  }
+
+  /* ── Payment methods ────────────────────────── */
+  .pay-row {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 44px;
+
+    .pay-pill {
+      border: 1px solid var(--border);
+      padding: 11px 20px;
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      transition: border-color 0.2s, color 0.2s;
+      cursor: default;
+
+      &:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+    }
+  }
+
+  /* ── Bottom bar ─────────────────────────────── */
+  .foot-bottom {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1100px;
+    margin: 0 auto;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    flex-wrap: wrap;
+    gap: 12px;
+
+    .foot-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      .blink-dot {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--accent);
+        animation: blink 1.4s ease-in-out infinite;
+      }
+    }
+  }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1;   }
+  50%       { opacity: 0.1; }
+}
+
+/* ── Responsive ─────────────────────────────────── */
+@media (max-width: 960px) {
+  .site-footer .foot-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .site-footer {
+    padding: 64px 16px 80px;
+
+    .foot-grid {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+
+    .foot-bottom {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  }
+}
