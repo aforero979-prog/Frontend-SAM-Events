@@ -1,39 +1,20 @@
 import { Routes } from '@angular/router';
 import { Home } from './features/home/home';
+import { Eventos } from './features/eventos/eventos';
+import { Register } from './features/register/register';
+import { Login } from './features/login/login';
+import { Checkout } from './features/checkout/checkout';
+import { PageNotFound } from './features/page-not-found/page-not-found';
 
 export const routes: Routes = [
-    {path: 'home', component: Home }, // Carga todo el contenido. 
+    { path: 'home', component: Home },
+    { path: 'user-new-form', loadComponent: () => import('./features/users/user-new-form/user-new-form').then(m => m.UserNewForm) },
 
-    {path: 'eventos', 
-        loadComponent: () => import( `./features/eventos/eventos` ).then( m => m.Eventos) }, // Carga peresoza
-        
-    {path: 'events-new', 
-        loadComponent: () => import( `./features/events/event-new-form/event-new-form` ).then( m => m.EventNewForm) }, // Carga peresoza
-        
-
-    {path: 'register', 
-        loadComponent: () => import( `./features/register/register` ).then( m => m.Register) },
-
-    {path: 'login',
-         loadComponent: () => import( `./features/login/login` ).then( m => m.Login) 
-
-    },
-    {path: 'checkout', 
-  loadComponent: () => import( `./features/checkout/checkout` ).then( m => m.Checkout) },
-
-      {path: 'user/list', 
-  loadComponent: () => import('./features/users/user-list').then(m => m.UserList)},
-
-
-
-  // para importar la ruta sin resolver la promeda thn cath, se debe poner la clase default
-    {path: '404',
-
-  loadComponent: () => import( `./features/page-not-found/page-not-found` )},
-        
-
-
-
-    {path: '', redirectTo: 'home', pathMatch: 'full'},
-    {path: '**', redirectTo: '404', pathMatch: 'full'}
+    { path: 'eventos', component: Eventos },
+    { path: 'register', component: Register },
+    { path: 'login', component: Login },
+    { path: 'checkout', component: Checkout },
+    { path: '404', component: PageNotFound },
+    { path: '', redirectTo: 'home', pathMatch: 'full' },
+    { path: '**', redirectTo: '404', pathMatch: 'full' }
 ];

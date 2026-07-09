@@ -1,0 +1,47 @@
+<h2>Registra el Evento</h2>
+
+<form (ngSubmit)="onSubmit()" [formGroup]="formData">
+    <div class="field">
+        <label for="name">Nombre del Evento</label>
+        <input type="text" formControlName="name" id="name">
+    </div>
+
+    <div class="field">
+        <label for="description">Descripción del Evento</label>    
+        <input type="text" formControlName="description" id="description">
+    </div>
+
+    <div class="field">
+        <label for="price">Precio del ticket</label>
+        <input type="number" formControlName="price" id="price">
+    </div>
+
+    <div class="field">
+        <label for="stock">Stock del Evento</label>
+        <input type="number" formControlName="stock" id="stock">
+    </div>
+
+    <div class="field">
+        <label for="status">Status del Evento</label>
+
+        <input type="radio" [value]="true" formControlName="status" id="status-avaible">
+        <label for="status-avaible">Disponible</label>
+        <input type="radio" [value]="false" formControlName="status" id="status-not-avaible">
+        <label for="status-not-avaible">No disponible</label>
+    </div>
+
+    <div class="field">
+        <label for="category">Categoria del Evento</label>
+        <select formControlName="category" id="category">
+            <option value="">Seleccione una categoria..</option>
+            <option value="hard Techno">Hard Techno</option>
+            <option value="tech House">Tech House</option>
+            <option value="groove">Groove</option>
+            <option value="techno">Techno</option>
+        </select>
+    </div>
+    
+    <div class="button">
+    <button>Crear Evento </button>
+    </div>
+</form>
