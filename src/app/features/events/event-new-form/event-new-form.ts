@@ -10,12 +10,12 @@ import { HttpEvents } from '../../../core/services/http-events';
   imports: [ReactiveFormsModule, AsyncPipe, JsonPipe],   templateUrl: './event-new-form.html',
   styleUrl: './event-new-form.css',
 })
-export default class EventNewForm {
+export class EventNewForm {
   private httpRoles = inject(HttpRoles);
 roleList$ = new BehaviorSubject ([]); //RxJs: Observable que mantiene en memoria los datos de la API, para que puedan ser usados en el HTML.
 private httpevents = inject(HttpEvents)
 
-  formData: FormGroup;
+  formData: FormGroup; 
 
   constructor() {
     //Define la estructura equivalente al formulario HTML, con los mismos nombres de los campos
@@ -46,6 +46,12 @@ private httpevents = inject(HttpEvents)
 
     if (this.formData.valid) {
       console.log(this.formData.value);
+      this.httpevents.createEvent(this.formData.value).subscribe({
+        next: (res) => {
+          console.log(res);        },
+        error: (err) => {
+          console.log(err);        }
+      });
     }
     else {
       console.log("Formulario inválido");
