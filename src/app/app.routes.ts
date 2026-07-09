@@ -4,7 +4,7 @@ import { Eventos } from './features/eventos/eventos';
 import { Register } from './features/register/register';
 import { Login } from './features/login/login';
 import { Checkout } from './features/checkout/checkout';
-import { PageNotFound } from './features/page-not-found/page-not-found';
+import PageNotFound from './features/page-not-found/page-not-found';
 
 export const routes: Routes = [
     { path: 'home', component: Home },

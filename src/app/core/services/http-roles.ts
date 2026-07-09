@@ -1,8 +1,8 @@
-import { Service, inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs';
 
-@Service()
+@Injectable({ providedIn: 'root' })
 export class HttpRoles {
   private http = inject(HttpClient);
 

@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Service } from '@angular/core';
-import { map, pipe } from 'rxjs';
-import { ResponseUsers } from './models/users';
+import { inject, Injectable } from '@angular/core';
+import { map } from 'rxjs';
+import { ResponseUsers } from '../models/users';
 
-@Service()
+@Injectable({ providedIn: 'root' })
 export class HttpUsers {
   //Inyectar una dependencia
   // constructor (private https: HttpClient) { }

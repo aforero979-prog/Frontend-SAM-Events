@@ -15,7 +15,7 @@ interface ApiResponse<T> {
 }
 
 @Injectable({ providedIn: 'root' })
-export class HttpRoles {
+export class HttpRolesUser {
 
   // URL del endpoint de roles en el backend
   private readonly baseUrl = 'http://localhost:3000/api/roles';

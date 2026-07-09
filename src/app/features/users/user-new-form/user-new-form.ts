@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { HttpUser } from '../../../core/service/http-user';
-import { HttpRoles } from '../../../core/service/http-roles';
+import { HttpUser } from '../../../core/services/http-user';
+import { HttpRolesUser } from '../../../core/services/http-roles-user';
 
 @Component({
   selector: 'app-user-new-form',
@@ -12,7 +12,7 @@ import { HttpRoles } from '../../../core/service/http-roles';
 export class UserNewForm {
 
   private httpUser = inject(HttpUser);
-  private httpRoles = inject(HttpRoles);
+  private httpRoles = inject(HttpRolesUser);
 
   // Atributo de la clase que va a contener el formulario
   formData: FormGroup;
