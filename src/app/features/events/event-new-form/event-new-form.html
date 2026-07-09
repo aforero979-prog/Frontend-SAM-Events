@@ -1,5 +1,7 @@
 <div>
     <h2 class="Tittle2">Crear Nuevo Evento</h2>
+<pre>{{ roleList$ | async | json }}</pre>
+ 
     <p>Diligencia los datos para crear un nuevo evento:</p>
 
     <form [formGroup]="formData" (ngSubmit)="onSubmit()" class="form form-Event">
@@ -44,7 +46,7 @@
 
         <div class="field">
             <label for="eventSecret">¿Locación secreta?</label>
-            <input type="radio" id="eventSecret" formControlName="eventSecret" required>
+            <input type="radio" [value]="true" id="eventSecret" formControlName="eventSecret" required>
         </div>
 
         <div class="field">
