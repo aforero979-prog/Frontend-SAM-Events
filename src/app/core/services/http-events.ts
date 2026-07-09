@@ -19,4 +19,4 @@ export class HttpEvents {
     return this.http.post(`http://localhost:3000/api/events`, eventData);
   }
 
-}
+} 
