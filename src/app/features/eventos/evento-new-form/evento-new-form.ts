@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpCategory } from '../../../core/services/http-category';
+import { HttpEvents } from '../../../core/services/http-events';
 
 @Component({
   selector: 'app-evento-new-form',
@@ -11,6 +12,7 @@ import { HttpCategory } from '../../../core/services/http-category';
 export class EventoNewForm {
 
   private httpCategory = inject( HttpCategory )
+  private httpEvent =inject(HttpEvents)
 
   //Atributo de la calse que va a contener al formulario
   formData: FormGroup
@@ -30,6 +32,14 @@ export class EventoNewForm {
 
     if(this.formData.valid) {
       console.log( this.formData.value )
+      this.httpEvent.createEvent(this.formData.value).subscribe({
+        next: (res) => {
+          console.log(res)
+        },
+        error: (error) => {console.error(error)},
+        complete: () => {console.log('complete execute')}
+      })
+
     } else {
       console.log('El formulario no es valido')
     }
@@ -38,7 +48,7 @@ export class EventoNewForm {
   //Hook: Cclo de vida que sabe cuando se inicializa el componente
 
   ngOnInit() {
-    this.httpCategory.getCategories().subscribe({
+    this.httpEvent.createEvent(this.formData.value).subscribe({
       next: (data) => {
         console.log(data)
       },

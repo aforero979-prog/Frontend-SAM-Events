@@ -7,7 +7,7 @@ export class HttpCategory {
 
     //Metodo para obtener todas las categorias
 
-    getCategories () {
-        return this.http.get('http://localhost:3000/api/categories')
-    }
+    createCategories (newCategory:any) {
+        return this.http.post('http://localhost:3000/api/categories', newCategory)
+    }                          
 }

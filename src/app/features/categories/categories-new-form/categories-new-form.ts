@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { HttpCategory } from '../../../core/services/http-category';
+
 
 @Component({
   selector: 'app-categories-new-form',
@@ -7,7 +9,9 @@ import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
   templateUrl: './categories-new-form.html',
   styleUrl: './categories-new-form.css',
 })
-export class CategoriesNewForm {
+export class CategoriesNewForm  {
+
+  private httpCategory = inject( HttpCategory)
 
   formData: FormGroup;
 
@@ -18,12 +22,24 @@ export class CategoriesNewForm {
       name: new FormControl(),
       description: new FormControl(),
       status: new FormControl()
-
     })
   }
 
   onEnviar() {
-    console.log(this.formData.value)
+
+    if(this.formData.valid) {
+      console.log(this.formData.value)
+      this.httpCategory.createCategories(this.formData.value).subscribe({
+        next:(res) => {
+          console.log(res)
+        },
+        error: (error) => {console.error(error)},
+        complete: () => {console.log('complete execute')}
+      })
+    } else {
+      console.log('El formulario no es valido')
+    }
   }
+
 
 }

@@ -1,6 +1,7 @@
 <h2>Registra el Evento</h2>
 
-<form (ngSubmit)="onSubmit()" [formGroup]="formData">
+<form (ngSubmit)="onSubmit()" [formGroup]="formData" class="form">
+    
     <div class="field">
         <label for="name">Nombre del Evento</label>
         <input type="text" formControlName="name" id="name">
@@ -42,6 +43,6 @@
     </div>
     
     <div class="button">
-    <button>Crear Evento </button>
+    <button>Crear Evento</button>
     </div>
 </form>
