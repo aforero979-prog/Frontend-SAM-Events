@@ -1,55 +1,33 @@
-import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-
-// Interfaz que representa un usuario creado/recibido del backend
-export interface User {
-  id?:       string;
-  name:      string;
-  email:     string;
-  password?: string;
-  role:      string;
-  avatar?:   string;
-  isActive?: boolean;
-}
-
-// Respuesta genérica de la API
-interface ApiResponse<T> {
-  msg:  string;
-  data: T;
-}
+import { inject, Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class HttpUser {
 
-  // URL base del backend
-  private readonly baseUrl = 'http://localhost:3000/api/users';
-
-  // Inyección del cliente HTTP de Angular
   private http = inject(HttpClient);
 
   // Obtener todos los usuarios
-  getAll(): Observable<ApiResponse<User[]>> {
-    return this.http.get<ApiResponse<User[]>>(this.baseUrl);
+  getUsers() {
+    return this.http.get('http://localhost:3000/api/users');
   }
 
   // Obtener un usuario por ID
-  getById(id: string): Observable<ApiResponse<User>> {
-    return this.http.get<ApiResponse<User>>(`${this.baseUrl}/${id}`);
+  getUserById(id: string) {
+    return this.http.get(`http://localhost:3000/api/users/${id}`);
   }
 
   // Crear un nuevo usuario
-  create(user: User): Observable<ApiResponse<User>> {
-    return this.http.post<ApiResponse<User>>(this.baseUrl, user);
+  createUser(newUser: any) {
+    return this.http.post('http://localhost:3000/api/users', newUser);
   }
 
   // Actualizar un usuario existente
-  update(id: string, user: Partial<User>): Observable<ApiResponse<User>> {
-    return this.http.put<ApiResponse<User>>(`${this.baseUrl}/${id}`, user);
+  updateUser(id: string, user: any) {
+    return this.http.put(`http://localhost:3000/api/users/${id}`, user);
   }
 
   // Eliminar un usuario
-  delete(id: string): Observable<ApiResponse<void>> {
-    return this.http.delete<ApiResponse<void>>(`${this.baseUrl}/${id}`);
+  deleteUser(id: string) {
+    return this.http.delete(`http://localhost:3000/api/users/${id}`);
   }
 }

@@ -20,10 +20,8 @@
         <label for="roles">Rol</label>
         <select id="roles" formControlName="role">
             <option value="" disabled>Selecciona un rol...</option>
-            @if (roles$ | async; as response) {
-                @for (role of response.data; track role.id) {
-                    <option [value]="role.id">{{ role.name }}</option>
-                }
+            @for (role of roles; track role.id) {
+                <option [value]="role.id">{{ role.name }}</option>
             }
         </select>
     </div>
@@ -36,23 +34,7 @@
         <input type="checkbox" id="isActive" formControlName="isActive">
     </div>
     <div class="button">
-        @if (formState$ | async; as state) {
-            <!-- Botón deshabilitado mientras se envía -->
-            <button class="btn" type="submit" [disabled]="state === 'loading'">
-                @if (state === 'loading') { GUARDANDO... }
-                @else { GUARDAR }
-            </button>
-
-            <!-- Mensaje de éxito -->
-            @if (state === 'success') {
-                <p class="msg-success">✓ Usuario creado correctamente.</p>
-            }
-
-            <!-- Mensaje de error -->
-            @if (state === 'error') {
-                <p class="msg-error">✗ Ocurrió un error al crear el usuario. Intenta de nuevo.</p>
-            }
-        }
+        <button class="btn" type="submit">GUARDAR</button>
     </div>
 
 </form>
