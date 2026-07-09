@@ -1,0 +1,64 @@
+<div>
+    <h2 class="Tittle2">Crear Nuevo Evento</h2>
+<pre>{{ roleList$ | async | json }}</pre>
+ 
+    <p>Diligencia los datos para crear un nuevo evento:</p>
+
+    <form [formGroup]="formData" (ngSubmit)="onSubmit()" class="form form-Event">
+
+        <div class="field">
+            <label for="nameEvent">Nombre del evento:</label>
+            <input type="text" placeholder="Nombre del evento" id="nameEvent" formControlName="name" required>
+        </div>
+
+        <div class="field">
+            <label for="priceTicket">Precio de la Boleta:</label>
+            <input type="number" placeholder="Precio de la Boleta" id="priceTicket" formControlName="price" required>
+        </div>
+
+        <div class="field">
+            <label for="stockTickets">Cantidad de Boletas:</label>
+            <input type="number" placeholder="Cantidad de Boletas" id="stockTickets" formControlName="stock" required>
+        </div>
+
+        <div class="field">
+            <label for="eventDate">Fecha del Evento:</label>
+            <input type="datetime-local" placeholder="Fecha del Evento" id="eventDate" formControlName="initialDate"
+                required>
+        </div>
+
+        <div class="field">
+            <label for="eventDateFinish">Fecha y hora final del Evento:</label>
+            <input type="datetime-local" placeholder="Fecha y hora final del Evento" id="eventDateFinish"
+                formControlName="finalDate" required>
+        </div>
+
+        <div class="field">
+            <label for="eventImage">Imagen del Evento:</label>
+            <input type="text" placeholder="Imagen del Evento" id="eventImage" formControlName="imageUrl" required>
+        </div>
+
+        <div class="field">
+            <label for="eventLocation">Lugar del Evento:</label>
+            <input type="text" placeholder="Lugar del Evento" id="eventLocation" formControlName="eventLocation"
+                required>
+        </div>
+
+        <div class="field">
+            <label for="eventSecret">¿Locación secreta?</label>
+            <input type="radio" [value]="true" id="eventSecret" formControlName="eventSecret" required>
+        </div>
+
+        <div class="field">
+            <label for="eventInformation">Información adicional:</label>
+            <input type="textarea" placeholder="Información adicional" id="eventInformation"
+                formControlName="eventInformation" required>
+        </div>
+
+        <div class="Buttom">
+            <button>Crear Evento</button>
+        </div>
+
+    </form>
+
+</div>
