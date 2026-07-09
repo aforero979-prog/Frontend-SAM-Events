@@ -1,0 +1,196 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=JetBrains+Mono:wght@500;700&display=swap');
+
+/* ── Variables S.A.M. ───────────────────────────── */
+:host {
+  --accent:  #e8ff00;
+  --text:    #e4e2e1;
+  --muted:   #c4c9ac;
+  --border:  #2a2a2a;
+
+  display: block;
+}
+
+/* ── Header shell ───────────────────────────────── */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  z-index: 100;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 20px;
+  padding: 0 6vw;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  font-family: 'JetBrains Mono', monospace;
+
+  /* ── Left block ─────────────────────────────── */
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    .brand-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 28px;
+      letter-spacing: 0.04em;
+      color: var(--accent);
+      text-decoration: none;
+      cursor: pointer;
+      text-shadow: 0 0 20px rgba(232, 255, 0, 0.3);
+      transition: text-shadow 0.2s;
+
+      &:hover {
+        text-shadow: 0 0 32px rgba(232, 255, 0, 0.6);
+      }
+    }
+
+    .loc-chip {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+
+      .loc-icon { font-size: 14px; }
+
+      .loc-text {
+        position: relative;
+        display: inline-block;
+        background: var(--text);
+        color: var(--text);
+        user-select: none;
+        cursor: crosshair;
+        padding: 0 3px;
+        transition: background 0.4s, color 0.4s;
+
+        &::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: repeating-linear-gradient(
+            45deg,
+            transparent, transparent 2px,
+            rgba(0,0,0,0.8) 2px, rgba(0,0,0,0.8) 4px
+          );
+          opacity: 1;
+          transition: opacity 0.4s;
+          pointer-events: none;
+        }
+
+        &:hover {
+          background: transparent;
+          color: var(--accent);
+          text-shadow: 0 0 8px rgba(232, 255, 0, 0.5);
+
+          &::after { opacity: 0; }
+        }
+      }
+    }
+  }
+
+  /* ── Nav links ──────────────────────────────── */
+  .nav-links {
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+
+    a {
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+
+      &:hover,
+      &.nav-active {
+        color: var(--accent);
+      }
+    }
+  }
+
+  /* ── Right block ────────────────────────────── */
+  .header-right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+
+    /* Ghost button */
+    .btn-ghost {
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+      padding: 9px 16px;
+      border: 1px solid var(--accent);
+      background: rgba(255, 255, 255, 0.03);
+      transition: background 0.2s, box-shadow 0.2s;
+
+      &:hover {
+        background: rgba(232, 255, 0, 0.07);
+        box-shadow: 0 0 14px rgba(232, 255, 0, 0.25);
+      }
+    }
+
+    /* Accent button */
+    .btn-accent {
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #000;
+      text-decoration: none;
+      padding: 10px 18px;
+      background: var(--accent);
+      border: 1px solid var(--accent);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: box-shadow 0.2s;
+
+      &:hover {
+        box-shadow: 0 0 22px rgba(232, 255, 0, 0.45);
+      }
+
+      .btn-plus { display: none; }
+    }
+  }
+}
+
+/* ── Responsive ─────────────────────────────────── */
+@media (max-width: 1024px) {
+  .site-header .header-left .loc-chip {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .site-header {
+    grid-template-columns: 1fr 1fr;
+    padding: 0 16px;
+
+    .nav-links { display: none; }
+
+    .header-right {
+      .btn-ghost { display: none; }
+
+      .btn-accent {
+        .btn-txt { display: none; }
+        .btn-plus { display: inline; font-size: 18px; }
+      }
+    }
+  }
+}

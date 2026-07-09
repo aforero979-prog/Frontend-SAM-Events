@@ -2,33 +2,57 @@
 <form [formGroup]="formData" (ngSubmit)="onSubmit()" class="form">
     <div class="field">
         <label for="name">Nombre</label>
-        <input type="text" id="name" formControlName="name" placeholder="John Doe" required>
+        <input type="text" id="name" formControlName="name" placeholder="John Doe">
     </div>
     <div class="field">
         <label for="email">Email</label>
-        <input type="email" id="email" formControlName="email" placeholder="jhondoe@email.com" required>
+        <input type="email" id="email" formControlName="email" placeholder="jhondoe@email.com">
     </div>
     <div class="field">
         <label for="password">Contraseña</label>
-        <input type="password" id="password" formControlName="password" placeholder="**********" required>
+        <input type="password" id="password" formControlName="password" placeholder="**********">
+    </div>
+    <div class="field">
+        <label for="confirmPassword">Confirmar contraseña</label>
+        <input type="password" id="confirmPassword" formControlName="confirmPassword" placeholder="**********">
     </div>
     <div class="checkbox">
         <label for="roles">Rol</label>
-        <select id="roles" formControlName="role" required>
-            <option value="admin">Admin</option>
-            <option value="user">User</option>
+        <select id="roles" formControlName="role">
+            <option value="" disabled>Selecciona un rol...</option>
+            @if (roles$ | async; as response) {
+                @for (role of response.data; track role.id) {
+                    <option [value]="role.id">{{ role.name }}</option>
+                }
+            }
         </select>
     </div>
     <div class="field">
         <label for="avatar">Avatar</label>
-        <input type="file" id="avatar" formControlName="avatar" required>
+        <input type="file" id="avatar" formControlName="avatar">
     </div>
     <div class="checkbox">
         <label for="isActive">Activo</label>
         <input type="checkbox" id="isActive" formControlName="isActive">
     </div>
     <div class="button">
-        <button class="btn" type="submit">Guardar</button>
+        @if (formState$ | async; as state) {
+            <!-- Botón deshabilitado mientras se envía -->
+            <button class="btn" type="submit" [disabled]="state === 'loading'">
+                @if (state === 'loading') { GUARDANDO... }
+                @else { GUARDAR }
+            </button>
+
+            <!-- Mensaje de éxito -->
+            @if (state === 'success') {
+                <p class="msg-success">✓ Usuario creado correctamente.</p>
+            }
+
+            <!-- Mensaje de error -->
+            @if (state === 'error') {
+                <p class="msg-error">✗ Ocurrió un error al crear el usuario. Intenta de nuevo.</p>
+            }
+        }
     </div>
 
 </form>
