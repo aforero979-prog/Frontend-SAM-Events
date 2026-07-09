@@ -14,4 +14,9 @@ export class HttpEvents {
     return this.http.get<ResponseUsers>(`http://localhost:3000/api/events`).pipe(
       map( ( res) => res.data ));
   }
+
+  createEvent (eventData: any) {
+    return this.http.post(`http://localhost:3000/api/events`, eventData);
+  }
+
 }

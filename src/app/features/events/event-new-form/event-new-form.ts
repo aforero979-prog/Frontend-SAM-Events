@@ -3,15 +3,17 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { HttpRoles } from '../../../core/services/http-roles';
 import { BehaviorSubject } from 'rxjs';
 import { AsyncPipe, JsonPipe } from '@angular/common';
+import { HttpEvents } from '../../../core/services/http-events';
 
 @Component({
   selector: 'app-event-new-form',
   imports: [ReactiveFormsModule, AsyncPipe, JsonPipe],   templateUrl: './event-new-form.html',
   styleUrl: './event-new-form.css',
 })
-export class EventNewForm {
+export default class EventNewForm {
   private httpRoles = inject(HttpRoles);
 roleList$ = new BehaviorSubject ([]); //RxJs: Observable que mantiene en memoria los datos de la API, para que puedan ser usados en el HTML.
+private httpevents = inject(HttpEvents)
 
   formData: FormGroup;
 
