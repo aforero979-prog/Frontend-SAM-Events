@@ -1,10 +1,11 @@
 import { AsyncPipe, JsonPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { HttpLocations } from '../../../core/services/http-locations';
 
 @Component({
   selector: 'app-location-new-form',
-  imports: [ReactiveFormsModule, AsyncPip, JsonPipe],
+  imports: [ReactiveFormsModule, AsyncPipe, JsonPipe],
   templateUrl: './location-new-form.html',
   styleUrl: './location-new-form.css',
 })
@@ -19,13 +20,14 @@ export class LocationNewForm {
       address: new FormControl('', [Validators.required]),
       capacity: new FormControl<number | null>(null, [Validators.required, Validators.min(1)]),
       imageUrl: new FormControl(''),
-      locationInformation: new FormControl('')
+      locationInformation: new FormControl(''),
+      status: new FormControl(true)
 
     });
 
   }
 
-  onsubmit() {
+  onSubmit() {
     console.group('Formulario de ubicación nueva');
     console.log('valid (formData) ' + this.formData.valid);
     console.log('valid (name) ' + this.formData.get('name')?.valid);
@@ -33,3 +35,4 @@ export class LocationNewForm {
     console.log('valid (capacity) ' + this.formData.get('capacity')?.valid);
     console.groupEnd();
   }
+}
