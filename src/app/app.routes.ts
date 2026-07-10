@@ -9,7 +9,7 @@ import PageNotFound from './features/page-not-found/page-not-found';
 export const routes: Routes = [
     { path: 'home', component: Home },
     { path: 'user-new-form', loadComponent: () => import('./features/users/user-new-form/user-new-form').then(m => m.UserNewForm) },
-
+    { path: 'ticket-new', loadComponent: () => import('./features/ticket/ticket-new-form') },
     { path: 'eventos', component: Eventos },
     { path: 'register', component: Register },
     { path: 'login', component: Login },

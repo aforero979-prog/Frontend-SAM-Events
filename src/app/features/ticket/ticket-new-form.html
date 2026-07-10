@@ -1,0 +1,43 @@
+<div class="page page-ticket-form">
+
+    <h2>Crea las boletas</h2>
+
+<form (ngSubmit)='onSubmit()' [formGroup]="formData" class="form">
+
+    <div class="field">
+        <label for="name">Nombre del evento</label>
+        <input formControlName="name" type="text" placeholder="Nombre del evento">
+    </div>
+
+    <div class="field">
+        <label for="price">Precio del ticket</label>
+        <input type="number" formControlName="price" id="price">
+    </div>
+
+    <div class="field">
+        <label for="description">Descripción:</label>
+        <textarea formControlName="description" id="descripcion" rows="4" cols="50" maxlength="150"
+            style="resize: none;" placeholder="Escribe la descripcion de la categoria"></textarea>
+    </div>
+
+    <div class="field">
+        <label for="status">Status de la categoria:</label>
+        <div class="options">
+            <input formControlName="status" type="radio" [value]="true"><label for="categorie-status-enable">Activo</label>
+            <input formControlName="status" type="radio" [value]="false"><label for="categorie-status-disable">InActivo</label>
+        </div>
+
+    </div>
+
+    <div class="field">
+        <label for="stock">Stock del Evento</label>
+        <input type="number" formControlName="stock" id="stock">
+    </div>
+
+    <div class="button">
+        <button>Enviar</button>
+    </div>
+
+</form>
+
+</div>

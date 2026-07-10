@@ -3,14 +3,13 @@ import { RouterOutlet } from "@angular/router";
 
 import { Header } from "./shared/components/header/header";
 import { Footer } from './shared/components/footer/footer';
-import { Counter } from './components/counter/counter';
 import { Person } from './interfaces/person';
 import { person } from './data/data';
 
  
 @Component({
   selector: 'app-root',
-  imports: [Header, Footer ,RouterOutlet, Counter],
+  imports: [Header, Footer ,RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
