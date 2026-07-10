@@ -1,10 +1,9 @@
 
-import { Component, inject } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-location-new-form',
-  imports: [ReactiveFormsModule],
+  imports: [],
   templateUrl: './location-new-form.html',
   styleUrl: './location-new-form.css',
 })
