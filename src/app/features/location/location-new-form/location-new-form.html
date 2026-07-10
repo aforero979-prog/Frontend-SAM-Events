@@ -1,0 +1,33 @@
+<div class="form">
+    <h2 class="form-title">Crear Nueva Ubicación</h2>
+    
+    <p class="form-intro">Diligencia los datos para crear una nueva ubicación:</p>
+
+    <form [formGroup]="formData" (ngSubmit)="onSubmit()" class="form form-Location">
+
+        <div class="field">
+            <label for="locationName">Nombre de la ubicación:</label>
+            <input type="text" placeholder="Ej. Teatro Mayor, Estadio Central..." id="locationName" formControlName="name" required>
+        </div>
+
+        <div class="field">
+            <label for="locationAddress">Dirección:</label>
+            <input type="text" placeholder="Dirección de la ubicación" id="locationAddress" formControlName="address" required>
+        </div>
+
+        <div class="field">
+            <label for="locationCapacity">Capacidad / Aforo:</label>
+            <input type="number" placeholder="Cantidad máxima de personas" id="locationCapacity" formControlName="capacity" min="0">
+        </div>
+
+        <div class="checkbox">
+            <label for="locationStatus">¿Ubicación activa?</label>
+            <input type="checkbox" id="locationStatus" formControlName="status">
+        </div>
+
+        <div class="button">
+            <button class="btn" type="submit">Crear Ubicación</button>
+        </div>
+
+    </form>
+</div>
