@@ -11,18 +11,28 @@ export const routes: Routes = [
   {
     path: 'user-new-form',
     loadComponent: () =>
-      import('./features/users/user-new-form/user-new-form').then((m) => m.UserNewForm),
+      import( './features/users/user-new-form/user-new-form' ).then((m) => m.UserNewForm),
   },
 
-  { path: 'ticket-new', loadComponent: () => import('./features/ticket/ticket-new-form') },
+  { path: 'ticket-new', 
+    loadComponent: () => import( './features/ticket/ticket-new-form' ) },
 
   {
     path: 'location-new-form',
-    loadComponent: () =>
-      import('./features/location/location-new-form/location-new-form').then(
-        (m) => m.LocationNewForm,
+    loadComponent: () => 
+      import( './features/location/location-new-form/location-new-form' ).then((m) => m.LocationNewForm,
       ),
   },
+  {path: 'category/new',
+    loadComponent: () => import( './features/categories/category-new-form/category-new-form' )
+  },
+  {path: 'category/edit',
+    loadComponent: () => import( './features/categories/category-edit-form/category-edit-form' )
+  },  
+  {path: 'category/list',
+    loadComponent: () => import( './features/categories/category-list/category-list' )
+  },
+
 
   { path: 'eventos', component: Eventos },
   { path: 'register', component: Register },
