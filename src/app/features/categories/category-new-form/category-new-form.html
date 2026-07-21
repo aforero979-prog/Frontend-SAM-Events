@@ -7,6 +7,18 @@
     <div class="field">
         <label for="category-name">Nombre de la categoria</label>
         <input type="text" formControlName="name" id="category-name">
+        <small class="error">
+            @if( name?.invalid && ( name?.dirty || name?.touched) ) {
+
+                @if(name?.errors?.['required']) {
+                    El nombre de la categoria es requerido
+                }
+
+                @if(name?.errors?.['minlength']) {
+                    El nombre de la categoria tiene que tener al menos 5 caracteres
+                }
+            }         
+        </small>
     </div>
 
     <div class="field">
@@ -14,10 +26,23 @@
         <textarea formControlName="description" id="category-description"></textarea>
     </div>
 
-    <div class="field">
+    <!-- <div class="field">
         <label for="category-location">Ubicación:</label>
         <input type="text" formControlName="location" id="category-location">
-    </div>
+    </div> -->
+
+    <!-- <div class="field">
+        <label for="category-location">Ubicación</label>
+        <select formControlName="ubicacion" id="category-location">
+
+            <option value="">categroia...</option>
+            <option value="">Hard Techno</option>
+            <option value="">Tech House</option>
+            <option value="">Melodic</option>
+            <option value="">Hard Groove</option>
+
+        </select>
+    </div> -->
 
     <div class="field">
         <label for="">Status:</label>
@@ -32,12 +57,12 @@
     </div>
 
     <div class="field">
-        <button>Registrar categoria</button>
+        <button [disabled]="formData.invalid">Registrar categoria</button>
     </div>
 
     <!-- <div class="field">
-        <label for="location">Ubicación</label>
-        <select formControlName="category" id="category">
+        <label for="category-location">Ubicación</label>
+        <select formControlName="ubicacion" id="category-location">
 
             <option value="">categroia...</option>
             <option value="">Categoria 1</option>

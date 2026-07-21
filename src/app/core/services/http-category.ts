@@ -11,14 +11,15 @@ export class HttpCategory {
         return this.http.get('http://localhost:3000/api/categories')
     }
 
-    deleteCategoryById ( id: String ) { 
+    createCategory( newCategory: any) {
+        return this.http.post( 'http://localhost:3000/api/categories', newCategory )
+    }
 
-        return this.http.delete( `http://localhost:3000/api/categories/${id}` )
-    
+    deleteCategoryById ( id: String ) { 
+        return this.http.delete( `http://localhost:3000/api/categories/${id}` )  
     }
 
     updataCategoryById( id: string, updateCategory: any ) {
-
         return this.http.patch( `http://localhost:3000/api/categories/${id}`, updateCategory )
-     }
+    }
 }
