@@ -1,0 +1,99 @@
+<h2>Crear pasarela de pago</h2>
+<form [formGroup]="formData" (ngSubmit)="onSubmit()">
+
+    <!-- Nombre de la pasarela -->
+    <div>
+        <label for="name">Nombre de la pasarela</label>
+        <input type="text" id="name" formControlName="name" placeholder="Ej: Stripe Colombia">
+        @if (formData.get('name')?.invalid && (formData.get('name')?.dirty || formData.get('name')?.touched)) {
+            @if (formData.get('name')?.errors?.['required']) {
+                <small>El nombre de la pasarela es obligatorio</small>
+            }
+        }
+    </div>
+
+    <!-- Proveedor -->
+    <div>
+        <label for="provider">Proveedor</label>
+        <select id="provider" formControlName="provider">
+            <option value="" disabled>Selecciona un proveedor...</option>
+            @for (prov of providers; track prov) {
+                <option [value]="prov">{{ prov }}</option>
+            }
+        </select>
+        @if (formData.get('provider')?.invalid && (formData.get('provider')?.dirty || formData.get('provider')?.touched)) {
+            @if (formData.get('provider')?.errors?.['required']) {
+                <small>El proveedor es obligatorio</small>
+            }
+        }
+    </div>
+
+    <!-- ID de transaccion (opcional) -->
+    <div>
+        <label for="transactionId">ID de transacción (opcional)</label>
+        <input type="text" id="transactionId" formControlName="transactionId" placeholder="ID generado por el proveedor">
+    </div>
+
+    <!-- Monto -->
+    <div>
+        <label for="amount">Monto</label>
+        <input type="number" id="amount" formControlName="amount" placeholder="0" min="0">
+        @if (formData.get('amount')?.invalid && (formData.get('amount')?.dirty || formData.get('amount')?.touched)) {
+            @if (formData.get('amount')?.errors?.['required']) {
+                <small>El monto es obligatorio</small>
+            }
+            @if (formData.get('amount')?.errors?.['min']) {
+                <small>El monto no puede ser negativo</small>
+            }
+        }
+    </div>
+
+    <!-- Moneda -->
+    <div>
+        <label for="currency">Moneda (ISO 4217)</label>
+        <input type="text" id="currency" formControlName="currency" placeholder="COP">
+    </div>
+
+    <!-- Estado -->
+    <div>
+        <label for="status">Estado</label>
+        <select id="status" formControlName="status">
+            @for (estado of statuses; track estado) {
+                <option [value]="estado">{{ estado }}</option>
+            }
+        </select>
+    </div>
+
+    <!-- ID del usuario -->
+    <div>
+        <label for="user">ID del usuario</label>
+        <input type="text" id="user" formControlName="user" placeholder="ID del usuario que realiza el pago">
+        @if (formData.get('user')?.invalid && (formData.get('user')?.dirty || formData.get('user')?.touched)) {
+            @if (formData.get('user')?.errors?.['required']) {
+                <small>El usuario es obligatorio</small>
+            }
+        }
+    </div>
+
+    <!-- ID del ticket -->
+    <div>
+        <label for="ticket">ID del ticket</label>
+        <input type="text" id="ticket" formControlName="ticket" placeholder="ID del ticket que se está pagando">
+        @if (formData.get('ticket')?.invalid && (formData.get('ticket')?.dirty || formData.get('ticket')?.touched)) {
+            @if (formData.get('ticket')?.errors?.['required']) {
+                <small>El ticket es obligatorio</small>
+            }
+        }
+    </div>
+
+    <!-- Estado activo -->
+    <div>
+        <label for="isActive">Activo</label>
+        <input type="checkbox" id="isActive" formControlName="isActive">
+    </div>
+
+    <div>
+        <button type="submit">GUARDAR</button>
+    </div>
+
+</form>

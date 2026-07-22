@@ -1,0 +1,72 @@
+<h2>Crear nueva publicación</h2>
+<form [formGroup]="formData" (ngSubmit)="onSubmit()">
+
+    <!-- Titulo -->
+    <div>
+        <label for="title">Título</label>
+        <input type="text" id="title" formControlName="title" placeholder="Título de la publicación">
+        @if (formData.get('title')?.invalid && (formData.get('title')?.dirty || formData.get('title')?.touched)) {
+            @if (formData.get('title')?.errors?.['required']) {
+                <small>El título es obligatorio</small>
+            }
+            @if (formData.get('title')?.errors?.['minlength']) {
+                <small>El título debe tener al menos 3 caracteres</small>
+            }
+        }
+    </div>
+
+    <!-- Contenido -->
+    <div>
+        <label for="content">Contenido</label>
+        <textarea id="content" formControlName="content" placeholder="Escribe el contenido del post..." rows="5"></textarea>
+        @if (formData.get('content')?.invalid && (formData.get('content')?.dirty || formData.get('content')?.touched)) {
+            @if (formData.get('content')?.errors?.['required']) {
+                <small>El contenido es obligatorio</small>
+            }
+        }
+    </div>
+
+    <!-- URL de imagen (opcional) -->
+    <div>
+        <label for="imageUrl">URL de imagen (opcional)</label>
+        <input type="url" id="imageUrl" formControlName="imageUrl" placeholder="https://ejemplo.com/imagen.jpg">
+    </div>
+
+    <!-- Tipo de publicacion -->
+    <div>
+        <label for="type">Tipo de publicación</label>
+        <select id="type" formControlName="type">
+            @for (tipo of postTypes; track tipo) {
+                <option [value]="tipo">{{ tipo }}</option>
+            }
+        </select>
+    </div>
+
+    <!-- Author (ID del usuario) -->
+    <div>
+        <label for="author">ID del autor (usuario)</label>
+        <input type="text" id="author" formControlName="author" placeholder="ID del usuario autor">
+        @if (formData.get('author')?.invalid && (formData.get('author')?.dirty || formData.get('author')?.touched)) {
+            @if (formData.get('author')?.errors?.['required']) {
+                <small>El autor es obligatorio</small>
+            }
+        }
+    </div>
+
+    <!-- Evento relacionado (opcional) -->
+    <div>
+        <label for="event">ID del evento relacionado (opcional)</label>
+        <input type="text" id="event" formControlName="event" placeholder="ID del evento (dejar vacío si no aplica)">
+    </div>
+
+    <!-- Estado activo -->
+    <div>
+        <label for="isActive">Activo</label>
+        <input type="checkbox" id="isActive" formControlName="isActive">
+    </div>
+
+    <div>
+        <button type="submit">GUARDAR</button>
+    </div>
+
+</form>

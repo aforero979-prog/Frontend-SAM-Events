@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Service } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -14,7 +14,7 @@ interface ApiResponse<T> {
   data: T;
 }
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class HttpRolesUser {
 
   // URL del endpoint de roles en el backend

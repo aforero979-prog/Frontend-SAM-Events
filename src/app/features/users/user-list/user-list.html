@@ -1,1 +1,36 @@
-<pre>{{ users | json }}</pre>
+<div class="list-header">
+    <h2 class="table-title">Lista de usuarios</h2>
+    <a class="btn-new" routerLink="/user-new-form">+ Nuevo usuario</a>
+</div>
+
+<table class="user-table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Rol</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (user of (userList$ | async); track user._id ?? user.id) {
+            <tr>
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.role?.name ?? user.role }}</td>
+                <td>
+                    @if (user.isActive) {
+                        <span class="badge-active">Activo</span>
+                    } @else {
+                        <span class="badge-inactive">Inactivo</span>
+                    }
+                </td>
+                <td class="actions">
+                    <a class="btn-edit" (click)="onEdit(user._id ?? user.id)">Editar</a>
+                    <a class="btn-delete" (click)="onDelete(user._id ?? user.id)">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

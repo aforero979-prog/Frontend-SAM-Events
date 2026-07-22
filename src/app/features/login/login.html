@@ -15,18 +15,18 @@
   <h2 class="panel-title">IDENTIFICACIÓN</h2>
   <p class="panel-desc">Ingresa tus credenciales para acceder a los Expedientes del Círculo.</p>
 
-  <form class="login-form">
+  <form class="login-form" [formGroup]="formData" (ngSubmit)="onSubmit()">
     <div class="field">
       <label class="field-label" for="alias">Alias / Frecuencia</label>
-      <input class="field-input" type="text" id="alias" placeholder="Ej: V0ID_USER">
+      <input class="field-input" type="email" id="alias" placeholder="Ej: user@sam.co" formControlName="email">
     </div>
 
     <div class="field">
       <label class="field-label" for="password">Clave de Encriptación</label>
-      <input class="field-input" type="password" id="password" placeholder="••••••••">
+      <input class="field-input" type="password" id="password" placeholder="••••••••" formControlName="password">
     </div>
 
-    <button class="btn-submit" type="submit">
+    <button class="btn-submit" type="submit" [disabled]="formData.invalid">
       DESCIFRAR ACCESO →
     </button>
   </form>

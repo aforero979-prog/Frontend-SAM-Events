@@ -61,7 +61,7 @@
         <label for="roles">Rol</label>
         <select id="roles" formControlName="role">
             <option value="" disabled>Selecciona un rol...</option>
-            @for (role of roles; track role.id) {
+            @for (role of (roleList$ | async); track role.id) {
                 <option [value]="role.id">{{ role.name }}</option>
             }
         </select>

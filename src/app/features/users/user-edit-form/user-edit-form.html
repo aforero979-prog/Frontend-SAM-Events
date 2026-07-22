@@ -1,0 +1,58 @@
+<h2 class="form-title">Editar usuario</h2>
+<form [formGroup]="formData" (ngSubmit)="onSubmit()" class="form">
+
+    <!-- Nombre -->
+    <div class="field">
+        <label for="name">Nombre</label>
+        <input type="text" id="name" formControlName="name" placeholder="John Doe">
+        @if (formData.get('name')?.invalid && (formData.get('name')?.dirty || formData.get('name')?.touched)) {
+            @if (formData.get('name')?.errors?.['required']) {
+                <small>el nombre es requerido</small>
+            }
+            @if (formData.get('name')?.errors?.['minlength']) {
+                <small>el nombre debe tener al menos 3 caracteres</small>
+            }
+            @if (formData.get('name')?.errors?.['maxlength']) {
+                <small>el nombre debe tener menos de 20 caracteres</small>
+            }
+        }
+    </div>
+
+    <!-- Email -->
+    <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" formControlName="email" placeholder="jhondoe@email.com">
+        @if (formData.get('email')?.invalid && (formData.get('email')?.dirty || formData.get('email')?.touched)) {
+            @if (formData.get('email')?.errors?.['required']) {
+                <small>el email es requerido</small>
+            }
+            @if (formData.get('email')?.errors?.['email']) {
+                <small>el email es inválido</small>
+            }
+        }
+    </div>
+
+    <!-- Rol -->
+    <div class="checkbox">
+        <label for="role">Rol</label>
+        <select id="role" formControlName="role">
+            <option value="" disabled>Selecciona un rol...</option>
+            @for (role of (roleList$ | async); track role.id) {
+                <option [value]="role.id">{{ role.name }}</option>
+            }
+        </select>
+    </div>
+
+    <!-- Estado activo -->
+    <div class="checkbox">
+        <label for="isActive">Activo</label>
+        <input type="checkbox" id="isActive" formControlName="isActive">
+    </div>
+
+    <!-- Botones -->
+    <div class="button-group">
+        <button class="btn btn-cancel" type="button" routerLink="/user-list">CANCELAR</button>
+        <button class="btn" type="submit" [disabled]="formData.invalid">GUARDAR</button>
+    </div>
+
+</form>
