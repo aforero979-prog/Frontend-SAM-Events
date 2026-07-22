@@ -91,4 +91,12 @@ export default class UserEditForm {
       });
     }
   }
+  //Getter para facilitar el acceso a los campos del formulario
+  get name() {
+    return this.formData.get('name');
+  }
+
+  get email() {
+    return this.formData.get('email');
+  }
 }

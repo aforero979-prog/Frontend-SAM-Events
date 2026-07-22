@@ -69,4 +69,27 @@ export default class UserNewForm {
       complete: () => { }
     });
   }
+  //Getter para facilitar el acceso a los campos del formulario
+
+  get name() {
+    return this.formData.get('name');
+  }
+  get email() {
+    return this.formData.get('email');
+  }
+  get password() {
+    return this.formData.get('password');
+  }
+  get confirmPassword() {
+    return this.formData.get('confirmPassword');
+  }
+  get role() {
+    return this.formData.get('role');
+  }
+  get avatar() {
+    return this.formData.get('avatar');
+  }
+  get isActive() {
+    return this.formData.get('isActive');
+  }
 }
