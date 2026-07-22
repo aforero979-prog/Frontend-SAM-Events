@@ -252,9 +252,17 @@ small {
 }
 
 .btn:disabled {
-  opacity: 0.5;
+  background: #2a2a2a;
+  /* Fondo gris oscuro */
+  color: #555;
+  /* Texto gris claro */
+  border: 1px solid #2a2a2a;
+  /* Borde gris oscuro */
   cursor: not-allowed;
+  /* Cursor de bloqueo */
   box-shadow: none;
+  /* Sin brillo */
+  opacity: 1;
 }
 
 /* ── Mensajes de estado ──────────────────────────── */

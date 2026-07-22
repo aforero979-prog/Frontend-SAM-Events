@@ -75,7 +75,7 @@
         <input type="checkbox" id="isActive" formControlName="isActive">
     </div>
     <div class="button">
-        <button class="btn" type="submit">GUARDAR</button>
+        <button class="btn" type="submit" [disabled]="formData.invalid">GUARDAR</button>
     </div>
 
 </form>
