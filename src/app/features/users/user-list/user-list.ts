@@ -14,7 +14,9 @@ export default class UserList implements OnInit {
   subscribeUsers!: Subscription;
   subscribeDeleteUser!: Subscription;
   public userList$ = new BehaviorSubject<any[]>([]);
-
+  // Controla la visibilidad del modal de confirmación
+  showDeleteModal = false;
+  private pendingDeleteId: string = '';
   // Inyectar el servicio
   private httpUser = inject(HttpUser);
   private router = inject(Router);
@@ -58,18 +60,27 @@ export default class UserList implements OnInit {
   }
 
   onDelete(id: string) {
-    console.log('Intentando eliminar usuario con id:', id);
-    if (!id) {
-      console.error('El id es undefined o vacío, no se puede eliminar');
-      return;
-    }
+    // En lugar de confirm(), abre el modal personalizado
+    this.pendingDeleteId = id;
+    this.showDeleteModal = true;
+  }
+  confirmDelete() {
+    this.showDeleteModal = false;
+    const id = this.pendingDeleteId;
+    if (!id) return;
     this.subscribeDeleteUser = this.httpUser.deleteUser(id).subscribe({
       next: (data) => {
         console.log('Usuario eliminado:', data);
-        this.loadUsers(); // Recargar la lista de usuarios después de eliminar uno
+        this.loadUsers();
       },
       error: (err) => { console.error('Error al eliminar:', err); },
       complete: () => { console.log('Petición de borrado completada'); },
     });
+    this.pendingDeleteId = '';
+  }
+
+  cancelDelete() {
+    this.showDeleteModal = false;
+    this.pendingDeleteId = '';
   }
 }

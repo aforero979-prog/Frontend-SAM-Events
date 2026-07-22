@@ -34,3 +34,17 @@
         }
     </tbody>
 </table>
+
+<!-- Modal de confirmación de eliminación -->
+@if (showDeleteModal) {
+  <div class="modal-overlay">
+    <div class="modal-box">
+      <h3 class="modal-title">⚠ ADVERTENCIA</h3>
+      <p class="modal-msg">¿Estás seguro de que quieres eliminar este usuario? Esta acción no se puede deshacer.</p>
+      <div class="modal-actions">
+        <button class="btn-modal-cancel" (click)="cancelDelete()">NO, CANCELAR</button>
+        <button class="btn-modal-confirm" (click)="confirmDelete()">SÍ, ELIMINAR</button>
+      </div>
+    </div>
+  </div>
+}
