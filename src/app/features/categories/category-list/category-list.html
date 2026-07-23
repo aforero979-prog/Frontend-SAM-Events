@@ -1,9 +1,47 @@
 <div class="page-page-category">
 
-    <h2>Lista de categorias</h2>
+    <h2>Lista de categorias:</h2>
+
+    <pre>{{ categoryList$ | async | json }}</pre>
 
     <data class="option">
-        <a routerLink="/category/new">Nueva categoria</a>
+        <a routerLink="/category/new">Nueva categoría</a>
     </data>
+
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre de la categoría</th>
+                <th>Status</th>
+                <th>Editar o eliminar </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @for ( categoria of ( categoryList$ | async ); track $index ) {
+            <tr>
+                <td>{{ categoria.name }}</td>
+
+
+                <td> <hugeicons-icon [icon]="notificationIcon" [size]="24" color="currentColor"
+                        [strokeWidth]="1.5"></hugeicons-icon>
+                </td>
+
+                <td> <hugeicons-icon [icon]="notificationIcon1" [size]="24" color="currentColor"
+                        [strokeWidth]="1.5"></hugeicons-icon>
+                </td>
+
+
+                <td></td>
+
+            </tr>
+            }
+        </tbody>
+
+        <tfoot>
+
+        </tfoot>
+    </table>
 
 </div>

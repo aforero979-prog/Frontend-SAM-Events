@@ -9,6 +9,7 @@
   display: block;
   font-family: 'JetBrains Mono', monospace;
   min-height: 100vh;
+  /* flex-wrap: wrap; */
 } 
 h1{
     color: #c4c9ac;
@@ -45,7 +46,6 @@ p{
     width: 75rem;
     height:75rem;
     margin-top: 4.5rem;
-
 }
 
 /* --------------------------------------------------- */
@@ -112,4 +112,38 @@ p{
     width: 25rem;
     height: 26rem;
     margin-top: 2.5rem;
+}
+
+/* -------------------------------------------------- */
+/* -------------------------------------------------- */
+
+.musica{
+    display: flex;
+}
+
+.wandertohell{
+    margin: .5rem solid #e8ff00;
+    padding: 5rem;
+    background-color: #141414;
+
+}
+
+.wandertohellimg{
+    width: 26rem;
+    height: 25rem;
+    margin: .5rem solid #e8ff00;
+}
+
+
+/* ------------------------------------------------- */
+.yourmind{
+    margin: .5rem solid #e8ff00;
+    padding: 5rem;
+    background-color: #141414;
+}
+
+.yourmindimg{
+    width: 26rem;
+    height: 25rem;
+    margin: .5rem solid #e8ff00;
 }
