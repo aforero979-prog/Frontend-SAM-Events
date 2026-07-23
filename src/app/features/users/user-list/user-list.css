@@ -260,3 +260,32 @@
 .btn-modal-confirm:hover {
   box-shadow: 0 0 18px rgba(255, 51, 51, 0.5);
 }
+
+/* ── Modal de Éxito (Verde) ─────────────────────── */
+.modal-box.success::before {
+  border-top: 2px solid #a3e635;
+  border-left: 2px solid #a3e635;
+}
+
+.modal-title.success {
+  color: #a3e635;
+}
+
+.btn-modal-close {
+  flex: 1;
+  padding: 12px;
+  background: #a3e635;
+  border: 1px solid #a3e635;
+  color: #000;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: box-shadow 0.2s;
+}
+
+.btn-modal-close:hover {
+  box-shadow: 0 0 18px rgba(163, 230, 53, 0.4);
+}

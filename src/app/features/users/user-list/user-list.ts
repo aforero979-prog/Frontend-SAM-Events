@@ -16,6 +16,7 @@ export default class UserList implements OnInit {
   public userList$ = new BehaviorSubject<any[]>([]);
   // Controla la visibilidad del modal de confirmación
   showDeleteModal = false;
+  showSuccessModal = false;
   private pendingDeleteId: string = '';
   // Inyectar el servicio
   private httpUser = inject(HttpUser);
@@ -72,6 +73,12 @@ export default class UserList implements OnInit {
       next: (data) => {
         console.log('Usuario eliminado:', data);
         this.loadUsers();
+        // Mostrar modal de éxito
+        this.showSuccessModal = true;
+        // Ocultar automáticamente después de 3 segundos
+        setTimeout(() => {
+          this.showSuccessModal = false;
+        }, 3000);
       },
       error: (err) => { console.error('Error al eliminar:', err); },
       complete: () => { console.log('Petición de borrado completada'); },

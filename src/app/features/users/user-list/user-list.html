@@ -48,3 +48,15 @@
     </div>
   </div>
 }
+<!-- Modal de ÉXITO -->
+@if (showSuccessModal) {
+  <div class="modal-overlay">
+    <div class="modal-box success">
+      <h3 class="modal-title success">✔ ÉXITO</h3>
+      <p class="modal-msg">El usuario ha sido eliminado correctamente del sistema.</p>
+      <div class="modal-actions">
+        <button class="btn-modal-close" (click)="showSuccessModal = false">CONTINUAR</button>
+      </div>
+    </div>
+  </div>
+}
