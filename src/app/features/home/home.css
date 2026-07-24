@@ -2,148 +2,263 @@
 
 :host {
   --accent: #e8ff00;
-  --text:   #e4e2e1;
-  --muted:  #c4c9ac;
+  --text: #e4e2e1;
+  --muted: #c4c9ac;
   --border: #2a2a2a;
 
   display: block;
   font-family: 'JetBrains Mono', monospace;
   min-height: 100vh;
   /* flex-wrap: wrap; */
-} 
-h1{
-    color: #c4c9ac;
+  margin-top: 6.4rem;
 }
-h2{
-    color: #c4c9ac;
+h1 {
+  color: #c4c9ac;
 }
-p{
-    color: #c4c9ac;
+h2 {
+  color: #c4c9ac;
+}
+p {
+  color: #c4c9ac;
+}
+
+.eventos {
+  padding: 2rem;
+  background-color: black;
+  text-decoration: underline;
+}
+/* --------------------------------------------------- */
+
+.destacados {
+  display: flex;
 }
 
 /* --------------------------------------------------- */
 
-.destacados{
-    display: flex;
+.destacado1 {
+  text-align: center;
+  display: block;
+  background-color: #2a2a2a;
+}
+.eventosdestacadosgrupo {
+  display: flex;
 }
 
 /* --------------------------------------------------- */
 
-.destacado1{
-    display: block;
+.destacado2 {
+  text-align: center;
+  display: block;
+  background-color: #2a2a2a;
+}
+.photon {
+  padding: 5rem 5rem 5rem 5rem;
+  margin: 0.5rem solid #e8ff00;
+  background-color: #2a2a2a;
+}
+.photonimg {
+  width: 75rem;
+  height: 75rem;
+  margin-top: 4.5rem;
 }
 
 /* --------------------------------------------------- */
 
-.photon{
-    padding: 5rem 5rem 0rem 5rem;
-    margin: .5rem solid #e8ff00;
-    background-color: #2a2a2a;
-    
+.mindagainst {
+  padding: 5rem;
+  margin: 0.5rem solid #e8ff00;
+  /* background-color: #2a2a2a; */
+  background-color: #141414;
 }
-
-.photonimg{
-    width: 75rem;
-    height:75rem;
-    margin-top: 4.5rem;
-}
-
-/* --------------------------------------------------- */
-
-.mindagainst{
-    padding: 5rem;
-    margin: .5rem solid #e8ff00;
-    /* background-color: #2a2a2a; */
-    background-color: #141414;
-}
-
-.mindagainstimg{
-    width: 25rem;
-    height: 25rem;
-    margin-top: 4.5rem;
+.mindagainstimg {
+  width: 25rem;
+  height: 25rem;
+  margin-top: 4.5rem;
 }
 
 /* --------------------------------------------------- */
 
-.rebekah{
-    padding: 5rem 4.5rem 5.5rem 5rem;
-    margin: .5rem solid #e8ff00;
-    /* background-color: #2a2a2a; */
-    background-color: #141414;
+.rebekah {
+  padding: 5rem 4.5rem 5.5rem 5rem;
+  margin: 0.5rem solid #e8ff00;
+  /* background-color: #2a2a2a; */
+  background-color: #141414;
 }
-
-.rebekahimg{
-    width: 25rem;
-    height: 25rem;
-    margin-top: 4.5rem;
-}
-
-/* --------------------------------------------------- */
-
-.saralandry{
-    background-color: #141414;
-    text-align: center;
-    padding: 5rem ;
-    margin: .5rem solid #e8ff00;
-    /* background-color: #2a2a2a; */
-
-}
-
-.saralandryimg{
-    width: 21rem;
-    height: 26rem;
-    margin-top: 4.5rem;
-}
-
-.descripcion{
-    text-align: left;
+.rebekahimg {
+  width: 25rem;
+  height: 25rem;
+  margin-top: 4.5rem;
 }
 
 /* --------------------------------------------------- */
 
-.carlcox{
-    padding: 5rem 2.1rem 5.5rem 5rem;
-    margin: .5rem solid #e8ff00;
-    /* background-color: #2a2a2a; */
-    background-color: #141414;
+.saralandry {
+  background-color: #141414;
+  text-align: center;
+  padding: 5rem;
+  margin: 0.5rem solid #e8ff00;
+  /* background-color: #2a2a2a; */
 }
+.saralandryimg {
+  width: 21rem;
+  height: 26rem;
+  margin-top: 4.5rem;
+}
+.descripcion {
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.4s ease;
+}
+.descripcion:hover h2,
+.descrpicion:hover p {
+  transition: color 0.4s ease;
+  color: #e8ff00;
+}
+/* .descripcion:hover{
+    color: #e8ff00;
+} */
 
-.carlcoximg{
-    width: 25rem;
-    height: 26rem;
-    margin-top: 2.5rem;
+/* --------------------------------------------------- */
+
+.carlcox {
+  padding: 5rem 2.1rem 5.5rem 5rem;
+  margin: 0.5rem solid #e8ff00;
+  /* background-color: #2a2a2a; */
+  background-color: #141414;
+}
+.carlcoximg {
+  width: 25rem;
+  height: 26rem;
+  margin-top: 2.5rem;
 }
 
 /* -------------------------------------------------- */
+/* MUSICA */
 /* -------------------------------------------------- */
 
-.musica{
-    display: flex;
+.musica {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  background-color: #141414;
 }
-
-.wandertohell{
-    margin: .5rem solid #e8ff00;
-    padding: 5rem;
-    background-color: #141414;
-
+.descubre {
+  background-color: #141414;
+  padding: 2rem 2rem 0rem 2rem;
+  text-decoration: underline;
 }
-
-.wandertohellimg{
-    width: 26rem;
-    height: 25rem;
-    margin: .5rem solid #e8ff00;
+.wandertohell {
+  margin: 0.5rem solid #e8ff00;
+  padding: 3rem 5rem 5rem 5rem;
+  background-color: #141414;
 }
-
+.wandertohellimg {
+  width: 26rem;
+  height: 25rem;
+  margin: 0.5rem solid #e8ff00;
+}
 
 /* ------------------------------------------------- */
-.yourmind{
-    margin: .5rem solid #e8ff00;
-    padding: 5rem;
-    background-color: #141414;
+.yourmind {
+  margin: 0.5rem solid #e8ff00;
+  padding: 3rem 5rem 5rem 5rem;
+  background-color: #141414;
+}
+.yourmindimg {
+  width: 26rem;
+  height: 25rem;
+  margin: 0.5rem solid #e8ff00;
 }
 
-.yourmindimg{
-    width: 26rem;
-    height: 25rem;
-    margin: .5rem solid #e8ff00;
+/* ------------------------------------------------- */
+
+.minimal {
+  margin: 0.5rem solid #e8ff00;
+  padding: 3rem 5rem 5rem 5rem;
+  background-color: #141414;
+}
+.minimalimg {
+  width: 26rem;
+  height: 25rem;
+  margin: 0.5rem solid #e8ff00;
+}
+
+/* ------------------------------------------------- */
+
+.hellonearth {
+  margin: 0.5rem solid #e8ff00;
+  padding: 3rem 5rem 5rem 5rem;
+  background-color: #141414;
+}
+.hellonearthimg {
+  width: 26rem;
+  height: 25rem;
+  margin: 0.5rem solid #e8ff00;
+}
+
+/* ------------------------------------------------- */
+/* --CLUBES-- */
+/* ------------------------------------------------- */
+
+.descubreclubes {
+  background-color: #2a2a2a;
+  padding: 1.5rem 1.5rem 4rem 2rem;
+  text-decoration: underline;
+}
+.descripcionoctava {
+  padding: 2rem;
+}
+
+/* ------------------------------------------------- */
+
+.octava {
+  background-color: #2a2a2a;
+  text-align: center;
+}
+.octavaimg {
+  width: 70rem;
+  border-radius: 2rem;
+  transition: transform 0.4s ease;
+  cursor: pointer;
+  box-shadow: #141414 0px 0px 10px 5px;
+}
+.octavaimg:hover {
+  transform: scale(1.03);
+  box-shadow: 0px 15px 35px rgba(0, 0, 0, 0.7);
+}
+
+/* ------------------------------------------------ */
+
+.radioestrella {
+  background-color: #2a2a2a;
+  text-align: center;
+}
+.radioestrellaimg {
+  width: 70rem;
+  border-radius: 2rem;
+  transition: transform 0.4s ease;
+  cursor: pointer;
+  box-shadow: #141414 0px 0px 10px 5px;
+}
+.radioestrellaimg:hover {
+  transform: scale(1.03);
+  box-shadow: 0px 15px 35px rgba(0, 0, 0, 0.7);
+}
+
+/* ------------------------------------------------ */
+
+.kinder {
+  background-color: #2a2a2a;
+  text-align: center;
+}
+.kinderimg {
+  width: 35rem;
+  border-radius: 2rem;
+  transition: transform 0.4s ease;
+  cursor: pointer;
+  box-shadow: #141414 0px 0px 10px 5px;
+}
+.kinderimg:hover {
+  transform: scale(1.03);
+  box-shadow: 0px 15px 35px rgba(0, 0, 0, 0.7);
 }

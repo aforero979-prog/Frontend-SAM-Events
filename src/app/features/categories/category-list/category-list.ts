@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 import { AsyncPipe, JsonPipe } from '@angular/common';
 
 import { HugeiconsIconComponent } from '@hugeicons/angular'
-import { Notification03Icon, ToggleOnIcon } from '@hugeicons/core-free-icons'
+import { ToggleOffIcon, ToggleOnIcon } from '@hugeicons/core-free-icons'
 
 @Component({
   selector: 'app-category-list',
@@ -20,8 +20,9 @@ export default class CategoryList {
   categoryList$ = new BehaviorSubject<any>([])
 
   //Define atributo público qye desplegará el ícono
-  notificationIcon = Notification03Icon
+
   notificationIcon1 = ToggleOnIcon
+  notificationIcon2 = ToggleOffIcon
 
 
   //Siempre inyectar la dependencia 

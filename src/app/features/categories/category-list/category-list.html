@@ -24,16 +24,26 @@
                 <td>{{ categoria.name }}</td>
 
 
-                <td> <hugeicons-icon [icon]="notificationIcon" [size]="24" color="currentColor"
+                <td>
+
+                    @if(categoria.status) {
+                    <hugeicons-icon class="toggleOn" [icon]="notificationIcon2" [size]="32" color="E81818r"
                         [strokeWidth]="1.5"></hugeicons-icon>
+
+                    }
+                    @else {
+                    <hugeicons-icon class="toggleOff" [icon]="notificationIcon1" [size]="32" color="32E818"
+                        [strokeWidth]="1.5"></hugeicons-icon>
+                    }
+
                 </td>
 
-                <td> <hugeicons-icon [icon]="notificationIcon1" [size]="24" color="currentColor"
-                        [strokeWidth]="1.5"></hugeicons-icon>
+                <td>
+                    <div class="options">
+                        <a href="#">Editar</a>
+                        <a href="#">Eliminar</a>
+                    </div>
                 </td>
-
-
-                <td></td>
 
             </tr>
             }
