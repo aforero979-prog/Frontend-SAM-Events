@@ -10,9 +10,11 @@ import { Router } from '@angular/router';
   styleUrl: './category-new-form.css',
 })
 export default class CategoryNewForm {
-  formData!: FormGroup;
+  
   private httpCategory = inject ( HttpCategory )
   private router = inject ( Router )
+
+  formData!: FormGroup;
   
   constructor() {
     this.formData = new FormGroup({
@@ -44,7 +46,6 @@ export default class CategoryNewForm {
       console.log( 'El formulario no es valido' )
     }
   }
-
 
   get name() {
     return this.formData.get( 'name' )

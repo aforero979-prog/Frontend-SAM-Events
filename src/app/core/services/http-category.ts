@@ -22,6 +22,8 @@ export class HttpCategory {
     }
 
     updateCategoryById ( id: string, updateCategory: any ) {
+        //Http siempre devuelve los datos dentro de un Observable
         return this.http.patch( `${ this.BASE_URL }/categories/${id}`, updateCategory )
     }
+
 }

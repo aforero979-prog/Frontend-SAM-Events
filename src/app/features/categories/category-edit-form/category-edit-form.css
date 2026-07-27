@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=JetBrains+Mono:wght@500;700&display=swap');
+
+:host {
+  --accent: #e8ff00;
+  --text:   #e4e2e1;
+  --muted:  #c4c9ac;
+  --border: #2a2a2a;
+
+  display: block;
+} 
+
+* {
+  box-sizing: border-box;
+  /* font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; */
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* 2. Contenedor principal del formulario */
+.form {
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.85);
+
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+/* Título superior (asumiendo que está cerca del form) */
+h2 {
+  text-align: center;
+  color: #e4e2e1;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+}
+
+/* 3. Estructura de cada campo (.field) */
+.field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+/* Etiquetas del formulario */
+.field > label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #e8ff00;
+  margin-bottom: 6px;
+}
+
+/* 4. Estilos para los Inputs y Textarea */
+.field input[type="text"],
+.field textarea,
+.field select {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #e8ff00;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  background-color: #f8fafc;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.field textarea {
+  min-height: 100px;
+  resize: vertical; /* Permite redimensionar solo verticalmente */
+}
+
+/* Focus en campos de texto */
+.field input[type="text"]:focus,
+.field textarea:focus,
+.field select:focus {
+  outline: none;
+  border-color: #2563eb;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* 5. Estilos para los mensajes de error (.error) */
+.error {
+  color: #dc2626;
+  font-size: 0.8rem;
+  margin-top: 5px;
+  min-height: 18px; /* Evita saltos bruscos cuando aparece el error */
+  display: block;
+}
+
+/* 6. Estilos para las opciones Radio (.options) */
+.options {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding-top: 5px;
+}
+
+.options label {
+  font-weight: normal;
+  cursor: pointer;
+  color: #e8ff00;;
+  font-size: 0.95rem;
+}
+
+.options input[type="radio"] {
+  accent-color: #2563eb; /* Color azul para el check del radio */
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+}
+
+/* 7. Botón de envío */
+.field button {
+  width: 100%;
+  padding: 12px;
+  background-color: #2563eb;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s, opacity 0.2s;
+  margin-top: 10px;
+}
+
+.field button:hover:not(:disabled) {
+  background-color: #1d4ed8;
+}
+
+/* Estado Deshabilitado [disabled] de Angular */
+.field button:disabled {
+  background-color: #e8ff00;;
+  cursor: not-allowed;
+  opacity: 0.7;
+}

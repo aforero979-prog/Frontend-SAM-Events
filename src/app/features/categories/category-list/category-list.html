@@ -40,13 +40,15 @@
 
                 <td>
                     <div class="options">
-                        <a href="#">Editar</a>
-                        <a href="#">Eliminar</a>
+                        <button (click)="onEdit( categoria._id )">Editar</button>
+                        <button (click)="onDelete( categoria._id)">Eliminar</button>
                     </div>
                 </td>
 
             </tr>
+
             }
+
         </tbody>
 
         <tfoot>
