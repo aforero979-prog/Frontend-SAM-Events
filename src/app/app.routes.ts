@@ -13,7 +13,7 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/users/user-new-form/user-new-form').then((m) => m.UserNewForm),
   },
-  { path: 'ticket-new', 
+  { path: 'ticket/new', 
     loadComponent: () => 
     import('./features/ticket/ticket-new-form')  
   },
@@ -25,13 +25,11 @@ export const routes: Routes = [
     loadComponent: () => 
       import('./features/categories/category-new-form/category-new-form'),
   },
-  {
-    path: 'category/edit/:id',
+  {path: 'category/edit/:id',
     loadComponent: () =>
       import('./features/categories/category-edit-form/category-edit-form'),
   },
-  {
-    path: 'category/list',
+  {path: 'category/list',
     loadComponent: () => 
       import('./features/categories/category-list/category-list'),
   },

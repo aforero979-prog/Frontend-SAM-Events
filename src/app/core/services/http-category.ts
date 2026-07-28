@@ -14,16 +14,20 @@ export class HttpCategory {
     }
 
     createCategory ( newCategory: any) {
-        return this.http.post( `${ this.BASE_URL }/categories`, newCategory )
+        return this.http.post<any>( `${ this.BASE_URL }/categories`, newCategory )
     }
 
     deleteCategoryById ( id: String ) { 
-        return this.http.delete( `${ this.BASE_URL }/categories/${id}` )  
+        return this.http.delete<any>( `${ this.BASE_URL }/categories/${id}` )  
     }
 
-    updateCategoryById ( id: string, updateCategory: any ) {
+    updateCategoryById ( id: string | null, updateCategory: any ) {
         //Http siempre devuelve los datos dentro de un Observable
-        return this.http.patch( `${ this.BASE_URL }/categories/${id}`, updateCategory )
+        return this.http.patch<any>( `${ this.BASE_URL }/categories/${id}`, updateCategory )
+    }
+
+    getCategoryById ( id: string | null) {
+        return this.http.get<any>( `${ this.BASE_URL }/categories/${id}` )
     }
 
 }

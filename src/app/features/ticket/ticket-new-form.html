@@ -2,26 +2,55 @@
 
     <h2>Crea las boletas</h2>
 
-<form (ngSubmit)='onSubmit()' [formGroup]="formData" class="form">
+    <form (ngSubmit)='onSubmit()' [formGroup]="formData" class="form">
 
-    <div class="field">
-        <label for="name">Nombre del evento</label>
-        <input formControlName="name" type="text" placeholder="Nombre del evento">
-    </div>
+        <div class="field">
+            <label for="name">Nombre:</label>
+            <input formControlName="name" type="text" placeholder="Nombre">
+        </div>
 
-    <div class="field">
-        <label for="price">Precio del ticket</label>
-        <input type="number" formControlName="price" id="price">
-    </div>
+        <div class="field">
+            <label for="apellido">Apellido:</label>
+            <input type="text" formControlName="apellido" id="apellido" placeholder="Apellido">
+        </div>
 
-    <div class="field">
-        <label for="description">Descripción:</label>
-        <textarea formControlName="description" id="descripcion" rows="4" cols="50" maxlength="150"
-            style="resize: none;" placeholder="Escribe la descripcion de la categoria"></textarea>
-    </div>
+        <div class="field">
+            <label for="email">Email:</label>
+            <input type="text" formControlName="email" id="email" placeholder="xxxxx@correo.com">
+        </div>
 
-    <div class="field">
-        <label for="status">Status de la categoria:</label>
+          <div class="field">
+            <label for="cedula">Documento de identidad:</label>
+            <input type="text" formControlName="cedula" id="cedula" placeholder="Documento de identidad">
+        </div>
+
+        <div class="field">
+            <label for="localidad">Ubicación</label>
+            <select formControlName="localidad" id="localidad">
+
+                <option value="">Ubicación...</option>
+                <option value="">Back Stage</option>
+                <option value="">VIP</option>
+                <option value="">General</option>
+
+            </select>
+
+            <div class="field">
+                <label for="stock">Número de ticket</label>
+                <select formControlName="stock" id="stock">
+
+                    <option value="">0</option>
+                    <option value="">1</option>
+                    <option value="">2</option>
+                    <option value="">3</option>
+                    <option value="">4</option>
+
+                </select>
+            </div>
+        </div>
+
+        <!-- <div class="field">
+        <label for="localidad">Localidad:</label>
         <div class="options">
             <input formControlName="status" type="radio" [value]="true"><label for="categorie-status-enable">Activo</label>
             <input formControlName="status" type="radio" [value]="false"><label for="categorie-status-disable">InActivo</label>
@@ -32,12 +61,12 @@
     <div class="field">
         <label for="stock">Stock del Evento</label>
         <input type="number" formControlName="stock" id="stock">
-    </div>
+    </div> -->
 
-    <div class="button">
-        <button>Enviar</button>
-    </div>
+        <div class="button">
+            <button>Comprar</button>
+        </div>
 
-</form>
+    </form>
 
 </div>

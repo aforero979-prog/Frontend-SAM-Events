@@ -9,6 +9,10 @@
   display: block;
 } 
 
+.tituloprincipal{
+  margin-top: 6.4rem;
+}
+
 p {
   color: #e8ff00;
   font-family: 'JetBrains Mono', monospace;

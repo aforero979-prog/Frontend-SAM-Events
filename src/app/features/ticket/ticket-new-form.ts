@@ -12,16 +12,18 @@ import { HttpTicket } from '../../core/services/http-ticket';
 export default class TicketNewForm {
 
     private httpTicket = inject( HttpTicket )
+    
 
   formData: FormGroup;
 
   constructor() {
     this.formData = new FormGroup({
       name: new FormControl(''),
-      price: new FormControl(0),
-      description: new FormControl(''),
-      status: new FormControl(true),
-      stock: new FormControl(0)
+      lastname: new FormControl(''),
+      email: new FormControl(''),
+      stock: new FormControl(''),
+      localidad: new FormControl(''),
+      cedula: new FormControl('')
     });
   }
 
@@ -30,27 +32,17 @@ export default class TicketNewForm {
     if(this.formData.valid) {
       console.log( this.formData.value)
       this.httpTicket.createTicket(this.formData.value).subscribe({
-        next: (res) => {
+        next: ( res ) => {
           console.log(res)
         },
-        error: (error) => {console.error(error)},
-        complete: () => {console.log('complete execute')}
+        error: ( error ) => {
+          console.error (error )},
+        complete: () => {
+          console.log('complete execute')}
       })
     } else {
       console.log('El formulario no es valido')
     }   
   }
-
-  // ngOnInit() {
-  //   this.httpTicket.createTicket(this.formData.value).subscribe({
-  //     next: (data) => {
-  //       console.log(data)
-  //     },
-  //     error: (err) => {
-  //       console.error(err)
-  //     },
-  //     complete: () => {}
-  //   })
-  // }
 
 }
