@@ -1,0 +1,12 @@
+.page-page-category{
+    margin-top: 10rem;
+}
+
+.toggleOn{
+    color: green;
+    width: 100%;
+}
+.toggleOff{
+    color: red;
+    width: 100%;
+}

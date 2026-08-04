@@ -1,7 +1,12 @@
 import { Component, inject } from '@angular/core';
+<<<<<<< HEAD
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+=======
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { HttpAuth } from '../../core/services/http-auth';
+>>>>>>> feature/auth
 
 @Component({
   selector: 'app-login',
@@ -10,6 +15,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrl: './login.css',
 })
 export default class Login {
+<<<<<<< HEAD
 
   private http = inject(HttpClient);
   private router = inject(Router);
@@ -37,6 +43,38 @@ export default class Login {
       });
     } else {
       console.log('Formulario inválido');
+=======
+  formData: FormGroup;
+  private httpAuth = inject(HttpAuth);
+
+  constructor() {
+    this.formData = new FormGroup({
+      email: new FormControl(''),
+      password: new FormControl(''),
+    });
+  }
+
+  onSubmit() {
+    if (this.formData.valid) {
+      console.log(this.formData.value);
+
+      //Usar el servicio para conectar con la API
+      this.httpAuth.loginUser(this.formData.value).subscribe({
+        next: (data) => {
+          console.log(data);
+
+          this.formData.reset(); //Limpiamos los campos del formulario
+        },
+        error: (err) => {
+          console.error(err);
+        },
+        complete: () => {
+          console.log('login satisfactorio');
+        },
+      });
+    } else {
+      console.log('Formulario invalido');
+>>>>>>> feature/auth
     }
   }
 }

@@ -1,12 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=JetBrains+Mono:wght@500;700&display=swap');
+
+:host {
+  --accent: #e8ff00;
+  --text:   #e4e2e1;
+  --muted:  #c4c9ac;
+  --border: #2a2a2a;
+
+  display: block;
+} 
+
+.tituloprincipal{
+  margin-top: 6.4rem;
+}
+
 p {
-  color: aliceblue;
+  color: #e8ff00;
+  font-family: 'JetBrains Mono', monospace;
 }
 h1 {
-  color: rgb(83, 149, 207);
+  font-family: 'JetBrains Mono', monospace;
+  color: #e8ff00;
   background-color: rgba(0, 0, 0, 0.795);
 }
 h2 {
-  color: aliceblue;
+  font-family: 'JetBrains Mono', monospace;
+  color: #e8ff00;
 }
 
 .eventos1 {
@@ -19,7 +37,7 @@ h2 {
 
 .indecorumdiv {
   padding: 1rem 1rem 1rem;
-  border: 0.1rem solid black;
+  border: 0.1rem solid #e8ff00;
   background-color: black;
 }
 
@@ -30,7 +48,7 @@ h2 {
 
 .r44div {
   padding: 1rem 1rem 1rem;
-  border: 0.1rem solid black;
+  border: 0.1rem solid #e8ff00;
   background-color: black;
 }
 .r44imagen {
@@ -40,7 +58,7 @@ h2 {
 
 .slvldiv {
   padding: 1rem 1rem 1rem;
-  border: 0.1rem solid black;
+  border: 0.1rem solid #e8ff00;
   background-color: black;
 }
 
@@ -59,7 +77,7 @@ h2 {
 
 .rebekahdiv {
   padding: 1rem 1rem 1rem;
-  border: 0.1rem solid black;
+  border: 0.1rem solid #e8ff00;
   background-color: black;
 }
 
@@ -70,7 +88,7 @@ h2 {
 
 .orquideadiv {
   padding: 1rem 1rem 1rem;
-  border: 0.1rem solid black;
+  border: 0.1rem solid #e8ff00;
   background-color: black;
 }
 
@@ -81,7 +99,7 @@ h2 {
 
 .carlcoxdiv {
   padding: 1rem 1rem 1rem;
-  border: 0.1rem solid black;
+  border: 0.1rem solid #e8ff00;
   background-color: black;
 }
 

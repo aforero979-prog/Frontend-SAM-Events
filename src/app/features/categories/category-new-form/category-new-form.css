@@ -9,11 +9,39 @@
   display: block;
 } 
 
-.compra{
-  background-color: #2a2a2a;
-  padding: 5rem;
-}
+
+/* .form{
+    display: block;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+
+    max-width: 450px;           /* Limita el ancho en pantallas grandes */
+/*    width: 100%;                /* Se adapta a pantallas pequeñas */
+/*    margin: 40px auto;          /* Centra la tarjeta horizontalmente */
+/*    padding: 32px;
+/*    border-radius: 12px;        /* Bordes redondeados */
+/*    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Sombra suave */
     
+
+/*    margin-top: 10rem;
+/*    font-family: 'JetBrains Mono', monospace;
+/*    background: rgba(0, 0, 0, 0.85);
+/*} 
+
+/* .a{
+  --accent: #e8ff00;
+
+} */
+
+/* .error{
+    color: red;
+    font-style: italic;
+    font-size: .7rem;
+    height: 1rem; */
+/*}
+
 /* 1. Reset básico para asegurar consistencia */
 * {
   box-sizing: border-box;
@@ -24,9 +52,10 @@
 /* 2. Contenedor principal del formulario */
 .form {
   max-width: 500px;
-  margin: 5rem auto;
+  margin: 20px auto;
   padding: 30px;
   background-color: rgba(0, 0, 0, 0.85);
+
   border-radius: 12px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
 }
@@ -45,7 +74,6 @@ h2 {
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
-  
 }
 
 /* Etiquetas del formulario */

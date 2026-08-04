@@ -1,0 +1,59 @@
+<div class="page-page-category">
+
+    <h2>Lista de categorias:</h2>
+
+    <pre>{{ categoryList$ | async | json }}</pre>
+
+    <data class="option">
+        <a routerLink="/category/new">Nueva categoría</a>
+    </data>
+
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre de la categoría</th>
+                <th>Status</th>
+                <th>Editar o eliminar </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @for ( categoria of ( categoryList$ | async ); track $index ) {
+            <tr>
+                <td>{{ categoria.name }}</td>
+
+
+                <td>
+
+                    @if(categoria.status) {
+                    <hugeicons-icon class="toggleOn" [icon]="notificationIcon2" [size]="32" color="E81818r"
+                        [strokeWidth]="1.5"></hugeicons-icon>
+
+                    }
+                    @else {
+                    <hugeicons-icon class="toggleOff" [icon]="notificationIcon1" [size]="32" color="32E818"
+                        [strokeWidth]="1.5"></hugeicons-icon>
+                    }
+
+                </td>
+
+                <td>
+                    <div class="options">
+                        <button (click)="onEdit( categoria._id )">Editar</button>
+                        <button (click)="onDelete( categoria._id)">Eliminar</button>
+                    </div>
+                </td>
+
+            </tr>
+
+            }
+
+        </tbody>
+
+        <tfoot>
+
+        </tfoot>
+    </table>
+
+</div>

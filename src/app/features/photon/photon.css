@@ -1,0 +1,147 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=JetBrains+Mono:wght@500;700&display=swap');
+
+:host {
+  --accent: #e8ff00;
+  --text: #e4e2e1;
+  --muted: #c4c9ac;
+  --border: #2a2a2a;
+
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  min-height: 100vh;
+  /* flex-wrap: wrap; */
+  margin-top: 6.4rem;
+}
+
+h1 {
+  color: #c4c9ac;
+}
+h2 {
+  color: #c4c9ac;
+}
+p {
+  color: #c4c9ac;
+  font-size: small;
+}
+
+.photondiv{
+    background-color: #2a2a2a;
+}
+
+.photontitulo{
+    margin-top: 2rem;
+}
+.photonimg{
+    width: 100%;
+}
+.photoninfo{
+    text-align: center;
+}
+
+.texto{
+    margin: 0rem 20rem 0rem 25rem;
+    text-align: justify;
+    padding-bottom: 4rem;
+}
+
+.tabla{
+    background-color: #2a2a2a;
+}
+
+.tabla {
+  background-color: #2a2a2a;
+  padding: 5rem;
+}
+
+/* Contenedor general de la página o componente */
+body {
+  background-color: #121212;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centra verticalmente en la pantalla */
+  align-items: center;     /* Centra horizontalmente en la pantalla */
+}
+
+/* Estilos de la tabla de precios centrada */
+.tabla-precios {
+  width: 90%;
+  max-width: 900px;
+  border-collapse: collapse;
+  color: #ffffff;
+  text-align: center;
+  margin: auto; /* Asegura el centrado automático en bloque */
+}
+
+.tabla-precios thead th {
+  background-color: #a8d5db; /* Color menta / celeste claro */
+  color: #000000;
+  padding: 20px 15px;
+  font-size: 1.1rem;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+}
+
+/* Subtexto debajo de PRECIO en el encabezado */
+.tabla-precios thead .subtexto {
+  font-size: 0.85rem;
+  display: inline-block;
+  margin-top: 5px;
+}
+
+/* Cuerpo de la tabla */
+.tabla-precios tbody tr {
+  background-color: #000000;
+}
+
+.tabla-precios tbody td {
+  padding: 16px 15px;
+  border: 1px solid #73888d; /* Bordes delgados en gris claro/azulado */
+  font-size: 1rem;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+}
+
+/* Quitar los bordes exteriores laterales e inferiores para coincidir con la imagen */
+.tabla-precios tbody td:first-child {
+  border-left: none;
+}
+
+.tabla-precios tbody td:last-child {
+  border-right: none;
+}
+
+.tabla-precios tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* --------------------------------------------------------- */
+
+.button{
+    text-align: center;
+    padding: 2rem;
+    background-color: #000000;
+}
+
+.btn-accent {
+  background-color: transparent;
+  color: #e8ff00;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding: 14px 28px;
+  border: 2px solid #e8ff00;
+  border-radius: 0px; /* Esquinas totalmente rectas para un estilo técnico */
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-accent:hover {
+  background-color: #e8ff00;
+  color: #000000;
+  box-shadow: 0 0 20px rgba(232, 255, 0, 0.5);
+}
