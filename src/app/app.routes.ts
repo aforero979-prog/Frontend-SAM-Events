@@ -17,6 +17,15 @@ export const routes: Routes = [
   { path: 'register',
     loadComponent: () => import( './features/register/register')
   },
+  { path: 'eventos',
+    loadComponent: () => import( './features/eventos/eventos')
+  },
+  { path: 'photon',
+    loadComponent: () => import( './features/photon/photon')
+  },
+  { path: 'mindagainst', 
+    loadComponent: () => import( './features/mindagainst/mindagainst')
+  },
   { path: 'dashboard',
     loadComponent: () => import( './features/dashboard/dashboard')
   },
@@ -26,17 +35,8 @@ export const routes: Routes = [
   { path: 'ticket/new', 
     loadComponent: () => import( './features/ticket/ticket-new-form')  
   },
-  // { path: 'eventos',
-  //   loadComponent: () => import( './features/eventos/eventos')
-  // },
-  { path: 'photon',
-    loadComponent: () => import( './features/photon/photon')
-  },
-  { path: 'mindagainst', 
-    loadComponent: () => import( './features/mindagainst/mindagainst')
-  },
   { path: 'dashboard/location-new-form',
-    loadComponent: () => import( './features/location/location-new-form/location-new-form').then((m) => m.LocationNewForm,)
+    loadComponent: () => import( './features/location/location-new-form/location-new-form')
   },
   { path: 'dashboard/category/new',
     loadComponent: () => import( './features/categories/category-new-form/category-new-form'),

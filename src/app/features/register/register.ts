@@ -7,9 +7,7 @@ import { FormGroup, ReactiveFormsModule } from "@angular/forms";
   templateUrl: './register.html',
   styleUrl: './register.css',
 })
-<<<<<<< HEAD
-export default class Register {}
-=======
+
 export default class Register {
 
   formData: FormGroup
@@ -32,4 +30,3 @@ export default class Register {
     }
   }
 }
->>>>>>> feature/auth

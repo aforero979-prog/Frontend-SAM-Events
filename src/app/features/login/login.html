@@ -17,30 +17,19 @@
 
   <form class="login-form" [formGroup]="formData" (ngSubmit)="onSubmit()">
     <div class="field">
-<<<<<<< HEAD
-      <label class="field-label" for="alias">Alias / Frecuencia</label>
-      <input class="field-input" type="email" id="alias" placeholder="Ej: user@sam.co" formControlName="email">
-=======
+
       <label class="field-label" for="email">Email</label>
       <input class="field-input" formControlName="email" type="text" id="email" placeholder="Ej: xxxxxx@correo.com">
->>>>>>> feature/auth
+
     </div>
 
     <div class="field">
       <label class="field-label" for="password">Clave de Encriptación</label>
-<<<<<<< HEAD
       <input class="field-input" type="password" id="password" placeholder="••••••••" formControlName="password">
     </div>
 
     <button class="btn-submit" type="submit" [disabled]="formData.invalid">
       DESCIFRAR ACCESO →
-=======
-      <input class="field-input" formControlName="password" type="password" id="password" placeholder="••••••••">
-    </div>
-
-    <button class="btn-submit" type="submit">
-      LOGIN →
->>>>>>> feature/auth
     </button>
   </form>
 

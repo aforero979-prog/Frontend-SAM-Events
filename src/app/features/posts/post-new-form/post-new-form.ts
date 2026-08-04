@@ -2,14 +2,14 @@ import { Component, inject } from '@angular/core'; // los inject nos sirve para 
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'; // los import de formcontrol, formgroup, reactiveforms y validators nos sirven para poder crear formularios reactivos
 import { Router } from '@angular/router'; // los import de router nos sirve para poder navegar entre paginas
 import { HttpPost } from '../../../core/services/http-post'; // los import de httpposts nos sirve para poder hacer peticiones http
-import { BehaviorSubject } from 'rxjs';
-import { AsyncPipe } from '@angular/common';
+
+
 // tipos de publicacion definidos en el backend
 const POST_TYPES = ['general', 'evento', 'banda', 'noticia'];
 
 @Component({
   selector: 'app-post-new-form',
-  imports: [ReactiveFormsModule, AsyncPipe],
+  imports: [ReactiveFormsModule],
   templateUrl: './post-new-form.html',
   styleUrl: './post-new-form.css',
 })

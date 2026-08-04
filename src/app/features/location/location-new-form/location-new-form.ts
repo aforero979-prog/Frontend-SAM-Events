@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
   templateUrl: './location-new-form.html',
   styleUrl: './location-new-form.css',
 })
-export class LocationNewForm {
+export default class LocationNewForm {
 }
