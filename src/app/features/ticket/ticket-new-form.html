@@ -1,71 +1,45 @@
 <div class="compra">
 
-    <form (ngSubmit)='onSubmit()' [formGroup]="formData" class="form">
+  <h2>Crear Ticket</h2>
 
-        <div class="field">
-            <label for="name">Nombre:</label>
-            <input formControlName="name" type="text" placeholder="Nombre">
-        </div>
+  @if (successMsg) { <p style="color:green">{{ successMsg }}</p> }
+  @if (errorMsg)   { <p style="color:red">{{ errorMsg }}</p> }
 
-        <div class="field">
-            <label for="apellido">Apellido:</label>
-            <input type="text" formControlName="apellido" id="apellido" placeholder="Apellido">
-        </div>
+  <form (ngSubmit)='onSubmit()' [formGroup]="formData" class="form">
 
-        <div class="field">
-            <label for="email">Email:</label>
-            <input type="text" formControlName="email" id="email" placeholder="xxxxx@correo.com">
-        </div>
-
-          <div class="field">
-            <label for="cedula">Documento de identidad:</label>
-            <input type="text" formControlName="cedula" id="cedula" placeholder="Documento de identidad">
-        </div>
-
-        <div class="field">
-            <label for="localidad">Ubicación</label>
-            <select formControlName="localidad" id="localidad">
-
-                <option value="">Ubicación...</option>
-                <option value="">Back Stage</option>
-                <option value="">VIP</option>
-                <option value="">General</option>
-
-            </select>
-
-            <div class="field">
-                <label for="stock">Número de ticket</label>
-                <select formControlName="stock" id="stock">
-
-                    <option value="">0</option>
-                    <option value="">1</option>
-                    <option value="">2</option>
-                    <option value="">3</option>
-                    <option value="">4</option>
-                    <option value="">5</option>
-
-                </select>
-            </div>
-        </div>
-
-        <!-- <div class="field">
-        <label for="localidad">Localidad:</label>
-        <div class="options">
-            <input formControlName="status" type="radio" [value]="true"><label for="categorie-status-enable">Activo</label>
-            <input formControlName="status" type="radio" [value]="false"><label for="categorie-status-disable">InActivo</label>
-        </div>
-
+    <div class="field">
+      <label for="name">Nombre del ticket:</label>
+      <input formControlName="name" type="text" id="name" placeholder="Ej: VIP, General, Back Stage">
     </div>
 
     <div class="field">
-        <label for="stock">Stock del Evento</label>
-        <input type="number" formControlName="stock" id="stock">
-    </div> -->
+      <label for="price">Precio (COP):</label>
+      <input type="number" formControlName="price" id="price" placeholder="0" min="0">
+    </div>
 
-        <div class="button">
-            <button>Comprar</button>
-        </div>
+    <div class="field">
+      <label for="description">Descripción:</label>
+      <input type="text" formControlName="description" id="description" placeholder="Descripción del ticket">
+    </div>
 
-    </form>
+    <div class="field">
+      <label for="status">Estado:</label>
+      <select formControlName="status" id="status">
+        @for (s of statuses; track s) {
+          <option [value]="s">{{ s }}</option>
+        }
+      </select>
+    </div>
 
-</div>
+    <div class="field">
+      <label for="stock">Stock (cantidad disponible):</label>
+      <input type="number" formControlName="stock" id="stock" min="1">
+    </div>
+
+    <div class="button">
+      <button type="submit" [disabled]="formData.invalid">Crear Ticket</button>
+    </div>
+
+  </form>
+
+</div>

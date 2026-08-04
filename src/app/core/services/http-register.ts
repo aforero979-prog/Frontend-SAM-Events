@@ -1,12 +1,13 @@
+import { environment } from '../../../environments/environment.development';
 import { HttpClient } from "@angular/common/http";
-import { inject, Service } from "@angular/core";
+import { inject, Injectable } from '@angular/core';
 
-@Service()
+@Injectable({ providedIn: 'root' })
 
 export class HttpRegister {
     private http = inject(HttpClient)
 
     createUser(registerData: any) {
-        return this.http.post('http://localhost:3000/api/register', registerData)
+        return this.http.post(`${environment.apiUrl}/auth/register`, registerData)
     }
 }

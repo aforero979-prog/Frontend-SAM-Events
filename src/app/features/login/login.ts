@@ -4,8 +4,6 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router } from '@angular/router';
 import { HttpAuth } from '../../core/services/http-auth';
 
-
-
 @Component({
   selector: 'app-login',
   imports: [ReactiveFormsModule],
@@ -17,36 +15,36 @@ export default class Login {
   formData: FormGroup;
   private httpAuth = inject(HttpAuth);
   private router = inject(Router);
+  errorMsg = '';
 
   constructor() {
     this.formData = new FormGroup({
-      email: new FormControl(''),
-      password: new FormControl(''),
+      email:    new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required]),
     });
   }
 
   onSubmit() {
     if (this.formData.valid) {
-      console.log(this.formData.value);
+      this.errorMsg = '';
 
       //Usar el servicio para conectar con la API
       this.httpAuth.loginUser(this.formData.value).subscribe({
-        next: (data) => {
-          console.log(data);
-
-          this.formData.reset(); //Limpiamos los campos del formulario
-          this.router.navigateByUrl('/dashboard')
+        next: (msg) => {
+          console.log(msg);
+          this.formData.reset();
+          // Muestra un anuncio de confirmación al usuario
+          alert('¡Inicio de sesión exitoso! Bienvenido.');
+          // Navega al dashboard
+          this.router.navigateByUrl('/dashboard');
         },
         error: (err) => {
           console.error(err);
-        },
-        complete: () => {
-          console.log('login satisfactorio');
+          this.errorMsg = err.error?.msg || err.message || 'Error al iniciar sesión';
         },
       });
     } else {
-      console.log('Formulario invalido');
-
+      this.errorMsg = 'Completa todos los campos correctamente';
     }
   }
 }

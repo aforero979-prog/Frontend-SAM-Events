@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core'; // los inject nos sirve para 
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'; // los import de formcontrol, formgroup, reactiveforms y validators nos sirven para poder crear formularios reactivos
 import { Router } from '@angular/router'; // los import de router nos sirve para poder navegar entre paginas
 import { HttpPost } from '../../../core/services/http-post'; // los import de httpposts nos sirve para poder hacer peticiones http
+import { HttpAuth } from '../../../core/services/http-auth'; // para obtener el usuario logueado
 
 
 // tipos de publicacion definidos en el backend
@@ -17,21 +18,30 @@ export default class PostNewForm {
 
   private httpPost = inject(HttpPost);
   private router = inject(Router);
+  private httpAuth = inject(HttpAuth);
 
   // tipos disponibles para el select de tipo de publicacion
   postTypes = POST_TYPES;
+
+  // mensajes de respuesta
+  successMsg = '';
+  errorMsg = '';
 
   // atributo de la clase que va a contener el formulario
   formData: FormGroup;
 
   constructor() {
+    // Obtener el ID del usuario logueado desde localStorage
+    const currentUser = this.httpAuth.getCurrentUser();
+    const authorId = currentUser?._id || '';
+
     this.formData = new FormGroup({
-      title: new FormControl('', [Validators.required, Validators.minLength(3)]),
-      content: new FormControl('', [Validators.required]),
+      title:    new FormControl('', [Validators.required, Validators.minLength(3)]),
+      content:  new FormControl('', [Validators.required]),
       imageUrl: new FormControl(''),
-      type: new FormControl('general', [Validators.required]),
-      author: new FormControl('', [Validators.required]),
-      event: new FormControl(''),
+      type:     new FormControl('general', [Validators.required]),
+      author:   new FormControl(authorId, [Validators.required]),  // auto-relleno con ID del usuario
+      event:    new FormControl(''),
       isActive: new FormControl(true),
     });
   }
@@ -45,11 +55,18 @@ export default class PostNewForm {
         // si la peticion es exitosa se ejecuta lo siguiente
         next: (res) => {
           console.log(res);
-          // se navega a la lista de posts
-          this.router.navigate(['/post-list']);
+          this.successMsg = 'Publicación creada correctamente';
+          this.errorMsg = '';
+          // limpiar form pero dejar author y tipo
+          const authorId = this.httpAuth.getCurrentUser()?._id || '';
+          this.formData.reset({ type: 'general', isActive: true, author: authorId });
         },
         // si la peticion falla se ejecuta lo siguiente
-        error: (error) => { console.error(error); },
+        error: (error) => {
+          console.error(error);
+          this.errorMsg = error.error?.msg || 'Error al crear la publicación';
+          this.successMsg = '';
+        },
         complete: () => { console.log('complete execute'); }
       });
     } else {

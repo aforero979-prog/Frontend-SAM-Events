@@ -1,4 +1,8 @@
 <h2>Crear nueva publicación</h2>
+
+@if (successMsg) { <p style="color:green">{{ successMsg }}</p> }
+@if (errorMsg)   { <p style="color:red">{{ errorMsg }}</p> }
+
 <form [formGroup]="formData" (ngSubmit)="onSubmit()">
 
     <!-- Titulo -->
@@ -42,13 +46,13 @@
         </select>
     </div>
 
-    <!-- Author (ID del usuario) -->
+    <!-- Author (ID del usuario - auto-llenado) -->
     <div>
-        <label for="author">ID del autor (usuario)</label>
-        <input type="text" id="author" formControlName="author" placeholder="ID del usuario autor">
+        <label for="author">Autor (ID usuario logueado)</label>
+        <input type="text" id="author" formControlName="author" placeholder="Inicia sesión para auto-rellenar" readonly style="opacity:0.6;cursor:not-allowed">
         @if (formData.get('author')?.invalid && (formData.get('author')?.dirty || formData.get('author')?.touched)) {
             @if (formData.get('author')?.errors?.['required']) {
-                <small>El autor es obligatorio</small>
+                <small style="color:red">Debes iniciar sesión para publicar</small>
             }
         }
     </div>

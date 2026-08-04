@@ -2,94 +2,61 @@ import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpUser } from '../../../core/services/http-user';
-import { HttpRolesUser } from '../../../core/services/http-roles-user';
-import { BehaviorSubject } from 'rxjs';
-import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-user-new-form',
-  imports: [ReactiveFormsModule, AsyncPipe],
+  imports: [ReactiveFormsModule],
   templateUrl: './user-new-form.html',
   styleUrl: './user-new-form.css',
 })
 export default class UserNewForm {
 
   private httpUser = inject(HttpUser);
-  private httpRoles = inject(HttpRolesUser);
   private router = inject(Router);
 
-  // RxJs: Observable que mantiene en memoria los roles de la API, para que puedan ser usados en el HTML.
-  roleList$ = new BehaviorSubject<any[]>([]);
-
-  // Atributo de la clase que va a contener el formulario
+  roles = ['admin', 'user', 'tiar'];
   formData: FormGroup;
+  errorMsg = '';
+  successMsg = '';
 
   constructor() {
-    // Define la estructura equivalente al formulario HTML, con los mismos nombres de los campos del modelo del backend
     this.formData = new FormGroup({
-      name: new FormControl(``, [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
-      email: new FormControl(``, [Validators.required, Validators.email]),
-      password: new FormControl(``, [Validators.required, Validators.minLength(6), Validators.maxLength(20)]),
-      confirmPassword: new FormControl(``, [Validators.required]),
-      role: new FormControl(``, [Validators.required]),
-      avatar: new FormControl(``),
+      name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]),
+      confirmPassword: new FormControl('', [Validators.required]),
+      role: new FormControl('', [Validators.required]),
+      avatar: new FormControl(''),
       isActive: new FormControl(true),
     });
   }
 
   onSubmit() {
     if (this.formData.valid) {
-      // Extraemos confirmPassword: el backend no la espera
+      this.errorMsg = '';
+      this.successMsg = '';
       const { confirmPassword, ...userPayload } = this.formData.value;
-      console.log(userPayload);
-
+      
       this.httpUser.createUser(userPayload).subscribe({
         next: (res) => {
-          console.log(res);
-          // Navegar de vuelta a la lista tras guardar con éxito
-          this.router.navigate(['/user-list']);
+          this.successMsg = 'Usuario creado con éxito';
+          this.router.navigate(['/dashboard/user-list']);
         },
-        error: (err) => { console.log(err); },
-        complete: () => { console.log('Usuario creado'); }
+        error: (err) => { 
+          console.log(err);
+          this.errorMsg = err.error?.msg || 'Error al crear el usuario';
+        }
       });
     } else {
-      console.log('Formulario inválido');
+      this.errorMsg = 'Formulario inválido, por favor verifica los campos';
     }
   }
 
-  // Hook: ciclo de vida que sabe cuando se inicializa el componente
-  ngOnInit() {
-    // Cargar la lista de roles desde el backend
-    this.httpRoles.getAll().subscribe({
-      next: (res) => {
-        this.roleList$.next(res.data);
-        console.log(res.data);
-      },
-      error: (err) => { console.log(err); },
-      complete: () => { }
-    });
-  }
-  //Getter para facilitar el acceso a los campos del formulario
-
-  get name() {
-    return this.formData.get('name');
-  }
-  get email() {
-    return this.formData.get('email');
-  }
-  get password() {
-    return this.formData.get('password');
-  }
-  get confirmPassword() {
-    return this.formData.get('confirmPassword');
-  }
-  get role() {
-    return this.formData.get('role');
-  }
-  get avatar() {
-    return this.formData.get('avatar');
-  }
-  get isActive() {
-    return this.formData.get('isActive');
-  }
+  get name() { return this.formData.get('name'); }
+  get email() { return this.formData.get('email'); }
+  get password() { return this.formData.get('password'); }
+  get confirmPassword() { return this.formData.get('confirmPassword'); }
+  get role() { return this.formData.get('role'); }
+  get avatar() { return this.formData.get('avatar'); }
+  get isActive() { return this.formData.get('isActive'); }
 }

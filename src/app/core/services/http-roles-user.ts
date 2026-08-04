@@ -1,4 +1,5 @@
-import { inject, Service } from '@angular/core';
+import { environment } from '../../../environments/environment.development';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -14,11 +15,11 @@ interface ApiResponse<T> {
   data: T;
 }
 
-@Service()
+@Injectable({ providedIn: 'root' })
 export class HttpRolesUser {
 
   // URL del endpoint de roles en el backend
-  private readonly baseUrl = 'http://localhost:3000/api/roles';
+  private readonly baseUrl = `${environment.apiUrl}/roles`;
 
   // Inyección del cliente HTTP de Angular
   private http = inject(HttpClient);

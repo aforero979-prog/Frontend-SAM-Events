@@ -1,6 +1,8 @@
 <div>
     <h2 class="Tittle2">Crear Nuevo Evento</h2>
-<pre>{{ roleList$ | async | json }}</pre>
+
+    @if (successMsg) { <p style="color:green">{{ successMsg }}</p> }
+    @if (errorMsg)   { <p style="color:red">{{ errorMsg }}</p> }
  
     <p>Diligencia los datos para crear un nuevo evento:</p>
 
@@ -12,53 +14,49 @@
         </div>
 
         <div class="field">
+            <label for="descriptionEvent">Descripción:</label>
+            <input type="text" placeholder="Descripción del evento" id="descriptionEvent" formControlName="description">
+        </div>
+
+        <div class="field">
             <label for="priceTicket">Precio de la Boleta:</label>
-            <input type="number" placeholder="Precio de la Boleta" id="priceTicket" formControlName="price" required>
+            <input type="number" placeholder="Precio" id="priceTicket" formControlName="price" required>
         </div>
 
         <div class="field">
             <label for="stockTickets">Cantidad de Boletas:</label>
-            <input type="number" placeholder="Cantidad de Boletas" id="stockTickets" formControlName="stock" required>
+            <input type="number" placeholder="Cantidad" id="stockTickets" formControlName="stock" required>
         </div>
 
         <div class="field">
-            <label for="eventDate">Fecha del Evento:</label>
-            <input type="datetime-local" placeholder="Fecha del Evento" id="eventDate" formControlName="initialDate"
-                required>
+            <label for="eventDate">Fecha inicio del Evento:</label>
+            <input type="datetime-local" id="eventDate" formControlName="initialDate" required>
         </div>
 
         <div class="field">
-            <label for="eventDateFinish">Fecha y hora final del Evento:</label>
-            <input type="datetime-local" placeholder="Fecha y hora final del Evento" id="eventDateFinish"
-                formControlName="finalDate" required>
+            <label for="eventDateFinish">Fecha fin del Evento:</label>
+            <input type="datetime-local" id="eventDateFinish" formControlName="finalDate" required>
         </div>
 
         <div class="field">
-            <label for="eventImage">Imagen del Evento:</label>
-            <input type="text" placeholder="Imagen del Evento" id="eventImage" formControlName="imageUrl" required>
+            <label for="eventImage">URL Imagen del Evento:</label>
+            <input type="text" placeholder="https://..." id="eventImage" formControlName="imageUrl">
         </div>
 
         <div class="field">
-            <label for="eventLocation">Lugar del Evento:</label>
-            <input type="text" placeholder="Lugar del Evento" id="eventLocation" formControlName="eventLocation"
-                required>
-        </div>
-
-        <div class="field">
-            <label for="eventSecret">¿Locación secreta?</label>
-            <input type="radio" [value]="true" id="eventSecret" formControlName="eventSecret" required>
-        </div>
-
-        <div class="field">
-            <label for="eventInformation">Información adicional:</label>
-            <input type="textarea" placeholder="Información adicional" id="eventInformation"
-                formControlName="eventInformation" required>
+            <label for="category">Categoría:</label>
+            <select id="category" formControlName="category" required>
+                <option value="" disabled>Selecciona una categoría...</option>
+                @for (cat of categories$ | async; track cat._id) {
+                    <option [value]="cat._id">{{ cat.name }}</option>
+                }
+            </select>
         </div>
 
         <div class="Buttom">
-            <button>Crear Evento</button>
+            <button type="submit" [disabled]="formData.invalid">Crear Evento</button>
         </div>
 
     </form>
 
-</div>
+</div>

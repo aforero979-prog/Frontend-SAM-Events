@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
-import { FormGroup, ReactiveFormsModule } from "@angular/forms";
+import { Component, inject } from '@angular/core';
+import { FormGroup, FormControl, ReactiveFormsModule, Validators } from "@angular/forms";
+import { HttpRegister } from '../../core/services/http-register';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -10,23 +12,38 @@ import { FormGroup, ReactiveFormsModule } from "@angular/forms";
 
 export default class Register {
 
-  formData: FormGroup
+  private httpRegister = inject(HttpRegister);
+  private router = inject(Router);
+
+  formData: FormGroup;
+  successMsg = '';
+  errorMsg = '';
   
   constructor() {
     this.formData = new FormGroup({
-      name: new FormGroup(''),
-      nit: new FormGroup(''),
-      email: new FormGroup(''),
-      password: new FormGroup('')
-    })
+      name:     new FormControl(''),
+      email:    new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required, Validators.minLength(6)])
+    });
   }
 
   onSubmit() {
-    if(this.formData.valid) {
-      console.log( this.formData.value )
-      
+    if (this.formData.valid) {
+      this.httpRegister.createUser(this.formData.value).subscribe({
+        next: (res: any) => {
+          console.log(res);
+          this.successMsg = res?.msg || 'Usuario registrado correctamente';
+          this.errorMsg = '';
+          this.router.navigateByUrl('/login');
+        },
+        error: (err) => {
+          console.error(err);
+          this.errorMsg = err.error?.msg || 'Error al registrar el usuario';
+          this.successMsg = '';
+        }
+      });
     } else {
-      console.log( 'Error al registar el usuario' )
+      console.log( 'Formulario inválido' );
     }
   }
 }

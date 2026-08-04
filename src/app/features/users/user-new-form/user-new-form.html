@@ -1,4 +1,6 @@
 <h2 class="form-title">Crear nuevo usuario</h2>
+@if (successMsg) { <p style="color:green">{{ successMsg }}</p> }
+@if (errorMsg)   { <p style="color:red">{{ errorMsg }}</p> }
 <form [formGroup]="formData" (ngSubmit)="onSubmit()" class="form">
     <div class="field">
         <label for="name">Nombre</label>
@@ -61,8 +63,8 @@
         <label for="roles">Rol</label>
         <select id="roles" formControlName="role">
             <option value="" disabled>Selecciona un rol...</option>
-            @for (role of (roleList$ | async); track role.id) {
-                <option [value]="role.id">{{ role.name }}</option>
+            @for (role of roles; track role) {
+                <option [value]="role">{{ role }}</option>
             }
         </select>
     </div>

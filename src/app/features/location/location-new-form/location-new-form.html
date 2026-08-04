@@ -3,31 +3,34 @@
     
     <p class="form-intro">Diligencia los datos para crear una nueva ubicación:</p>
 
-    <form class="form form-Location">
+    @if (successMsg) { <p style="color:green">{{ successMsg }}</p> }
+    @if (errorMsg)   { <p style="color:red">{{ errorMsg }}</p> }
+
+    <form class="form form-Location" [formGroup]="formData" (ngSubmit)="onSubmit()">
 
         <div class="field">
             <label for="locationName">Nombre de la ubicación:</label>
-            <input type="text" placeholder="Ej. Teatro Mayor, Estadio Central..." id="locationName" name="name" required>
+            <input type="text" formControlName="name" placeholder="Ej. Teatro Mayor, Estadio Central..." id="locationName" required>
         </div>
 
         <div class="field">
             <label for="locationAddress">Dirección:</label>
-            <input type="text" placeholder="Dirección de la ubicación" id="locationAddress" name="address" required>
+            <input type="text" formControlName="address" placeholder="Dirección de la ubicación" id="locationAddress" required>
         </div>
 
         <div class="field">
             <label for="locationCapacity">Capacidad / Aforo:</label>
-            <input type="number" placeholder="Cantidad máxima de personas" id="locationCapacity" name="capacity" min="0">
+            <input type="number" formControlName="capacity" placeholder="Cantidad máxima de personas" id="locationCapacity" min="0">
         </div>
 
-        <div class="checkbox">
+        <div class="field">
             <label for="locationStatus">¿Ubicación activa?</label>
-            <input type="checkbox" id="locationStatus" name="status">
+            <input type="checkbox" formControlName="status" id="locationStatus">
         </div>
 
         <div class="button">
-            <button class="btn" type="submit">Crear Ubicación</button>
+            <button class="btn" type="submit" [disabled]="formData.invalid">Crear Ubicación</button>
         </div>
 
     </form>
-</div>
+</div>

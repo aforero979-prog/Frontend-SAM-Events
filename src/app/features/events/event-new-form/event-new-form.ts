@@ -1,78 +1,67 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { HttpRoles } from '../../../core/services/http-roles';
+import { AsyncPipe } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
-import { AsyncPipe, JsonPipe } from '@angular/common';
 import { HttpEvents } from '../../../core/services/http-events';
+import { HttpCategory } from '../../../core/services/http-category';
 
 @Component({
   selector: 'app-event-new-form',
-  imports: [ReactiveFormsModule, AsyncPipe, JsonPipe],   templateUrl: './event-new-form.html',
+  imports: [ReactiveFormsModule, AsyncPipe],
+  templateUrl: './event-new-form.html',
   styleUrl: './event-new-form.css',
 })
-export class EventNewForm {
-  private httpRoles = inject(HttpRoles);
-roleList$ = new BehaviorSubject ([]); //RxJs: Observable que mantiene en memoria los datos de la API, para que puedan ser usados en el HTML.
-private httpevents = inject(HttpEvents)
+export class EventNewForm implements OnInit {
+  private httpEvents   = inject(HttpEvents);
+  private httpCategory = inject(HttpCategory);
+
+  categories$ = new BehaviorSubject<any[]>([]);
 
   formData: FormGroup; 
+  successMsg = '';
+  errorMsg = '';
 
   constructor() {
-    //Define la estructura equivalente al formulario HTML, con los mismos nombres de los campos
     this.formData = new FormGroup({
-      name: new FormControl(``),
-      price: new FormControl(``, [Validators.required, Validators.min(5000)]),
-      stock: new FormControl(``, [Validators.required, Validators.min(1)]),
-      initialDate: new FormControl(``),
-      finalDate: new FormControl(``),
-      imageUrl: new FormControl(``),
-      eventLocation: new FormControl(``),
-      eventSecret: new FormControl(false),
-      eventInformation: new FormControl(``)
+      name:        new FormControl('', [Validators.required]),
+      description: new FormControl(''),
+      price:       new FormControl(0, [Validators.required, Validators.min(0)]),
+      stock:       new FormControl(1, [Validators.required, Validators.min(1)]),
+      initialDate: new FormControl('', [Validators.required]),
+      finalDate:   new FormControl('', [Validators.required]),
+      imageUrl:    new FormControl(''),
+      category:    new FormControl('', [Validators.required]),  // ObjectId de categoría
+    });
+  }
 
+  ngOnInit() {
+    // Cargar categorías para el select
+    this.httpCategory.getCategories().subscribe({
+      next: (res: any) => {
+        const cats = res?.data || res || [];
+        this.categories$.next(cats);
+      },
+      error: (err) => console.error('Error cargando categorías:', err)
     });
   }
 
   onSubmit() {
-
-    console.group("Formulario de evento nuevo");
-    console.log("valid (formData) " + this.formData.valid);
-    console.log("valid (name) " + this.formData.get('name')?.valid);
-    console.log("valid (price) " + this.formData.get('price')?.valid);
-    console.log("valid (stock) " + this.formData.get('stock')?.valid);
-    console.groupEnd();
-
-    // Aquí muestras valores diligenciados en el formulario.
-
     if (this.formData.valid) {
-      console.log(this.formData.value);
-      this.httpevents.createEvent(this.formData.value).subscribe({
+      this.httpEvents.createEvent(this.formData.value).subscribe({
         next: (res) => {
-          console.log(res);        },
+          console.log(res);
+          this.successMsg = 'Evento creado correctamente';
+          this.errorMsg = '';
+          this.formData.reset({ price: 0, stock: 1 });
+        },
         error: (err) => {
-          console.log(err);        }
+          console.error(err);
+          this.errorMsg = err.error?.msg || 'Error al crear el evento';
+          this.successMsg = '';
+        }
       });
-    }
-    else {
-      console.log("Formulario inválido");
-
+    } else {
+      console.log('Formulario inválido');
     }
   }
-  ngOnInit() {
-    //Observables
-    this.httpRoles.getRoles().subscribe({
-      next: (roles) => {
-        console.log(roles);
-        this.roleList$.next(roles);
-      },
-
-      error: (err) => {
-        console.log(err);
-      },
-
-      complete: () => {
-        console.log("Complete siempre se ejecuta ");
-      }
-    });
-  }
-}
+}

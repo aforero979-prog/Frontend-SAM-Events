@@ -1,15 +1,16 @@
+import { environment } from '../../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
-import { inject, Service } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 
-@Service()
+@Injectable({ providedIn: 'root' })
 export class HttpLocations {
   private http = inject(HttpClient);
 
   getLocations() {
-    return this.http.get('http://localhost:3000/api/locations');
+    return this.http.get(`${environment.apiUrl}/locations`);
   }
 
   createLocation(locationData: any) {
-    return this.http.post('http://localhost:3000/api/locations', locationData);
+    return this.http.post(`${environment.apiUrl}/locations`, locationData);
   }
 }

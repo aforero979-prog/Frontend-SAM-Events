@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Service } from '@angular/core';
-import { environment } from '../../../environments/environment';
+import { inject, Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment.development';
 
-@Service()
+@Injectable({ providedIn: 'root' })
 export class HttpCategory {
     private http = inject( HttpClient )
 
