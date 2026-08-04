@@ -9,7 +9,7 @@ import { HttpRolesUser } from '../../../core/services/http-roles-user';
   templateUrl: './user-new-form.html',
   styleUrl: './user-new-form.css',
 })
-export class UserNewForm {
+export default class UserNewForm {
 
   private httpUser = inject(HttpUser);
   private httpRoles = inject(HttpRolesUser);

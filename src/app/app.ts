@@ -9,7 +9,7 @@ import { person } from './data/data';
  
 @Component({
   selector: 'app-root',
-  imports: [Header, Footer ,RouterOutlet],
+  imports: [Header, Footer, RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

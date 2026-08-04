@@ -6,4 +6,4 @@ import { Component } from '@angular/core';
   templateUrl: './photon.html',
   styleUrl: './photon.css',
 })
-export class Photon {}
+export default class Photon {}

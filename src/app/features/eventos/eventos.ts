@@ -7,4 +7,4 @@ import { RouterLink } from "@angular/router";
   templateUrl: './eventos.html',
   styleUrl: './eventos.css',
 })
-export class Eventos {}
+export default class Eventos {}

@@ -2,7 +2,6 @@ import { Component, inject } from '@angular/core';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { HttpTicket } from '../../core/services/http-ticket';
 
-
 @Component({
   selector: 'app-ticket-new-form',
   imports: [ReactiveFormsModule],
@@ -11,9 +10,8 @@ import { HttpTicket } from '../../core/services/http-ticket';
 })
 export default class TicketNewForm {
 
-    private httpTicket = inject( HttpTicket )
+  private httpTicket = inject( HttpTicket )
     
-
   formData: FormGroup;
 
   constructor() {
@@ -28,7 +26,6 @@ export default class TicketNewForm {
   }
 
   onSubmit() {
-
     if(this.formData.valid) {
       console.log( this.formData.value)
       this.httpTicket.createTicket(this.formData.value).subscribe({
@@ -44,5 +41,4 @@ export default class TicketNewForm {
       console.log('El formulario no es valido')
     }   
   }
-
 }
