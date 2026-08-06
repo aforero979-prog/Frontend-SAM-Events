@@ -1,0 +1,118 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=JetBrains+Mono:wght@500;700&display=swap');
+
+:host {
+  --accent: #e8ff00;
+  --text: #e4e2e1;
+  --muted: #c4c9ac;
+  --border: #2a2a2a;
+
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  min-height: 100vh;
+  flex-wrap: wrap;
+  margin-top: 6.4rem;
+  background-color: #2a2a2a;
+}
+h1 {
+  color: #c4c9ac;
+}
+h2 {
+  color: #c4c9ac;
+}
+p {
+  color: #c4c9ac;
+}
+
+/* img.img-event {
+    width: 28rem;
+    height: 28rem;
+    object-fit: contain;
+}
+
+.eventos{
+    display: flex;
+}  */
+
+/* Contenedor de eventos */
+.eventos {
+  display: grid;
+  /* Fuerza exactamente 3 columnas de igual tamaño */
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 20px;
+  padding: 20px;
+}
+
+/* Tarjeta individual */
+.evento {
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Control de la imagen */
+.img-event {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+.descripcion {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.descripcion h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.descripcion p {
+  margin: 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* Adaptación a dispositivos móviles */
+@media (max-width: 768px) {
+  .eventos {
+    /* Cambia a 1 sola columna en pantallas móviles */
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ------------------------------------------------------------------- */
+/* button */
+/* ------------------------------------------------------------------- */
+.button{
+    text-align: center;
+    padding: 2rem;
+    background-color: #000000;
+}
+
+
+.btn-accent {
+  background-color: transparent;
+  color: #e8ff00;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding: 14px 28px;
+  border: 2px solid #e8ff00;
+  border-radius: 0px; /* Esquinas totalmente rectas para un estilo técnico */
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-accent:hover {
+  background-color: #e8ff00;
+  color: #000000;
+  box-shadow: 0 0 20px rgba(232, 255, 0, 0.5);
+}

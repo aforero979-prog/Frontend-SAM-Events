@@ -36,11 +36,7 @@ p {
 
 /* --------------------------------------------------- */
 
-.destacado1 {
-  text-align: center;
-  display: block;
-  background-color: #2a2a2a;
-}
+
 .eventosdestacadosgrupo {
   display: flex;
   margin-top: 5rem;
@@ -362,4 +358,38 @@ p {
   box-shadow: 
     0px 0px 15px 2px #e8ff00,
     0px 0px 35px 6px rgba(232, 255, 0, 0.5); 
+}
+
+
+/* ----------------------------------------------- */
+
+/* .destacado1 {
+  text-align: center;
+  display: block;
+  background-color: #2a2a2a;
+} */
+
+.destacado1 {
+  background-color: #2a2a2a;
+  text-align: center;
+  
+  /* Convierte el contenedor en una cuadrícula */
+  display: grid;
+  
+  /* Crea columnas automáticas de mínimo 200px (ajusta este valor a tu gusto) */
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  
+  /* Espacio de separación entre cada imagen */
+  gap: 16px; 
+  
+  /* Espaciado interno para que las imágenes no peguen a los bordes del fondo */
+  padding: 16px; 
+}
+
+/* Opcional: Asegura que las imágenes no sobrepasen su espacio */
+.destacado1 img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px; /* Opcional: bordes redondeados */
 }

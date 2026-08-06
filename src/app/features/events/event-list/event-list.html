@@ -1,0 +1,25 @@
+<h1 class="titulo">Próximos eventos:</h1>
+
+<div class="eventos">
+
+    @for (event of (eventList$ | async); track $index) {
+    <div class="evento">
+
+        <a [routerLink]="['dashboard', 'event-details', event._id]">
+            <img class="img-event" [alt]="event.name" [src]="event.imageUrl">
+        </a>
+
+        <div class="descripcion">
+            <h2>{{ event.name }}</h2>
+            <p>{{ event.initialDate | date }}</p>
+        </div>
+
+        <div class="button">
+            <a class="btn-accent" [routerLink]="['/dashboard', 'event-details', event._id]">COMPRAR TICKET</a>
+        </div>
+
+    </div>
+    }
+
+
+</div>
