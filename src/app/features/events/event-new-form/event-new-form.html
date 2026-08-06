@@ -1,64 +1,129 @@
+<div class="page page-event">
+    <form [formGroup]="formData" (ngSubmit)="onSubmit()" class="event-form">
+        <h2>Crear / Editar Evento</h2>
 
-<div>
-    <h2 class="Tittle2">Crear Nuevo Evento</h2>
+        <!-- Nombre del Evento -->
+        <div class="form-group">
+            <label for="name">Nombre del Evento *</label>
+            <input id="name" type="text" formControlName="name" class="form-control" />
 
-    @if (successMsg) { <p style="color:green">{{ successMsg }}</p> }
-    @if (errorMsg)   { <p style="color:red">{{ errorMsg }}</p> }
- 
-    <p>Diligencia los datos para crear un nuevo evento:</p>
-
-    <form [formGroup]="formData" (ngSubmit)="onSubmit()" class="form form-Event">
-
-        <div class="field">
-            <label for="nameEvent">Nombre del evento:</label>
-            <input type="text" placeholder="Nombre del evento" id="nameEvent" formControlName="name" required>
-        </div>
-
-        <div class="field">
-            <label for="descriptionEvent">Descripción:</label>
-            <input type="text" placeholder="Descripción del evento" id="descriptionEvent" formControlName="description">
-        </div>
-
-        <div class="field">
-            <label for="priceTicket">Precio de la Boleta:</label>
-            <input type="number" placeholder="Precio" id="priceTicket" formControlName="price" required>
-        </div>
-
-        <div class="field">
-            <label for="stockTickets">Cantidad de Boletas:</label>
-            <input type="number" placeholder="Cantidad" id="stockTickets" formControlName="stock" required>
-        </div>
-
-        <div class="field">
-            <label for="eventDate">Fecha inicio del Evento:</label>
-            <input type="datetime-local" id="eventDate" formControlName="initialDate" required>
-        </div>
-
-        <div class="field">
-            <label for="eventDateFinish">Fecha fin del Evento:</label>
-            <input type="datetime-local" id="eventDateFinish" formControlName="finalDate" required>
-        </div>
-
-        <div class="field">
-            <label for="eventImage">URL Imagen del Evento:</label>
-            <input type="text" placeholder="https://..." id="eventImage" formControlName="imageUrl">
-        </div>
-
-        <div class="field">
-            <label for="category">Categoría:</label>
-            <select id="category" formControlName="category" required>
-                <option value="" disabled>Selecciona una categoría...</option>
-                @for (cat of categories$ | async; track cat._id) {
-                    <option [value]="cat._id">{{ cat.name }}</option>
+            @if (formData.get('name')?.touched && formData.get('name')?.invalid) {
+            <div class="error-msg" style="color: red; font-size: 0.8em;">
+                @if (formData.get('name')?.errors?.['required']) {
+                <small>El nombre es obligatorio.</small>
                 }
+                @if (formData.get('name')?.errors?.['maxlength']) {
+                <small>Máximo 100 caracteres.</small>
+                }
+            </div>
+            }
+        </div>
+
+        <!-- Descripción -->
+        <div class="form-group">
+            <label for="description">Descripción</label>
+            <textarea id="description" formControlName="description" class="form-control" rows="3"></textarea>
+        </div>
+
+        <!-- Precio y Stock -->
+        <div class="form-row" style="display: flex; gap: 1rem;">
+            <div class="form-group col">
+                <label for="price">Precio ($) *</label>
+                <input id="price" type="number" formControlName="price" class="form-control" />
+                @if (formData.get('price')?.touched && formData.get('price')?.errors?.['min']) {
+                <div class="error-msg" style="color: red; font-size: 0.8em;">
+                    <small>El precio no puede ser negativo.</small>
+                </div>
+                }
+            </div>
+
+            <div class="form-group col">
+                <label for="stock">Stock *</label>
+                <input id="stock" type="number" formControlName="stock" class="form-control" />
+                @if (formData.get('stock')?.touched && formData.get('stock')?.errors?.['min']) {
+                <div class="error-msg" style="color: red; font-size: 0.8em;">
+                    <small>El stock mínimo es 1.</small>
+                </div>
+                }
+            </div>
+        </div>
+
+        <!-- GRUPO: initialDate -->
+        <fieldset formGroupName="initialDate" class="form-section">
+            <legend>Inicio del Evento *</legend>
+            <div class="form-row" style="display: flex; gap: 1rem;">
+                <div class="form-group col">
+                    <label for="initialDate">Fecha:</label>
+                    <input id="initialDate" type="date" formControlName="date" class="form-control" />
+                </div>
+                <div class="form-group col">
+                    <label for="initialTime">Hora:</label>
+                    <input id="initialTime" type="time" formControlName="time" class="form-control" />
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- GRUPO: finalDate -->
+        <fieldset formGroupName="finalDate" class="form-section">
+            <legend>Fin del Evento *</legend>
+            <div class="form-row" style="display: flex; gap: 1rem;">
+                <div class="form-group col">
+                    <label for="finalDate">Fecha:</label>
+                    <input id="finalDate" type="date" formControlName="date" class="form-control" />
+                </div>
+                <div class="form-group col">
+                    <label for="finalTime">Hora:</label>
+                    <input id="finalTime" type="time" formControlName="time" class="form-control" />
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- Error del rango de fechas general -->
+        @if (formData.errors?.['dateRangeInvalid']) {
+        <div class="error-msg alert" style="color: red; font-weight: bold; margin-bottom: 1rem;">
+            <small>La fecha y hora de finalización debe ser posterior al inicio.</small>
+        </div>
+        }
+
+        <!-- Categoría (Uso de @for) -->
+        <div class="form-group">
+            <label for="category">Categoría *</label>
+            <select id="category" formControlName="category" class="form-control">
+                <option value="" disabled>Seleccione una categoría</option>
+
+                <!-- Nueva sintaxis @for con la propiedad obligatoria 'track' -->
+                @for (cat of (categoryList$ | async); track cat._id) {
+                <option [value]="cat._id">
+                    {{ cat.name }}
+                </option>
+                }
+
             </select>
+            @if (formData.get('category')?.touched && formData.get('category')?.invalid) {
+            <div class="error-msg" style="color: red; font-size: 0.8em;">
+                <small>Debe seleccionar una categoría.</small>
+            </div>
+            }
         </div>
 
-        <div class="Buttom">
-            <button type="submit" [disabled]="formData.invalid">Crear Evento</button>
+        <!-- URL Imagen -->
+        <div class="form-group">
+            <label for="imageUrl">URL de la Imagen</label>
+            <input id="imageUrl" type="url" formControlName="imageUrl" class="form-control" />
         </div>
 
+        <!-- Estado (Activo / Inactivo) -->
+        <div class="form-group checkbox-group" style="margin-top: 1rem;">
+            <label for="status">
+                <input id="status" type="checkbox" formControlName="status" /> Evento Activo
+            </label>
+        </div>
+
+        <!-- Botón Guardar -->
+        <div style="margin-top: 1.5rem;">
+            <button type="submit" [disabled]="formData.invalid" class="btn-submit">
+                Guardar Evento
+            </button>
+        </div>
     </form>
-
 </div>
-

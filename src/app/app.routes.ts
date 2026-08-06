@@ -18,10 +18,7 @@ export const routes: Routes = [
     path: 'events-details',
     loadComponent: () => import('./features/events/event-details/event-details'),
   },
-  {
-    path: 'dashboard/events-new',
-    loadComponent: () => import('./features/events/event-new-form/event-new-form'),
-  },
+
 
   // ── Users ────────────────────────────────────────
   {

@@ -1,90 +1,98 @@
-
 import { Component, inject } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
 
-import { HttpEvents } from '../../../core/services/http-events';
 import { HttpCategory } from '../../../core/services/http-category';
-import { HttpRoles } from '../../../core/services/http-roles';
 
 @Component({
-  selector: 'app-event-new-form',
+  selector: 'app-event-create',
   imports: [ReactiveFormsModule, AsyncPipe],
   templateUrl: './event-new-form.html',
   styleUrl: './event-new-form.css',
 })
-export default class EventNewForm {
-  private httpEvents   = inject(HttpEvents);
+export default class EventCreateComponent {
+  formData!: FormGroup;
+
+  categoryList$ = new BehaviorSubject<any[]>([]); // Observable para almacenar la lista de categorías
+
+  private router = inject(Router);
   private httpCategory = inject(HttpCategory);
-  private httpRoles = inject(HttpRoles);
+  // private eventService = inject(EventService);
 
-  categories$ = new BehaviorSubject<any[]>([]);
-  roleList$ = new BehaviorSubject ([]); //RxJs: Observable que mantiene en memoria los datos de la API, para que puedan ser usados en el HTML.
-
-
-
-  formData: FormGroup; 
-  successMsg = '';
-  errorMsg = '';
-
-  constructor() {
-    this.formData = new FormGroup({
-      name:        new FormControl('', [Validators.required]),
-      description: new FormControl(''),
-      price:       new FormControl(0, [Validators.required, Validators.min(0)]),
-      stock:       new FormControl(1, [Validators.required, Validators.min(1)]),
-      initialDate: new FormControl('', [Validators.required]),
-      finalDate:   new FormControl('', [Validators.required]),
-      imageUrl:    new FormControl(''),
-      category:    new FormControl('', [Validators.required]),  // ObjectId de categoría
-    });
-  }
-
-  ngOnInit() {
-        this.httpRoles.getRoles().subscribe({
-      next: (roles) => {
-        console.log(roles);
-        this.roleList$.next(roles);
+  ngOnInit(): void {
+    this.httpCategory.getCategories().subscribe({
+      next: (categories) => {
+        console.log('Categorías obtenidas:', categories);
+        this.categoryList$.next(categories);
       },
-
-      error: (err) => {
-        console.log(err);
-      },
-
-      complete: () => {
-        console.log("Complete siempre se ejecuta ");
+      error: (error) => {
+        console.error('Error al obtener categorías:', error);
       }
     });
-
-    // Cargar categorías para el select
-    this.httpCategory.getCategories().subscribe({
-      next: (res: any) => {
-        const cats = res?.data || res || [];
-        this.categories$.next(cats);
-      },
-      error: (err) => console.error('Error cargando categorías:', err)
-    });
   }
 
-  onSubmit() {
-    if (this.formData.valid) {
-      this.httpEvents.createEvent(this.formData.value).subscribe({
-        next: (res) => {
-          console.log(res);
-          this.successMsg = 'Evento creado correctamente';
-          this.errorMsg = '';
-          this.formData.reset({ price: 0, stock: 1 });
-        },
-        error: (err) => {
-          console.error(err);
-          this.errorMsg = err.error?.msg || 'Error al crear el evento';
-          this.successMsg = '';
-        }
-      });
-    } else {
-      console.log('Formulario inválido');
+  constructor() {
+
+    this.formData = new FormGroup(
+      {
+        name: new FormControl('', [Validators.required, Validators.maxLength(100)]),
+        description: new FormControl(''),
+        price: new FormControl(0, [Validators.required, Validators.min(0)]),
+        stock: new FormControl(1, [Validators.required, Validators.min(1)]),
+        status: new FormControl(true),
+        
+        // Controles anidados para la fecha de inicio (Homologado con Mongoose)
+        initialDate: new FormGroup({
+          date: new FormControl('', [Validators.required]),
+          time: new FormControl('', [Validators.required])
+        }),
+        
+        // Controles anidados para la fecha final (Homologado con Mongoose)
+        finalDate: new FormGroup({
+          date: new FormControl('', [Validators.required]),
+          time: new FormControl('', [Validators.required])
+        }),
+        
+        imageUrl: new FormControl(''),
+        category: new FormControl('', [Validators.required])
+      },
+      { 
+        validators: [this.dateRangeValidator] 
+      }
+    );
+  }
+
+  private dateRangeValidator = (group: AbstractControl): ValidationErrors | null => {
+    const init = group.get('initialDate')?.value;
+    const final = group.get('finalDate')?.value;
+
+    if (init?.date && init?.time && final?.date && final?.time) {
+      const start = new Date(`${init.date}T${init.time}:00`);
+      const end = new Date(`${final.date}T${final.time}:00`);
+      
+      if (end < start) {
+        return { dateRangeInvalid: true };
+      }
     }
+    return null;
+  };
+
+  onSubmit(): void {
+    if (this.formData.invalid) {
+      this.formData.markAllAsTouched();
+      return;
+    }
+
+    const rawValues = this.formData.value;
+    const payload = {
+      ...rawValues,
+      initialDate: new Date(`${rawValues.initialDate.date}T${rawValues.initialDate.time}:00`).toISOString(),
+      finalDate: new Date(`${rawValues.finalDate.date}T${rawValues.finalDate.time}:00`).toISOString()
+    };
+
+    console.log('Enviando POST para CREAR:', payload);
+    // this.eventService.createEvent(payload).subscribe(() => this.router.navigate(['/events']));
   }
 }
-
