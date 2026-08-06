@@ -1,33 +1,34 @@
+import { environment } from '../../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
-import { inject, Service } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 
-@Service()
+@Injectable({ providedIn: 'root' })
 export class HttpGateway {
 
   private http = inject(HttpClient);
 
   // Obtener todas las pasarelas de pago
   getGateways() {
-    return this.http.get('http://localhost:3000/api/gateways');
+    return this.http.get(`${environment.apiUrl}/gateways`);
   }
 
   // Obtener una pasarela por ID
   getGatewayById(id: string) {
-    return this.http.get(`http://localhost:3000/api/gateways/${id}`);
+    return this.http.get(`${environment.apiUrl}/gateways/${id}`);
   }
 
   // Crear una nueva pasarela de pago
   createGateway(newGateway: any) {
-    return this.http.post('http://localhost:3000/api/gateways', newGateway);
+    return this.http.post(`${environment.apiUrl}/gateways`, newGateway);
   }
 
   // Actualizar una pasarela existente
   updateGateway(id: string, gateway: any) {
-    return this.http.put(`http://localhost:3000/api/gateways/${id}`, gateway);
+    return this.http.put(`${environment.apiUrl}/gateways/${id}`, gateway);
   }
 
   // Eliminar una pasarela
   deleteGateway(id: string) {
-    return this.http.delete(`http://localhost:3000/api/gateways/${id}`);
+    return this.http.delete(`${environment.apiUrl}/gateways/${id}`);
   }
 }

@@ -2,14 +2,14 @@ import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { HttpCategory } from '../../../core/services/http-category';
 import { BehaviorSubject } from 'rxjs';
-import { AsyncPipe, JsonPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 
 import { HugeiconsIconComponent } from '@hugeicons/angular';
 import { ToggleOffIcon, ToggleOnIcon } from '@hugeicons/core-free-icons';
 
 @Component({
   selector: 'app-category-list',
-  imports: [RouterLink, AsyncPipe, JsonPipe, HugeiconsIconComponent],
+  imports: [RouterLink, AsyncPipe, HugeiconsIconComponent],
   templateUrl: './category-list.html',
   styleUrl: './category-list.css',
 })

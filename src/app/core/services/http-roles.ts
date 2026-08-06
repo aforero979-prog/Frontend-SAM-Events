@@ -1,13 +1,14 @@
-import { Service, inject } from '@angular/core';
+import { environment } from '../../../environments/environment.development';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs';
 
-@Service()
+@Injectable({ providedIn: 'root' })
 export class HttpRoles {
   private http = inject(HttpClient);
 
   getRoles() {
-    return this.http.get<any>(`http://localhost:3000/api/roles`).pipe(
+    return this.http.get<any>(`${environment.apiUrl}/roles`).pipe(
       map((res) => res.data)
     );
   }

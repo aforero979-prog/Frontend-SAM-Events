@@ -11,18 +11,39 @@
 
   <!-- Navigation -->
   <nav class="nav-links">
-    <a routerLink="/events" routerLinkActive="nav-active">EVENTOS</a>
+
+
     <a routerLink="/festivales"    routerLinkActive="nav-active">CLUBES</a>
     <a routerLink="/login"   routerLinkActive="nav-active">INICIAR SESIÓN</a>
+
+    <a routerLink="/eventos" routerLinkActive="nav-active">EVENTOS</a>
+
+    // TODO: Revisar como condicionar el despliegue de estos botones
+    <!-- @if (!auth.isLoggedIn()) {
+      <a routerLink="/login" routerLinkActive="nav-active">INICIAR SESIÓN</a>
+    }
+    @if (auth.isLoggedIn()) {
+      <a routerLink="/dashboard" routerLinkActive="nav-active">PANEL</a>
+    } -->
+
   </nav>
 
   <!-- Actions -->
   <div class="header-right">
-    <a routerLink="/login"    class="btn-ghost">PORTAL</a>
-    <a routerLink="/register" class="btn-accent">
-      <span class="btn-txt">NUEVA CONVOCATORIA</span>
-      <span class="btn-plus">+</span>
-    </a>
+    @if (!auth.isLoggedIn()) {
+      <a routerLink="/login"    class="btn-ghost">PORTAL</a>
+      <a routerLink="/register" class="btn-accent">
+        <span class="btn-txt">NUEVA CONVOCATORIA</span>
+        <span class="btn-plus">+</span>
+      </a>
+    }
+    @if (auth.isLoggedIn()) {
+      <span class="user-name">{{ (auth.currentUser$ | async)?.name || 'Usuario' }}</span>
+      <button class="btn-logout" (click)="logout()" title="Cerrar sesión">
+        <span class="logout-icon">⏻</span>
+        <span class="logout-txt">SALIR</span>
+      </button>
+    }
   </div>
 
 </header>

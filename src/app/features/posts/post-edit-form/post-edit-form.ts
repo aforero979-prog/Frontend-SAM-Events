@@ -6,4 +6,4 @@ import { Component } from '@angular/core';
   templateUrl: './post-edit-form.html',
   styleUrl: './post-edit-form.css',
 })
-export class PostEditForm {}
+export default class PostEditForm {}

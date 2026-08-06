@@ -58,7 +58,7 @@ export default class CategoryEditForm {
       this.httpCategory.updateCategoryById( this.selectedId, this.formData.value).subscribe({
         next: ( data ) => {
           console.log( data )
-          this.router.navigateByUrl( '/category/list' )
+          this.router.navigateByUrl( '/dashboard/category/list' )
         },
         error: ( err ) => {
           console.error( err )

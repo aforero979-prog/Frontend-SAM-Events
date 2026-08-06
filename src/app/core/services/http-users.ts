@@ -1,9 +1,10 @@
+import { environment } from '../../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
-import { inject, Service } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { map } from 'rxjs';
 import { ResponseUsers } from '../models/users';
 
-@Service()
+@Injectable({ providedIn: 'root' })
 export class HttpUsers {
   //Inyectar una dependencia
   // constructor (private https: HttpClient) { }
@@ -12,7 +13,7 @@ export class HttpUsers {
   //Metodo para consultar la lista de usuarios
   getUsers() {
     return this.http
-      .get<ResponseUsers>('http://localhost:3000/api/users')
+      .get<ResponseUsers>(`${environment.apiUrl}/users`)
       .pipe(map((res) => res.data));
   }
 }
