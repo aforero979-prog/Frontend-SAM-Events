@@ -1,15 +1,38 @@
 <div class="compra">
 
-  <h2>Crear Ticket</h2>
+  <h2>Comprar Ticket</h2>
 
   @if (successMsg) { <p style="color:green">{{ successMsg }}</p> }
-  @if (errorMsg)   { <p style="color:red">{{ errorMsg }}</p> }
+  @if (errorMsg) { <p style="color:red">{{ errorMsg }}</p> }
 
   <form (ngSubmit)='onSubmit()' [formGroup]="formData" class="form">
 
     <div class="field">
-      <label for="name">Nombre del ticket:</label>
+      <label for="name">Nombre:</label>
       <input formControlName="name" type="text" id="name" placeholder="Ej: VIP, General, Back Stage">
+    </div>
+
+    <div class="field">
+      <label for="name">Apellido:</label>
+      <input formControlName="name" type="text" id="name" placeholder="Ej: VIP, General, Back Stage">
+    </div>
+
+    <div class="field">
+      <label for="name">Email:</label>
+      <input formControlName="name" type="text" id="name" placeholder="Ej: VIP, General, Back Stage">
+    </div>
+
+    <div class="field">
+      <label for="category-location">Ubicación</label>
+      <select formControlName="ubicacion" id="category-location">
+
+        <option value="">Selecciona..</option>
+        <option value="">General</option>
+        <option value="">VIP</option>
+        <option value="">BackStage</option>
+        <option value="">Palco</option>
+
+      </select>
     </div>
 
     <div class="field">
@@ -18,28 +41,23 @@
     </div>
 
     <div class="field">
-      <label for="description">Descripción:</label>
-      <input type="text" formControlName="description" id="description" placeholder="Descripción del ticket">
-    </div>
+      <label for="category-location">Número de boletas:</label>
+      <select formControlName="ubicacion" id="category-location">
 
-    <div class="field">
-      <label for="status">Estado:</label>
-      <select formControlName="status" id="status">
-        @for (s of statuses; track s) {
-          <option [value]="s">{{ s }}</option>
-        }
+        <option value="">Selecciona..</option>
+        <option value="">1</option>
+        <option value="">2</option>
+        <option value="">3</option>
+        <option value="">4</option>
+        <option value="">5</option>
+
       </select>
     </div>
 
-    <div class="field">
-      <label for="stock">Stock (cantidad disponible):</label>
-      <input type="number" formControlName="stock" id="stock" min="1">
-    </div>
-
     <div class="button">
-      <button type="submit" [disabled]="formData.invalid">Crear Ticket</button>
+      <button type="submit" [disabled]="formData.invalid">Comprar</button>
     </div>
 
   </form>
 
-</div>
+</div>

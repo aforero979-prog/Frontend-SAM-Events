@@ -18,16 +18,16 @@ export const routes: Routes = [
     path: 'events-details',
     loadComponent: () => import('./features/events/event-details/event-details'),
   },
+  
+  // ── Tickets ──────────────────────────────────────
 
+  { path: 'buy-ticket', loadComponent: () => import('./features/ticket/ticket-new-form') },
 
   // ── Users ────────────────────────────────────────
   {
     path: 'dashboard/user-new-form',
     loadComponent: () => import('./features/users/user-new-form/user-new-form'),
   },
-
-  // ── Tickets ──────────────────────────────────────
-  { path: 'ticket/new', loadComponent: () => import('./features/ticket/ticket-new-form') },
 
   // ── Locations ────────────────────────────────────
   {
