@@ -5,6 +5,7 @@ import { AsyncPipe } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
 
 import { HttpCategory } from '../../../core/services/http-category';
+import { HttpEvents } from '../../../core/services/http-events';
 
 @Component({
   selector: 'app-event-create',
@@ -19,13 +20,15 @@ export default class EventCreateComponent {
 
   private router = inject(Router);
   private httpCategory = inject(HttpCategory);
-  // private eventService = inject(EventService);
+  private httpEvents = inject(HttpEvents);
+
+  cities = ['Bogotá', 'Cali', 'Barranquilla', 'Medellín', 'Cartagena', 'Cúcuta', 'Neiva'];
 
   ngOnInit(): void {
     this.httpCategory.getCategories().subscribe({
-      next: (categories) => {
-        console.log('Categorías obtenidas:', categories);
-        this.categoryList$.next(categories);
+      next: (response) => {
+        console.log('Categorías obtenidas:', response);
+        this.categoryList$.next(response.data || []);
       },
       error: (error) => {
         console.error('Error al obtener categorías:', error);
@@ -34,32 +37,53 @@ export default class EventCreateComponent {
   }
 
   constructor() {
-
     this.formData = new FormGroup(
       {
         name: new FormControl('', [Validators.required, Validators.maxLength(100)]),
-        description: new FormControl(''),
-        price: new FormControl(0, [Validators.required, Validators.min(0)]),
-        stock: new FormControl(1, [Validators.required, Validators.min(1)]),
-        status: new FormControl(true),
-        
-        // Controles anidados para la fecha de inicio (Homologado con Mongoose)
+        description: new FormControl('', [Validators.required]),
+
+        // Grupo de localidades (General, VIP, BackStage, Palco)
+        localidades: new FormGroup({
+          general: new FormGroup({
+            enabled: new FormControl(false),
+            stock: new FormControl(0, [Validators.min(0)]),
+            price: new FormControl(0, [Validators.min(0)])
+          }),
+          vip: new FormGroup({
+            enabled: new FormControl(false),
+            stock: new FormControl(0, [Validators.min(0)]),
+            price: new FormControl(0, [Validators.min(0)])
+          }),
+          backstage: new FormGroup({
+            enabled: new FormControl(false),
+            stock: new FormControl(0, [Validators.min(0)]),
+            price: new FormControl(0, [Validators.min(0)])
+          }),
+          palco: new FormGroup({
+            enabled: new FormControl(false),
+            stock: new FormControl(0, [Validators.min(0)]),
+            price: new FormControl(0, [Validators.min(0)])
+          })
+        }),
+
+        // Controles anidados para la fecha de inicio
         initialDate: new FormGroup({
           date: new FormControl('', [Validators.required]),
           time: new FormControl('', [Validators.required])
         }),
-        
-        // Controles anidados para la fecha final (Homologado con Mongoose)
+
+        // Controles anidados para la fecha final
         finalDate: new FormGroup({
           date: new FormControl('', [Validators.required]),
           time: new FormControl('', [Validators.required])
         }),
-        
-        imageUrl: new FormControl(''),
-        category: new FormControl('', [Validators.required])
+
+        category: new FormControl('', [Validators.required]),
+        imageUrl: new FormControl('', [Validators.required]),
+        status: new FormControl(true)
       },
-      { 
-        validators: [this.dateRangeValidator] 
+      {
+        validators: [this.dateRangeValidator]
       }
     );
   }
@@ -71,7 +95,7 @@ export default class EventCreateComponent {
     if (init?.date && init?.time && final?.date && final?.time) {
       const start = new Date(`${init.date}T${init.time}:00`);
       const end = new Date(`${final.date}T${final.time}:00`);
-      
+
       if (end < start) {
         return { dateRangeInvalid: true };
       }
@@ -86,13 +110,27 @@ export default class EventCreateComponent {
     }
 
     const rawValues = this.formData.value;
+
+    // Estructuramos el payload limpio con todas las propiedades capturadas del formulario
     const payload = {
-      ...rawValues,
+      name: rawValues.name,
+      description: rawValues.description,
+      localidades: rawValues.localidades,
       initialDate: new Date(`${rawValues.initialDate.date}T${rawValues.initialDate.time}:00`).toISOString(),
-      finalDate: new Date(`${rawValues.finalDate.date}T${rawValues.finalDate.time}:00`).toISOString()
+      finalDate: new Date(`${rawValues.finalDate.date}T${rawValues.finalDate.time}:00`).toISOString(),
+      category: rawValues.category,
+      imageUrl: rawValues.imageUrl,
+      status: rawValues.status
     };
 
-    console.log('Enviando POST para CREAR:', payload);
-    // this.eventService.createEvent(payload).subscribe(() => this.router.navigate(['/events']));
+    console.log('DATOS COMPLETOS DEL FORMULARIO CAPTURADOS:', payload);
+    this.httpEvents.createEvent(payload).subscribe({
+      next: () => {
+        //this.router.navigate(['/events']);
+      },
+      error: (error) => {
+        console.error('Error al crear el evento:', error);
+      }
+    });
   }
 }
