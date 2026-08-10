@@ -34,7 +34,7 @@
             <legend>Localidades</legend>
             <div class="localidades">
                 <div class="option option-general">
-                    <input [value]="true" type="radio" formControlName="status" id="event-localidad">
+                    <input [value]="true" type="checkbox" formControlName="status" id="event-localidad">
                     <label for="category-status-enable">General</label>
 
                     <div class="field-group">
@@ -62,7 +62,7 @@
                 </div>
 
                 <div class="option option-vip">
-                    <input [value]="true" type="radio" formControlName="status" id="event-localidad">
+                    <input [value]="true" type="checkbox" formControlName="status" id="event-localidad">
                     <label for="category-status-enable">VIP</label>
 
                     <div class="field-group">
@@ -91,7 +91,7 @@
                 </div>
 
                 <div class="option option-backstage">
-                    <input [value]="true" type="radio" formControlName="status" id="event-localidad">
+                    <input [value]="true" type="checkbox" formControlName="status" id="event-localidad">
                     <label for="category-status-enable">BackStage</label>
 
                     <div class="field-group">
@@ -119,10 +119,9 @@
 
                     </div>
                 </div>
-            </div>
 
-            <div class="option option-palco">
-                <input [value]="true" type="radio" formControlName="status" id="event-localidad">
+                <div class="option option-palco">
+                <input [value]="true" type="checkbox" formControlName="status" id="event-localidad">
                 <label for="category-status-enable">Palco</label>
 
                 <div class="field-group">
@@ -147,8 +146,8 @@
 
                 </div>
 
+                </div>
             </div>
-
 
         </fieldset>
 
