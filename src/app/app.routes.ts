@@ -82,6 +82,12 @@ export const routes: Routes = [
     loadComponent: () => import('./features/gateways/gateway-new-form/gateway-new-form'),
   },
 
+  // ── Cart ──────────────────────────────────────────
+  {
+    path: 'dashboard/cart/new',
+    loadComponent: () => import('./features/cart/cart-new-form/cart-new-form'),
+  },
+
   { path: '404', component: PageNotFound },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: '404', pathMatch: 'full' },
