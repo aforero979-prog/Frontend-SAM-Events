@@ -1,0 +1,64 @@
+<div class="list-header">
+    <h2 class="table-title">Lista de eventos</h2>
+    <a class="btn-new" routerLink="/dashboard/events/new">+ Nuevo evento</a>
+</div>
+
+<table class="admin-table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Categoría</th>
+            <th>Fecha inicio</th>
+            <th>Fecha fin</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (event of events; track event._id) {
+            <tr>
+                <td>{{ event.name }}</td>
+                <td>{{ event.category }}</td>
+                <td>{{ event.initialDate }}</td>
+                <td>{{ event.finalDate }}</td>
+                <td>
+                    @if (event.status) {
+                        <span class="badge-active">Activo</span>
+                    } @else {
+                        <span class="badge-inactive">Inactivo</span>
+                    }
+                </td>
+                <td class="actions">
+                    <a class="btn-delete" (click)="onDelete(event._id)">Eliminar</a>
+                </td>
+            </tr>
+        } @empty {
+            <tr><td colspan="6" class="empty">No hay eventos registrados</td></tr>
+        }
+    </tbody>
+</table>
+
+<!-- Modal de confirmación -->
+@if (showDeleteModal) {
+  <div class="modal-overlay">
+    <div class="modal-box">
+      <h3 class="modal-title">⚠ ADVERTENCIA</h3>
+      <p class="modal-msg">¿Estás seguro de que quieres eliminar este evento?</p>
+      <div class="modal-actions">
+        <button class="btn-modal-cancel" (click)="cancelDelete()">NO, CANCELAR</button>
+        <button class="btn-modal-confirm" (click)="confirmDelete()">SÍ, ELIMINAR</button>
+      </div>
+    </div>
+  </div>
+}
+@if (showSuccessModal) {
+  <div class="modal-overlay">
+    <div class="modal-box success">
+      <h3 class="modal-title success">✔ ÉXITO</h3>
+      <p class="modal-msg">El evento ha sido eliminado correctamente.</p>
+      <div class="modal-actions">
+        <button class="btn-modal-close" (click)="showSuccessModal = false">CONTINUAR</button>
+      </div>
+    </div>
+  </div>
+}

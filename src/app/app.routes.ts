@@ -12,7 +12,34 @@ export const routes: Routes = [
   { path: 'register', loadComponent: () => import('./features/register/register') },
   { path: 'photon', loadComponent: () => import('./features/photon/photon') },
   { path: 'mindagainst', loadComponent: () => import('./features/mindagainst/mindagainst') },
-  { path: 'dashboard', loadComponent: () => import('./features/dashboard/dashboard') },
+  // ── Dashboard Admin (con child routes) ──────────
+  {
+    path: 'dashboard',
+    loadComponent: () => import('./features/dashboard/dashboard'),
+    children: [
+      { path: 'users', loadComponent: () => import('./features/users/user-list/user-list') },
+      { path: 'users/new', loadComponent: () => import('./features/users/user-new-form/user-new-form') },
+      { path: 'events', loadComponent: () => import('./features/eventos/event-list/event-list') },
+      { path: 'events/new', loadComponent: () => import('./features/events/event-new-form/event-new-form') },
+      { path: 'bars', loadComponent: () => import('./features/bars/bar-list/bar-list') },
+      { path: 'bars/new', loadComponent: () => import('./features/bars/bar-new-form/bar-new-form') },
+      { path: 'bar/edit', loadComponent: () => import('./features/bars/bar-edit-form/bar-edit-form') },
+      { path: 'carts', loadComponent: () => import('./features/cart/cart-list/cart-list') },
+      { path: 'carts/new', loadComponent: () => import('./features/cart/cart-new-form/cart-new-form') },
+      // Rutas existentes que se mantienen como child routes del dashboard
+      { path: 'user-new-form', loadComponent: () => import('./features/users/user-new-form/user-new-form') },
+      { path: 'location-new-form', loadComponent: () => import('./features/location/location-new-form/location-new-form') },
+      { path: 'category/new', loadComponent: () => import('./features/categories/category-new-form/category-new-form') },
+      { path: 'category/edit/:id', loadComponent: () => import('./features/categories/category-edit-form/category-edit-form') },
+      { path: 'category/list', loadComponent: () => import('./features/categories/category-list/category-list') },
+      { path: 'event/new', loadComponent: () => import('./features/events/event-new-form/event-new-form') },
+      { path: 'post/new', loadComponent: () => import('./features/posts/post-new-form/post-new-form') },
+      { path: 'post/list', loadComponent: () => import('./features/posts/post-list/post-list') },
+      { path: 'post/edit/:id', loadComponent: () => import('./features/posts/post-edit-form/post-edit-form') },
+      { path: 'gateway/new', loadComponent: () => import('./features/gateways/gateway-new-form/gateway-new-form') },
+      { path: 'cart/new', loadComponent: () => import('./features/cart/cart-new-form/cart-new-form') },
+    ]
+  },
   { path: 'events', loadComponent: () => import('./features/events/event-list/event-list') },
   {
     path: 'events-details',
@@ -27,64 +54,7 @@ export const routes: Routes = [
 
   { path: 'buy-ticket', loadComponent: () => import('./features/ticket/ticket-new-form') },
 
-  // ── Users ────────────────────────────────────────
-  {
-    path: 'dashboard/user-new-form',
-    loadComponent: () => import('./features/users/user-new-form/user-new-form'),
-  },
 
-  // ── Locations ────────────────────────────────────
-  {
-    path: 'dashboard/location-new-form',
-    loadComponent: () => import('./features/location/location-new-form/location-new-form'),
-  },
-  // ── Categories ───────────────────────────────────
-  {
-    path: 'dashboard/category/new',
-    loadComponent: () => import('./features/categories/category-new-form/category-new-form'),
-  },
-  {
-    path: 'dashboard/category/edit/:id',
-    loadComponent: () => import('./features/categories/category-edit-form/category-edit-form'),
-  },
-  {
-    path: 'dashboard/category/list',
-    loadComponent: () => import('./features/categories/category-list/category-list'),
-  },
-  {
-    path: 'dashboard/category/new',
-    loadComponent: () => import('./features/categories/category-new-form/category-new-form'),
-  },
-  {
-    path: 'dashboard/category/edit/:id',
-    loadComponent: () => import('./features/categories/category-edit-form/category-edit-form'),
-  },
-
-  // ── Events ───────────────────────────────────────
-  {
-    path: 'dashboard/event/new',
-    loadComponent: () => import('./features/events/event-new-form/event-new-form'),
-  },
-
-  // ── Posts ────────────────────────────────────────
-  {
-    path: 'dashboard/post/new',
-    loadComponent: () => import('./features/posts/post-new-form/post-new-form'),
-  },
-  {
-    path: 'dashboard/post/list',
-    loadComponent: () => import('./features/posts/post-list/post-list'),
-  },
-  {
-    path: 'dashboard/post/edit/:id',
-    loadComponent: () => import('./features/posts/post-edit-form/post-edit-form'),
-  },
-
-  // ── Gateways ─────────────────────────────────────
-  {
-    path: 'dashboard/gateway/new',
-    loadComponent: () => import('./features/gateways/gateway-new-form/gateway-new-form'),
-  },
 
   { path: '404', component: PageNotFound },
   { path: '', redirectTo: 'home', pathMatch: 'full' },

@@ -1,0 +1,64 @@
+<div class="list-header">
+    <h2 class="table-title">Lista de bares</h2>
+    <a class="btn-new" routerLink="/dashboard/bars/new">+ Nuevo bar</a>
+</div>
+
+<table class="admin-table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Dirección</th>
+            <th>Capacidad</th>
+            <th>Teléfono</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (bar of bars; track bar._id) {
+            <tr>
+                <td>{{ bar.name }}</td>
+                <td>{{ bar.address }}</td>
+                <td>{{ bar.capacity }}</td>
+                <td>{{ bar.contactPhone || '—' }}</td>
+                <td>
+                    @if (bar.isActive) {
+                        <span class="badge-active">Activo</span>
+                    } @else {
+                        <span class="badge-inactive">Inactivo</span>
+                    }
+                </td>
+                <td class="actions">
+                    <a class="btn-delete" (click)="onDelete(bar._id)">Eliminar</a>
+                </td>
+            </tr>
+        } @empty {
+            <tr><td colspan="6" class="empty">No hay bares registrados</td></tr>
+        }
+    </tbody>
+</table>
+
+<!-- Modal de confirmación -->
+@if (showDeleteModal) {
+  <div class="modal-overlay">
+    <div class="modal-box">
+      <h3 class="modal-title">⚠ ADVERTENCIA</h3>
+      <p class="modal-msg">¿Estás seguro de que quieres eliminar este bar?</p>
+      <div class="modal-actions">
+        <button class="btn-modal-cancel" (click)="cancelDelete()">NO, CANCELAR</button>
+        <button class="btn-modal-confirm" (click)="confirmDelete()">SÍ, ELIMINAR</button>
+      </div>
+    </div>
+  </div>
+}
+@if (showSuccessModal) {
+  <div class="modal-overlay">
+    <div class="modal-box success">
+      <h3 class="modal-title success">✔ ÉXITO</h3>
+      <p class="modal-msg">El bar ha sido eliminado correctamente.</p>
+      <div class="modal-actions">
+        <button class="btn-modal-close" (click)="showSuccessModal = false">CONTINUAR</button>
+      </div>
+    </div>
+  </div>
+}

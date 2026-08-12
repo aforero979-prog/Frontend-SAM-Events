@@ -1,0 +1,53 @@
+import { Component, inject, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { HttpBar } from '../../../core/services/http-bar';
+
+@Component({
+  selector: 'app-bar-list',
+  imports: [RouterLink],
+  templateUrl: './bar-list.html',
+  styleUrl: './bar-list.css',
+})
+export default class BarList implements OnInit {
+  private httpBar = inject(HttpBar);
+  bars: any[] = [];
+
+  showDeleteModal = false;
+  showSuccessModal = false;
+  private pendingDeleteId = '';
+
+  ngOnInit() {
+    this.loadBars();
+  }
+
+  loadBars() {
+    this.httpBar.getBars().subscribe({
+      next: (data: any) => this.bars = Array.isArray(data) ? data : [],
+      error: (err) => console.error('Error cargando bares', err),
+    });
+  }
+
+  onDelete(id: string) {
+    this.pendingDeleteId = id;
+    this.showDeleteModal = true;
+  }
+
+  confirmDelete() {
+    this.showDeleteModal = false;
+    if (!this.pendingDeleteId) return;
+    this.httpBar.deleteBar(this.pendingDeleteId).subscribe({
+      next: () => {
+        this.loadBars();
+        this.showSuccessModal = true;
+        setTimeout(() => this.showSuccessModal = false, 3000);
+      },
+      error: (err) => console.error('Error eliminando bar', err),
+    });
+    this.pendingDeleteId = '';
+  }
+
+  cancelDelete() {
+    this.showDeleteModal = false;
+    this.pendingDeleteId = '';
+  }
+}

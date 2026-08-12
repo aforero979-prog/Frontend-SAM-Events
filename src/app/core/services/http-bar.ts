@@ -1,23 +1,32 @@
 import { environment } from '../../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, Service } from '@angular/core';
+
+import { inject, Injectable } from '@angular/core';
 import { map } from 'rxjs';
-import { ResponseUsers } from '../models/users';
 
-
-@Service()
+@Injectable({ providedIn: 'root' })
 export class HttpBar {
   private http = inject(HttpClient);
-  //inyectar una dependencia 
-  //Constructor (Private: http: HttpClient) { } //inyección de dependencias
 
-  getBar() {
-    return this.http.get<any>(`${environment.apiUrl}/bar`).pipe(
+  getBars() {
+    return this.http.get<any>(`${environment.apiUrl}/bars`).pipe(
       map((res) => res.data));
   }
 
-  createBar(eventData: any) {
-    return this.http.post(`${environment.apiUrl}/bar`, eventData);
+  getBarById(id: string | null ) {
+    return this.http.get<any>(`${environment.apiUrl}/bars/${id}`);
   }
 
+  createBar(barData: any) {
+    return this.http.post(`${environment.apiUrl}/bars`, barData);
+  }
+
+  updateBar(id: string | null, barData: any) {
+    return this.http.patch<any>(`${environment.apiUrl}/bars/${id}`, barData);
+  }
+
+  deleteBar(id: string) {
+    return this.http.delete(`${environment.apiUrl}/bars/${id}`);
+  }
 }
+

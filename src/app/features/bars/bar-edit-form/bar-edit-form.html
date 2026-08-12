@@ -1,0 +1,81 @@
+<div class="form-wrapper">
+
+  <span class="corner tl"></span>
+  <span class="corner tr"></span>
+  <span class="corner bl"></span>
+  <span class="corner br"></span>
+
+  <div class="panel-header">
+    <span class="brand">S.A.M.</span>
+    <span class="badge">EDITAR:</span>
+  </div>
+
+  <h2 class="panel-title">EDITAR INFORMACIÓN DEL BAR:</h2>
+  <p class="panel-desc">Completa para actualizar la información del bar o local.</p>
+
+  <form class="admin-form" [formGroup]="formData" (ngSubmit)="onSubmit()">
+
+    <div class="field">
+      <label class="field-label" for="name">Nombre del bar</label>
+      <input class="field-input" type="text" id="name" formControlName="name" placeholder="Ej: Octava Club">
+      @if (formData.get('name')?.invalid && (formData.get('name')?.dirty || formData.get('name')?.touched)) {
+        @if (formData.get('name')?.errors?.['required']) {
+          <small class="field-error">El nombre es obligatorio</small>
+        }
+      }
+    </div>
+
+    <div class="field">
+      <label class="field-label" for="description">Descripción</label>
+      <textarea class="field-input field-textarea" id="description" formControlName="description" placeholder="Breve descripción del bar"></textarea>
+      @if (formData.get('description')?.invalid && (formData.get('description')?.dirty || formData.get('description')?.touched)) {
+        @if (formData.get('description')?.errors?.['required']) {
+          <small class="field-error">La descripción es obligatoria</small>
+        }
+      }
+    </div>
+
+    <div class="field">
+      <label class="field-label" for="imageUrl">URL de imagen</label>
+      <input class="field-input" type="text" id="imageUrl" formControlName="imageUrl" placeholder="https://...">
+      @if (formData.get('imageUrl')?.invalid && (formData.get('imageUrl')?.dirty || formData.get('imageUrl')?.touched)) {
+        @if (formData.get('imageUrl')?.errors?.['required']) {
+          <small class="field-error">La imagen es obligatoria</small>
+        }
+      }
+    </div>
+
+    <div class="field">
+      <label class="field-label" for="address">Dirección</label>
+      <input class="field-input" type="text" id="address" formControlName="address" placeholder="Ej: Cra. 8 #63-41, Chapinero">
+      @if (formData.get('address')?.invalid && (formData.get('address')?.dirty || formData.get('address')?.touched)) {
+        @if (formData.get('address')?.errors?.['required']) {
+          <small class="field-error">La dirección es obligatoria</small>
+        }
+      }
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label class="field-label" for="capacity">Capacidad</label>
+        <input class="field-input" type="number" id="capacity" formControlName="capacity" placeholder="0" min="0">
+      </div>
+      <div class="field">
+        <label class="field-label" for="contactPhone">Teléfono de contacto</label>
+        <input class="field-input" type="text" id="contactPhone" formControlName="contactPhone" placeholder="Ej: 300 123 4567">
+      </div>
+    </div>
+
+    <div class="field field-checkbox">
+      <label class="field-label">
+        <input type="checkbox" formControlName="isActive">
+        <span>Activo</span>
+      </label>
+    </div>
+
+    <button class="btn-submit" type="submit" [disabled]="formData.invalid">
+      REGISTRAR BAR →
+    </button>
+  </form>
+
+</div>

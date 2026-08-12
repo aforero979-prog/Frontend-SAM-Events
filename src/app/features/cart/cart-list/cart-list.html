@@ -1,0 +1,54 @@
+<div class="list-header">
+    <h2 class="table-title">Lista de carritos</h2>
+    <a class="btn-new" routerLink="/dashboard/carts/new">+ Nuevo carrito</a>
+</div>
+
+<table class="admin-table">
+    <thead>
+        <tr>
+            <th>Usuario (ID)</th>
+            <th>Productos</th>
+            <th>Creado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (cart of carts; track cart._id) {
+            <tr>
+                <td class="mono">{{ cart.userId }}</td>
+                <td>{{ cart.items?.length || 0 }} item(s)</td>
+                <td>{{ cart.createdAt }}</td>
+                <td class="actions">
+                    <a class="btn-delete" (click)="onDelete(cart._id)">Eliminar</a>
+                </td>
+            </tr>
+        } @empty {
+            <tr><td colspan="4" class="empty">No hay carritos registrados</td></tr>
+        }
+    </tbody>
+</table>
+
+<!-- Modal de confirmación -->
+@if (showDeleteModal) {
+  <div class="modal-overlay">
+    <div class="modal-box">
+      <h3 class="modal-title">⚠ ADVERTENCIA</h3>
+      <p class="modal-msg">¿Estás seguro de que quieres eliminar este carrito?</p>
+      <div class="modal-actions">
+        <button class="btn-modal-cancel" (click)="cancelDelete()">NO, CANCELAR</button>
+        <button class="btn-modal-confirm" (click)="confirmDelete()">SÍ, ELIMINAR</button>
+      </div>
+    </div>
+  </div>
+}
+@if (showSuccessModal) {
+  <div class="modal-overlay">
+    <div class="modal-box success">
+      <h3 class="modal-title success">✔ ÉXITO</h3>
+      <p class="modal-msg">El carrito ha sido eliminado correctamente.</p>
+      <div class="modal-actions">
+        <button class="btn-modal-close" (click)="showSuccessModal = false">CONTINUAR</button>
+      </div>
+    </div>
+  </div>
+}
