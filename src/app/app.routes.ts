@@ -18,6 +18,10 @@ export const routes: Routes = [
     path: 'events-details',
     loadComponent: () => import('./features/events/event-details/event-details'),
   },
+
+  // ──  Bares  ──────────────────────────────────────
+
+  { path: 'club-new', loadComponent: () => import('./features/bares/bar-new-form/bar-new-form')},
   
   // ── Tickets ──────────────────────────────────────
 

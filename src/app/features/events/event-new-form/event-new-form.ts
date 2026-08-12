@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AsyncPipe } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
 
 import { HttpCategory } from '../../../core/services/http-category';
@@ -9,7 +8,7 @@ import { HttpEvents } from '../../../core/services/http-events';
 
 @Component({
   selector: 'app-event-create',
-  imports: [ReactiveFormsModule, AsyncPipe],
+  imports: [ReactiveFormsModule],
   templateUrl: './event-new-form.html',
   styleUrl: './event-new-form.css',
 })
