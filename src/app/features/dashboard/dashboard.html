@@ -1,1 +1,72 @@
-<p>dashboard works!</p>
+<div class="admin-shell">
+
+  <!-- ── Sidebar ─────────────────────────────────── -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <span class="brand-logo">S.A.M.</span>
+      <span class="brand-badge">ADMIN</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a routerLink="/dashboard" routerLinkActive="nav-active" [routerLinkActiveOptions]="{exact: true}" class="nav-item">
+        <span class="nav-icon">◈</span>
+        <span>PANEL</span>
+      </a>
+      <a routerLink="/dashboard/users" routerLinkActive="nav-active" class="nav-item">
+        <span class="nav-icon">◉</span>
+        <span>USUARIOS</span>
+      </a>
+      <a routerLink="/dashboard/events" routerLinkActive="nav-active" class="nav-item">
+        <span class="nav-icon">◎</span>
+        <span>EVENTOS</span>
+      </a>
+      <a routerLink="/dashboard/bars" routerLinkActive="nav-active" class="nav-item">
+        <span class="nav-icon">◐</span>
+        <span>BARES</span>
+      </a>
+      <a routerLink="/dashboard/carts" routerLinkActive="nav-active" class="nav-item">
+        <span class="nav-icon">◑</span>
+        <span>CARRITOS</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a routerLink="/home" class="nav-item nav-item--back">
+        <span class="nav-icon">←</span>
+        <span>VOLVER AL SITIO</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- ── Main content ────────────────────────────── -->
+  <main class="admin-main">
+
+    <!-- Stats cards (solo se ven en /dashboard exacto) -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <span class="stat-number">{{ userCount }}</span>
+        <span class="stat-label">USUARIOS</span>
+        <a routerLink="/dashboard/users" class="stat-link">VER →</a>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">{{ eventCount }}</span>
+        <span class="stat-label">EVENTOS</span>
+        <a routerLink="/dashboard/events" class="stat-link">VER →</a>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">{{ barCount }}</span>
+        <span class="stat-label">BARES</span>
+        <a routerLink="/dashboard/bars" class="stat-link">VER →</a>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">{{ cartCount }}</span>
+        <span class="stat-label">CARRITOS</span>
+        <a routerLink="/dashboard/carts" class="stat-link">VER →</a>
+      </div>
+    </div>
+
+    <!-- Child routes render here -->
+    <router-outlet></router-outlet>
+  </main>
+
+</div>
