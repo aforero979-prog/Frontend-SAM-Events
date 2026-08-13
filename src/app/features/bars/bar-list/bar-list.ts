@@ -1,16 +1,18 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { HttpBar } from '../../../core/services/http-bar';
+import { BehaviorSubject } from 'rxjs';
+import { AsyncPipe, JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-bar-list',
-  imports: [RouterLink],
+  imports: [RouterLink, AsyncPipe, JsonPipe],
   templateUrl: './bar-list.html',
   styleUrl: './bar-list.css',
 })
-export default class BarList implements OnInit {
+export default class BarList {
+  barList$ = new BehaviorSubject<any>([]);
   private httpBar = inject(HttpBar);
-  bars: any[] = [];
 
   showDeleteModal = false;
   showSuccessModal = false;
@@ -22,7 +24,11 @@ export default class BarList implements OnInit {
 
   loadBars() {
     this.httpBar.getBars().subscribe({
-      next: (data: any) => this.bars = Array.isArray(data) ? data : [],
+      next: (data: any) => {
+        console.log('Bares cargados:', data);
+  
+        this.barList$.next( Array.isArray(data) ? data : [] );
+      },
       error: (err) => console.error('Error cargando bares', err),
     });
   }

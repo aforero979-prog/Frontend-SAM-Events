@@ -54,3 +54,10 @@ tr:nth-child(even) {
   background-color: #dddddd;
 }
 
+pre {
+  background-color: #dddddd;
+}
+
+.pre {
+  display: none;
+}

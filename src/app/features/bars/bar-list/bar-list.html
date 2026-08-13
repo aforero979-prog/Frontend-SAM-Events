@@ -3,6 +3,8 @@
     <a class="btn-new" routerLink="/dashboard/bars/new">+ Nuevo bar</a>
 </div>
 
+<pre class="pre">{{ barList$ | async | json }}</pre>
+
 <table class="admin-table">
     <thead>
         <tr>
@@ -15,7 +17,7 @@
         </tr>
     </thead>
     <tbody>
-        @for (bar of bars; track bar._id) {
+        @for (bar of (barList$ | async); track bar._id) {
             <tr>
                 <td>{{ bar.name }}</td>
                 <td>{{ bar.address }}</td>
