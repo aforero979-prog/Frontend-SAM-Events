@@ -13,6 +13,8 @@ export default class BarNewForm {
   private httpBar = inject(HttpBar);
   private router = inject(Router);
 
+  cities = ['Bogotá', 'Cali', 'Pereira', 'Medellín', 'Cartagena', 'Neiva'];
+
   formData: FormGroup;
 
   constructor() {
@@ -20,7 +22,9 @@ export default class BarNewForm {
       name:         new FormControl('', [Validators.required]),
       description:  new FormControl('', [Validators.required]),
       imageUrl:     new FormControl('', [Validators.required]),
+      city:         new FormControl('', [Validators.required]),
       address:      new FormControl('', [Validators.required]),
+      urlPage:      new FormControl(''),
       capacity:     new FormControl(0, [Validators.min(0)]),
       contactPhone: new FormControl(''),
       isActive:     new FormControl(true),

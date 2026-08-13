@@ -37,15 +37,15 @@ export default class BarEditForm {
             next: ( data ) => {
                 console.log( data.data )
 
-                const { name, description, imageUrl, adress, capacity, contactphone, isActive } = data.data
+                const { name, description, imageUrl, address, capacity, contactPhone, isActive } = data.data
 
                 this.formData.patchValue({
                     name: name,
                     description: description, 
                     imageUrl: imageUrl, 
-                    address: adress, 
+                    address: address, 
                     capacity: capacity, 
-                    contactphone: contactphone, 
+                    contactPhone: contactPhone, 
                     isActive: isActive
                 })
             },
