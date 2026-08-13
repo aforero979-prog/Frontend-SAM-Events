@@ -46,7 +46,7 @@ export default class UserEditForm {
         next: (res) => {
           console.log('Usuario actualizado:', res);
           // Navegar de vuelta a la lista tras guardar con éxito
-          this.router.navigate(['/user-list']);
+          this.router.navigate(['/dashboard/users']);
         },
         error: (err) => {
           console.log(err);
@@ -63,11 +63,9 @@ export default class UserEditForm {
 
     // Cargar la lista de roles
     this.httpRoles.getAll().subscribe({
-      next: (res) => {
-        this.roleList$.next(res.data);
-      },
-      error: (err) => {
-        console.log(err);
+      next: (res: any) => {
+        const list = res.roles || res.data || (Array.isArray(res) ? res : []);
+        this.roleList$.next(list);
       }
     });
 

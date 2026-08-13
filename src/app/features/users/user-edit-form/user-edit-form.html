@@ -36,11 +36,12 @@
     <div class="checkbox">
         <label for="role">Rol</label>
         <select id="role" formControlName="role">
-            <option value="" disabled>Selecciona un rol...</option>
-            @for (role of (roleList$ | async); track role.id) {
-                <option [value]="role.id">{{ role.name }}</option>
-            }
-        </select>
+    <option value="" disabled>Selecciona un rol...</option>
+    @for (role of (roleList$ | async); track role.id) {
+        <option [value]="role.id">{{ role.label || role.name }}</option>
+    }
+</select>
+
     </div>
 
     <!-- Estado activo -->
@@ -51,7 +52,7 @@
 
     <!-- Botones -->
     <div class="button-group">
-        <button class="btn btn-cancel" type="button" routerLink="/user-list">CANCELAR</button>
+        <button class="btn btn-cancel" type="button" routerLink="/dashboard/users">CANCELAR</button>
         <button class="btn" type="submit" [disabled]="formData.invalid">GUARDAR</button>
     </div>
 

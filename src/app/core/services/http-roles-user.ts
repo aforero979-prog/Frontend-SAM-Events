@@ -5,13 +5,13 @@ import { Observable } from 'rxjs';
 
 // Interfaz que representa un rol del sistema
 export interface Role {
-  id:   string; // ej: "admin" | "user" | "company"
+  id: string; // ej: "admin" | "user" | "company"
   name: string; // ej: "Administrador" | "Usuario" | "Empresa"
 }
 
 // Respuesta genérica de la API
 interface ApiResponse<T> {
-  msg:  string;
+  msg: string;
   data: T;
 }
 
