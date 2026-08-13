@@ -5,10 +5,13 @@ import { BehaviorSubject } from 'rxjs';
 
 import { HttpCategory } from '../../../core/services/http-category';
 import { HttpEvents } from '../../../core/services/http-events';
+import { HttpBar } from '../../../core/services/http-bar';
+
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-event-create',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, AsyncPipe],
   templateUrl: './event-new-form.html',
   styleUrl: './event-new-form.css',
 })
@@ -16,10 +19,12 @@ export default class EventCreateComponent {
   formData!: FormGroup;
 
   categoryList$ = new BehaviorSubject<any[]>([]); // Observable para almacenar la lista de categorías
+  barList$ = new BehaviorSubject<any[]>([]); // Observable para almacenar la lista de bares
 
   private router = inject(Router);
   private httpCategory = inject(HttpCategory);
   private httpEvents = inject(HttpEvents);
+  private httpBar = inject(HttpBar);
 
   cities = ['Bogotá', 'Cali', 'Barranquilla', 'Medellín', 'Cartagena', 'Cúcuta', 'Neiva'];
 
@@ -31,6 +36,16 @@ export default class EventCreateComponent {
       },
       error: (error) => {
         console.error('Error al obtener categorías:', error);
+      }
+    });
+
+    this.httpBar.getBars().subscribe({
+      next: (response) => {
+        console.log('Bares obtenidos:', response);
+        this.barList$.next(Array.isArray(response) ? response : response?.data || []);
+      },
+      error: (error) => {
+        console.error('Error al obtener bares:', error);
       }
     });
   }
@@ -78,6 +93,7 @@ export default class EventCreateComponent {
         }),
 
         category: new FormControl('', [Validators.required]),
+        bar: new FormControl(''),
         imageUrl: new FormControl('', [Validators.required]),
         status: new FormControl(true)
       },
@@ -118,6 +134,7 @@ export default class EventCreateComponent {
       initialDate: new Date(`${rawValues.initialDate.date}T${rawValues.initialDate.time}:00`).toISOString(),
       finalDate: new Date(`${rawValues.finalDate.date}T${rawValues.finalDate.time}:00`).toISOString(),
       category: rawValues.category,
+      bar: rawValues.bar || null,
       imageUrl: rawValues.imageUrl,
       status: rawValues.status
     };

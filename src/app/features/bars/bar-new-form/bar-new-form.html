@@ -46,6 +46,26 @@
     </div>
 
     <div class="field">
+      <label class="field-label" for="department">Departamento</label>
+      <select class="field-input" id="department" formControlName="department">
+        <option value="">-- Seleccione un departamento --</option>
+        @for (dep of (departments$ | async); track dep.id || $index) {
+          <option [value]="dep.id">{{ dep.name }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="field">
+      <label class="field-label" for="city">Ciudad / Municipio</label>
+      <select class="field-input" id="city" formControlName="city">
+        <option value="">-- Seleccione una ciudad --</option>
+        @for (city of (cities$ | async); track city.id || $index) {
+          <option [value]="city.id">{{ city.name }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="field">
       <label class="field-label" for="address">Dirección</label>
       <input class="field-input" type="text" id="address" formControlName="address" placeholder="Ej: Cra. 8 #63-41, Chapinero">
       @if (formData.get('address')?.invalid && (formData.get('address')?.dirty || formData.get('address')?.touched)) {
