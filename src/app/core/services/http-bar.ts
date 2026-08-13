@@ -10,7 +10,8 @@ export class HttpBar {
 
   getBars() {
     return this.http.get<any>(`${environment.apiUrl}/bars`).pipe(
-      map((res) => res.data));
+      map((res) => (Array.isArray(res) ? res : res?.data || []))
+    );
   }
 
   getBarById(id: string | null ) {

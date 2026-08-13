@@ -12,13 +12,14 @@ export const routes: Routes = [
   { path: 'register', loadComponent: () => import('./features/register/register') },
   { path: 'photon', loadComponent: () => import('./features/photon/photon') },
   { path: 'mindagainst', loadComponent: () => import('./features/mindagainst/mindagainst') },
-  // ── Dashboard Admin (con child routes) ──────────
+  //Dashboard Admin
   {
     path: 'dashboard',
     loadComponent: () => import('./features/dashboard/dashboard'),
     children: [
       { path: 'users', loadComponent: () => import('./features/users/user-list/user-list') },
       { path: 'users/new', loadComponent: () => import('./features/users/user-new-form/user-new-form') },
+      { path: 'user/edit/:id', loadComponent: () => import('./features/users/user-edit-form/user-edit-form') },
       { path: 'events', loadComponent: () => import('./features/eventos/event-list/event-list') },
       { path: 'events/new', loadComponent: () => import('./features/events/event-new-form/event-new-form') },
       { path: 'bars', loadComponent: () => import('./features/bars/bar-list/bar-list') },
@@ -37,7 +38,6 @@ export const routes: Routes = [
       { path: 'post/list', loadComponent: () => import('./features/posts/post-list/post-list') },
       { path: 'post/edit/:id', loadComponent: () => import('./features/posts/post-edit-form/post-edit-form') },
       { path: 'gateway/new', loadComponent: () => import('./features/gateways/gateway-new-form/gateway-new-form') },
-      { path: 'cart/new', loadComponent: () => import('./features/cart/cart-new-form/cart-new-form') },
     ]
   },
   { path: 'events', loadComponent: () => import('./features/events/event-list/event-list') },
@@ -47,14 +47,10 @@ export const routes: Routes = [
   },
 
   // ──  Bares  ──────────────────────────────────────
+  { path: 'club-new', loadComponent: () => import('./features/bars/bar-new-form/bar-new-form')},
 
-  { path: 'club-new', loadComponent: () => import('./features/bares/bar-new-form/bar-new-form')},
-  
   // ── Tickets ──────────────────────────────────────
-
   { path: 'buy-ticket', loadComponent: () => import('./features/ticket/ticket-new-form') },
-
-
 
   { path: '404', component: PageNotFound },
   { path: '', redirectTo: 'home', pathMatch: 'full' },

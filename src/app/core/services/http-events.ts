@@ -9,7 +9,8 @@ export class HttpEvents {
 
   getEvents() {
     return this.http.get<any>(`${environment.apiUrl}/events`).pipe(
-      map((res) => res.data));
+      map((res) => (Array.isArray(res) ? res : res?.data || []))
+    );
   }
 
   getEventById(id: string) {
