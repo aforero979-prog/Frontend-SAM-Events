@@ -206,6 +206,30 @@
             }
         </div> -->
 
+        <!-- Categoría del Evento -->
+        <div class="form-group">
+            <label for="category">Categoría*</label>
+            <input id="category" type="text" formControlName="category" class="form-control" placeholder="Ej: Concierto, Festival..." />
+            @if (formData.get('category')?.touched && formData.get('category')?.invalid) {
+            <div class="error-msg" style="color: red; font-size: 0.8em;">
+                <small>La categoría es obligatoria.</small>
+            </div>
+            }
+        </div>
+
+        <!-- Lugar / Bar del Evento -->
+        <div class="form-group">
+            <label for="bar">Lugar / Bar del Evento</label>
+            <select id="bar" formControlName="bar" class="form-control">
+                <option value="">-- Seleccione un lugar / bar --</option>
+                @for (b of (barList$ | async); track b._id || b.id || $index) {
+                <option [value]="b._id || b.id">
+                    {{ b.name }} {{ b.address ? '(' + b.address + ')' : '' }}
+                </option>
+                }
+            </select>
+        </div>
+
         <!-- URL Imagen -->
         <div class="form-group">
             <label for="imageUrl">URL de la Imagen*</label>
