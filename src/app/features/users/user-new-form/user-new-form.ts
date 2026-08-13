@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { HttpUser } from '../../../core/services/http-user';
 
 @Component({
   selector: 'app-user-new-form',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './user-new-form.html',
   styleUrl: './user-new-form.css',
 })
@@ -14,7 +14,7 @@ export default class UserNewForm {
   private httpUser = inject(HttpUser);
   private router = inject(Router);
 
-  roles = ['admin', 'user', 'tiar'];
+  roles = ['ADMIN', 'USER', 'BAR'];
   formData: FormGroup;
   errorMsg = '';
   successMsg = '';
@@ -36,13 +36,13 @@ export default class UserNewForm {
       this.errorMsg = '';
       this.successMsg = '';
       const { confirmPassword, ...userPayload } = this.formData.value;
-      
+
       this.httpUser.createUser(userPayload).subscribe({
         next: (res) => {
           this.successMsg = 'Usuario creado con éxito';
-          this.router.navigate(['/dashboard/user-list']);
+          this.router.navigate(['/dashboard/users']);
         },
-        error: (err) => { 
+        error: (err) => {
           console.log(err);
           this.errorMsg = err.error?.msg || 'Error al crear el usuario';
         }

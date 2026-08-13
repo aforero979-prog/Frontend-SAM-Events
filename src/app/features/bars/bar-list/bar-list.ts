@@ -27,8 +27,8 @@ export default class BarList {
     this.httpBar.getBars().subscribe({
       next: (data: any) => {
         console.log('Bares cargados:', data);
-  
-        this.barList$.next( Array.isArray(data) ? data : [] );
+        const list = Array.isArray(data) ? data : (data?.data || []);
+        this.barList$.next(list);
       },
       error: (err) => console.error('Error cargando bares', err),
     });

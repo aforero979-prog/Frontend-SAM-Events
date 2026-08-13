@@ -1,10 +1,11 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { DatePipe } from '@angular/common';
 import { HttpEvents } from '../../../core/services/http-events';
 
 @Component({
   selector: 'app-admin-event-list',
-  imports: [RouterLink],
+  imports: [RouterLink, DatePipe],
   templateUrl: './event-list.html',
   styleUrl: './event-list.css',
 })
@@ -22,7 +23,10 @@ export default class AdminEventList implements OnInit {
 
   loadEvents() {
     this.httpEvents.getEvents().subscribe({
-      next: (data: any) => this.events = Array.isArray(data) ? data : [],
+      next: (data: any) => {
+        console.log('Eventos recibidos:', data);
+        this.events = Array.isArray(data) ? data : (data?.data || []);
+      },
       error: (err) => console.error('Error cargando eventos', err),
     });
   }

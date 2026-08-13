@@ -56,9 +56,9 @@ export default class UserList implements OnInit {
   }
 
   onEdit(id: string) {
-    console.log('Editando usuario con id:', id);
-    this.router.navigate(['/user-edit-form', id]);
+    this.router.navigate(['/dashboard/user/edit', id]);
   }
+
 
   onDelete(id: string) {
     // En lugar de confirm(), abre el modal personalizado

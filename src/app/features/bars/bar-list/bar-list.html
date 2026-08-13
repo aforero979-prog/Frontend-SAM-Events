@@ -17,7 +17,7 @@
         </tr>
     </thead>
     <tbody>
-        @for (bar of (barList$ | async); track bar._id) {
+        @for (bar of (barList$ | async); track bar._id || bar.id || $index) {
             <tr>
                 <td>{{ bar.name }}</td>
                 <td>{{ bar.address }}</td>
