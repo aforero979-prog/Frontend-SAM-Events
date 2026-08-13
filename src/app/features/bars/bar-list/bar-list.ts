@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { HttpBar } from '../../../core/services/http-bar';
 import { BehaviorSubject } from 'rxjs';
 import { AsyncPipe, JsonPipe } from '@angular/common';
@@ -17,6 +17,7 @@ export default class BarList {
   showDeleteModal = false;
   showSuccessModal = false;
   private pendingDeleteId = '';
+  private router = inject( Router )
 
   ngOnInit() {
     this.loadBars();
@@ -50,6 +51,11 @@ export default class BarList {
       error: (err) => console.error('Error eliminando bar', err),
     });
     this.pendingDeleteId = '';
+  }
+
+  OnEdit(id: string) {
+    console.log('Editar', id);
+    this.router.navigateByUrl( `/dashboard/bar/edit/${id}` )
   }
 
   cancelDelete() {

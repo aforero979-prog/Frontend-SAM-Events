@@ -1,6 +1,6 @@
 import { AsyncPipe, DatePipe, JsonPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { RouterLink } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 import { BehaviorSubject } from 'rxjs';
 import { HttpEvents } from '../../../core/services/http-events';
 
@@ -15,6 +15,7 @@ export default class EventList {
   eventList$ = new BehaviorSubject<any>([]);
 
   private httpEvents = inject(HttpEvents);
+  private router = inject( Router )
 
   ngOnInit() {
     this.httpEvents.getEvents().subscribe({
@@ -28,4 +29,9 @@ export default class EventList {
       complete: () => {}
     })
   }
+
+  // onEdit( id: string ) {
+  //   console.log('Eliminar', id)
+  //   this.httpEvents.createEvent
+  // }
 }

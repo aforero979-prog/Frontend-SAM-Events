@@ -12,6 +12,7 @@ export const routes: Routes = [
   { path: 'register', loadComponent: () => import('./features/register/register') },
   { path: 'photon', loadComponent: () => import('./features/photon/photon') },
   { path: 'mindagainst', loadComponent: () => import('./features/mindagainst/mindagainst') },
+  { path: 'bar/home', loadComponent: () => import('./features/bars/bar-home/bar-home') },
   // ── Dashboard Admin (con child routes) ──────────
   {
     path: 'dashboard',
@@ -22,8 +23,8 @@ export const routes: Routes = [
       { path: 'events', loadComponent: () => import('./features/eventos/event-list/event-list') },
       { path: 'events/new', loadComponent: () => import('./features/events/event-new-form/event-new-form') },
       { path: 'bars', loadComponent: () => import('./features/bars/bar-list/bar-list') },
-      { path: 'bars/new', loadComponent: () => import('./features/bars/bar-new-form/bar-new-form') },
-      { path: 'bar/edit', loadComponent: () => import('./features/bars/bar-edit-form/bar-edit-form') },
+      { path: 'bars/new/:id', loadComponent: () => import('./features/bars/bar-new-form/bar-new-form') },
+      { path: 'bar/edit/:id', loadComponent: () => import('./features/bars/bar-edit-form/bar-edit-form') },
       { path: 'carts', loadComponent: () => import('./features/cart/cart-list/cart-list') },
       { path: 'carts/new', loadComponent: () => import('./features/cart/cart-new-form/cart-new-form') },
       // Rutas existentes que se mantienen como child routes del dashboard

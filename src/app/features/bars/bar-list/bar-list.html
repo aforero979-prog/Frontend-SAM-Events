@@ -33,6 +33,10 @@
                 <td class="actions">
                     <a class="btn-delete" (click)="onDelete(bar._id)">Eliminar</a>
                 </td>
+                <td class="actions">
+                  <button class="btn-edit" (click)="OnEdit(bar._id)">Editar</button>
+                
+                </td>
             </tr>
         } @empty {
             <tr><td colspan="6" class="empty">No hay bares registrados</td></tr>

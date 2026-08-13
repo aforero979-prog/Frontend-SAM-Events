@@ -1,2 +1,19 @@
 <h1>DESCUBRE CLUBS EN BOGOTÁ</h1>
 
+<div class="bares">
+
+    @for (bar of (barList$ | async); track $index) {
+        <div class="bar">
+
+            <a [routerLink]="['dashboard', 'bar-ditails', bar._id]">
+                <img [src]="bar.imageUrl" [alt]="bar.name" class="img-bar">
+            </a>
+
+            <div class="description">
+                <h2>{{bar.name }}</h2>
+                <p>{{ bar.descripcion }}</p>
+            </div>
+        </div>
+    }
+</div>
+
