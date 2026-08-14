@@ -44,8 +44,10 @@
                     <div class="field-group">
                         <div class="field">
                             <label for="general-stock">Aforo*</label>
-                            <input id="general-stock" type="number" formControlName="stock" class="form-control field-aforo" />
-                            @if (formData.get('localidades.general.stock')?.touched && formData.get('localidades.general.stock')?.errors?.['min']) {
+                            <input id="general-stock" type="number" formControlName="stock"
+                                class="form-control field-aforo" />
+                            @if (formData.get('localidades.general.stock')?.touched &&
+                            formData.get('localidades.general.stock')?.errors?.['min']) {
                             <div class="error-msg" style="color: red; font-size: 0.8em;">
                                 <small>El aforo mínimo es 0.</small>
                             </div>
@@ -55,7 +57,8 @@
                         <div class="field">
                             <label for="general-price">Precio*</label>
                             <input id="general-price" type="number" formControlName="price" class="form-control" />
-                            @if (formData.get('localidades.general.price')?.touched && formData.get('localidades.general.price')?.errors?.['min']) {
+                            @if (formData.get('localidades.general.price')?.touched &&
+                            formData.get('localidades.general.price')?.errors?.['min']) {
                             <div class="error-msg" style="color: red; font-size: 0.8em;">
                                 <small>El precio no puede ser negativo.</small>
                             </div>
@@ -73,8 +76,10 @@
                     <div class="field-group">
                         <div class="field">
                             <label for="vip-stock">Aforo*</label>
-                            <input id="vip-stock" type="number" formControlName="stock" class="form-control field-aforo" />
-                            @if (formData.get('localidades.vip.stock')?.touched && formData.get('localidades.vip.stock')?.errors?.['min']) {
+                            <input id="vip-stock" type="number" formControlName="stock"
+                                class="form-control field-aforo" />
+                            @if (formData.get('localidades.vip.stock')?.touched &&
+                            formData.get('localidades.vip.stock')?.errors?.['min']) {
                             <div class="error-msg" style="color: red; font-size: 0.8em;">
                                 <small>El aforo mínimo es 0.</small>
                             </div>
@@ -84,7 +89,8 @@
                         <div class="field">
                             <label for="vip-price">Precio*</label>
                             <input id="vip-price" type="number" formControlName="price" class="form-control" />
-                            @if (formData.get('localidades.vip.price')?.touched && formData.get('localidades.vip.price')?.errors?.['min']) {
+                            @if (formData.get('localidades.vip.price')?.touched &&
+                            formData.get('localidades.vip.price')?.errors?.['min']) {
                             <div class="error-msg" style="color: red; font-size: 0.8em;">
                                 <small>El precio no puede ser negativo.</small>
                             </div>
@@ -101,8 +107,10 @@
                     <div class="field-group">
                         <div class="field">
                             <label for="backstage-stock">Aforo*</label>
-                            <input id="backstage-stock" type="number" formControlName="stock" class="form-control field-aforo" />
-                            @if (formData.get('localidades.backstage.stock')?.touched && formData.get('localidades.backstage.stock')?.errors?.['min']) {
+                            <input id="backstage-stock" type="number" formControlName="stock"
+                                class="form-control field-aforo" />
+                            @if (formData.get('localidades.backstage.stock')?.touched &&
+                            formData.get('localidades.backstage.stock')?.errors?.['min']) {
                             <div class="error-msg" style="color: red; font-size: 0.8em;">
                                 <small>El aforo mínimo es 0.</small>
                             </div>
@@ -112,7 +120,8 @@
                         <div class="field">
                             <label for="backstage-price">Precio*</label>
                             <input id="backstage-price" type="number" formControlName="price" class="form-control" />
-                            @if (formData.get('localidades.backstage.price')?.touched && formData.get('localidades.backstage.price')?.errors?.['min']) {
+                            @if (formData.get('localidades.backstage.price')?.touched &&
+                            formData.get('localidades.backstage.price')?.errors?.['min']) {
                             <div class="error-msg" style="color: red; font-size: 0.8em;">
                                 <small>El precio no puede ser negativo.</small>
                             </div>
@@ -129,8 +138,10 @@
                     <div class="field-group">
                         <div class="field">
                             <label for="palco-stock">Aforo*</label>
-                            <input id="palco-stock" type="number" formControlName="stock" class="form-control field-aforo" />
-                            @if (formData.get('localidades.palco.stock')?.touched && formData.get('localidades.palco.stock')?.errors?.['min']) {
+                            <input id="palco-stock" type="number" formControlName="stock"
+                                class="form-control field-aforo" />
+                            @if (formData.get('localidades.palco.stock')?.touched &&
+                            formData.get('localidades.palco.stock')?.errors?.['min']) {
                             <div class="error-msg" style="color: red; font-size: 0.8em;">
                                 <small>El aforo mínimo es 0.</small>
                             </div>
@@ -139,8 +150,10 @@
 
                         <div class="field">
                             <label for="palco-price">Precio*</label>
-                            <input id="palco-price" type="number" formControlName="price" class="form-control field-precio" />
-                            @if (formData.get('localidades.palco.price')?.touched && formData.get('localidades.palco.price')?.errors?.['min']) {
+                            <input id="palco-price" type="number" formControlName="price"
+                                class="form-control field-precio" />
+                            @if (formData.get('localidades.palco.price')?.touched &&
+                            formData.get('localidades.palco.price')?.errors?.['min']) {
                             <div class="error-msg" style="color: red; font-size: 0.8em;">
                                 <small>El precio no puede ser negativo.</small>
                             </div>
@@ -188,28 +201,11 @@
         </div>
         }
 
-        <!-- Categoría / Ciudad -->
-        <div class="form-group">
-            <label for="category">Ciudad*</label>
-            <select id="category" formControlName="category" class="form-control">
-                <option value="" disabled>Seleccione una opción</option>
-                @for (city of cities; track city) {
-                <option [value]="city">
-                    {{ city }}
-                </option>
-                }
-            </select>
-            @if (formData.get('category')?.touched && formData.get('category')?.invalid) {
-            <div class="error-msg" style="color: red; font-size: 0.8em;">
-                <small>Debe seleccionar una opción.</small>
-            </div>
-            }
-        </div>
-
         <!-- Categoría del Evento -->
         <div class="form-group">
             <label for="category">Categoría*</label>
-            <input id="category" type="text" formControlName="category" class="form-control" placeholder="Ej: Concierto, Festival..." />
+            <input id="category" type="text" formControlName="category" class="form-control"
+                placeholder="Ej: Concierto, Festival..." />
             @if (formData.get('category')?.touched && formData.get('category')?.invalid) {
             <div class="error-msg" style="color: red; font-size: 0.8em;">
                 <small>La categoría es obligatoria.</small>
@@ -224,7 +220,9 @@
                 <option value="">-- Seleccione un lugar / bar --</option>
                 @for (b of (barList$ | async); track b._id || b.id || $index) {
                 <option [value]="b._id || b.id">
-                    {{ b.name }} {{ b.address ? '(' + b.address + ')' : '' }}
+                    <strong>{{ b.name }}</strong>
+                    - {{ b.city ? b.city : '' }}, {{ b.department ? b.department : '' }} -
+                    <em>{{ b.address ? b.address : '' }}</em>
                 </option>
                 }
             </select>

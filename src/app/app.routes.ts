@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 
 import Home from './features/home/home';
 import PageNotFound from './features/page-not-found/page-not-found';
-import { authGuard } from './core/guards/auth-guard';
 
 export const routes: Routes = [
   // ── 1. Redirección inicial ──────────────────────────────────────
@@ -34,7 +33,7 @@ export const routes: Routes = [
     loadComponent: () => import('./features/dashboard/dashboard'),
     children: [
       // Usuarios
-      { path: 'users', loadComponent: () => import('./features/users/user-list/user-list'), canActivate: [authGuard] },
+      { path: 'users', loadComponent: () => import('./features/users/user-list/user-list') },
       { path: 'user/new', loadComponent: () => import('./features/users/user-new-form/user-new-form') },
       { path: 'user/edit/:id', loadComponent: () => import('./features/users/user-edit-form/user-edit-form') },
 

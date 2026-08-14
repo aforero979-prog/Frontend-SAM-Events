@@ -26,8 +26,6 @@ export default class EventCreateComponent {
   private httpEvents = inject(HttpEvents);
   private httpBar = inject(HttpBar);
 
-  cities = ['Bogotá', 'Cali', 'Barranquilla', 'Medellín', 'Cartagena', 'Cúcuta', 'Neiva'];
-
   ngOnInit(): void {
     this.httpCategory.getCategories().subscribe({
       next: (response) => {

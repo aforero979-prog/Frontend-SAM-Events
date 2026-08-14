@@ -17,10 +17,9 @@ export default class BarNewForm implements OnInit {
     private httpColombia = inject(HttpApiColombia);
     private router = inject(Router);
 
-
-  cities = ['Bogotá', 'Cali', 'Pereira', 'Medellín', 'Cartagena', 'Neiva'];
-
-  formData: FormGroup;
+    departments$ = new BehaviorSubject<any[]>([]);
+    cities$ = new BehaviorSubject<any[]>([]);
+    formData: FormGroup;
 
   constructor() {
     this.formData = new FormGroup({
@@ -37,14 +36,7 @@ export default class BarNewForm implements OnInit {
     });
   }
 
-    // Observables para manejar los departamentos y ciudades
-    departments$ = new BehaviorSubject<any[]>([]);
-    cities$ = new BehaviorSubject<any[]>([]);
-
-    // Formulario
-
     ngOnInit() {
-        // Trae los departamentos de Colombia
         this.httpColombia.getDepartments().subscribe({
             next: (deps) => {
                 console.log('Departamentos obtenidos:', deps);
@@ -53,22 +45,25 @@ export default class BarNewForm implements OnInit {
             error: (err) => console.error('Error al obtener departamentos:', err)
         });
 
-        // Detecta el cambio de departamento para traer las ciudades
-        // valueChanges es un observable que emite el nuevo valor del formulario
-        this.formData.get('department')?.valueChanges.subscribe((departmentId) => {
-            console.log('Departamento seleccionado:', departmentId);
-            // Resetear la ciudad
+        this.formData.get('department')?.valueChanges.subscribe((depName) => {
+            console.log('Departamento seleccionado:', depName);
             this.formData.get('city')?.setValue('');
 
-            if (departmentId) {
-                // Trae las ciudades del departamento seleccionado
-                this.httpColombia.getCitiesByDepartment(departmentId).subscribe({
-                    next: (cities) => {
-                        console.log('Ciudades obtenidas:', cities);
-                        this.cities$.next(cities || []);
-                    },
-                    error: (err) => console.error('Error al obtener ciudades:', err)
-                });
+            if (depName) {
+                const deps = this.departments$.getValue();
+                const foundDep = deps.find(d => d.name === depName || d.id === depName);
+
+                if (foundDep?.id) {
+                    this.httpColombia.getCitiesByDepartment(foundDep.id).subscribe({
+                        next: (cities) => {
+                            console.log('Ciudades obtenidas:', cities);
+                            this.cities$.next(cities || []);
+                        },
+                        error: (err) => console.error('Error al obtener ciudades:', err)
+                    });
+                } else {
+                    this.cities$.next([]);
+                }
             } else {
                 this.cities$.next([]);
             }
