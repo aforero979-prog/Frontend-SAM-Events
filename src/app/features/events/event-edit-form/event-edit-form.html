@@ -1,6 +1,6 @@
 <div class="page page-event">
     <form [formGroup]="formData" (ngSubmit)="onSubmit()" class="event-form">
-        <h2>Crear / Editar Evento</h2>
+        <h2>Editar Evento</h2>
 
         <!-- Nombre del Evento -->
         <div class="form-group">
@@ -189,7 +189,7 @@
         }
 
         <!-- Categoría / Ciudad -->
-        <div class="form-group">
+        <!-- <div class="form-group">
             <label for="category">Ciudad*</label>
             <select id="category" formControlName="category" class="form-control">
                 <option value="" disabled>Seleccione una opción</option>
@@ -202,17 +202,6 @@
             @if (formData.get('category')?.touched && formData.get('category')?.invalid) {
             <div class="error-msg" style="color: red; font-size: 0.8em;">
                 <small>Debe seleccionar una opción.</small>
-            </div>
-            }
-        </div>
-
-        <!-- Categoría del Evento -->
-        <!-- <div class="form-group">
-            <label for="category">Categoría*</label>
-            <input id="category" type="text" formControlName="category" class="form-control" placeholder="Ej: Concierto, Festival..." />
-            @if (formData.get('category')?.touched && formData.get('category')?.invalid) {
-            <div class="error-msg" style="color: red; font-size: 0.8em;">
-                <small>La categoría es obligatoria.</small>
             </div>
             }
         </div> -->

@@ -1,25 +1,81 @@
-<h1 class="titulo">Próximos eventos:</h1>
-
-<div class="eventos">
-
-    @for (event of (eventList$ | async); track $index) {
-    <div class="evento">
-
-        <a [routerLink]="['dashboard', 'event-details', event._id]">
-            <img class="img-event" [alt]="event.name" [src]="event.imageUrl">
-        </a>
-
-        <div class="descripcion">
-            <h2>{{ event.name }}</h2>
-            <p>{{ event.initialDate | date }}</p>
-        </div>
-
-        <div class="button">
-            <a class="btn-accent" [routerLink]="['/dashboard', 'event-details', event._id]">COMPRAR TICKET</a>
-        </div>
-
-    </div>
-    }
-
-
+<div class="list-header">
+    <h2 class="table-title">Lista de eventos</h2>
+    <a class="btn-new" routerLink="events/new">+ Nuevo evento</a>
 </div>
+
+<pre class="pre">{{ eventList$ | async | json }}</pre>
+
+<table class="admin-table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Localidades</th>
+            <th>Capacidad</th>
+            <th>precio</th>
+            <th>Fecha de inicio</th>
+            <th>Fecha de finalización</th>
+            <th>Ciudad</th>
+            <th>Imagen Url</th>
+
+
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (event of (eventList$ | async); track event._id || event.id || $index) {
+            <tr>
+                <td>{{ event.name }}</td>
+                <td>{{ event.localidades }}</td>
+                <td>{{ event.stock }}</td>
+                <td>{{ event.initialDate }}</td>
+                <td>{{ event.finalDate }}</td>
+                <td>{{ event.city }}</td>
+                <td>{{ event.imageUrl }}</td>
+                <td>{{ event.status }}</td>
+     
+
+                <td>
+                    @if (event.isActive) {
+                        <span class="badge-active">Activo</span>
+                    } @else {
+                        <span class="badge-inactive">Inactivo</span>
+                    }
+                </td>
+                <td class="actions">
+                    <a class="btn-delete" (click)="onDelete(event._id)">Eliminar</a>
+                </td>
+                <td class="actions">
+                  <button class="btn-edit" (click)="OnEdit(event._id)">Editar</button>
+                
+                </td>
+            </tr>
+        } @empty {
+            <tr><td colspan="6" class="empty">No hay eventos registrados</td></tr>
+        }
+    </tbody>
+</table>
+
+<!-- Modal de confirmación -->
+@if (showDeleteModal) {
+  <div class="modal-overlay">
+    <div class="modal-box">
+      <h3 class="modal-title">⚠ ADVERTENCIA</h3>
+      <p class="modal-msg">¿Estás seguro de que quieres eliminar este evento?</p>
+      <div class="modal-actions">
+        <button class="btn-modal-cancel" (click)="cancelDelete()">NO, CANCELAR</button>
+        <button class="btn-modal-confirm" (click)="confirmDelete()">SÍ, ELIMINAR</button>
+      </div>
+    </div>
+  </div>
+}
+@if (showSuccessModal) {
+  <div class="modal-overlay">
+    <div class="modal-box success">
+      <h3 class="modal-title success">✔ ÉXITO</h3>
+      <p class="modal-msg">El bar ha sido eliminado correctamente.</p>
+      <div class="modal-actions">
+        <button class="btn-modal-close" (click)="showSuccessModal = false">CONTINUAR</button>
+      </div>
+    </div>
+  </div>
+}

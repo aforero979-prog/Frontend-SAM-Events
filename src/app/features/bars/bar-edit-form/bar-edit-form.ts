@@ -70,7 +70,7 @@ export default class BarEditForm {
                     console.error( err )
                 },
                 complete: () => {
-                    console.log( 'La informacion del bar ha sido editada correctamente' )
+                    console.log( 'La informacion del bar ha sido actualizada' )
                 }
             })
         } else {

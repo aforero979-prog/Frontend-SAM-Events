@@ -13,19 +13,19 @@ export class HttpEvents {
     );
   }
 
-  getEventById(id: string) {
-    return this.http.get(`${environment.apiUrl}/events/${id}`);
+  getEventById(id: string | null) {
+    return this.http.get<any>(`${environment.apiUrl}/events/${id}`);
   }
 
   createEvent(eventData: any) {
-    return this.http.post(`${environment.apiUrl}/events`, eventData);
+    return this.http.post<any>(`${environment.apiUrl}/events`, eventData);
   }
 
-  updateEvent(id: string, eventData: any) {
-    return this.http.patch(`${environment.apiUrl}/events/${id}`, eventData);
+  updateEvent(id: string | null, eventData: any) {
+    return this.http.patch<any>(`${environment.apiUrl}/events/${id}`, eventData);
   }
 
-  deleteEvent(id: string) {
-    return this.http.delete(`${environment.apiUrl}/events/${id}`);
+  deleteEvent(id: string | null) {
+    return this.http.delete<any>(`${environment.apiUrl}/events/${id}`);
   }
 }

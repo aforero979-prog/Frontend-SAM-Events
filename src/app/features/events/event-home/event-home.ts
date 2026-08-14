@@ -5,12 +5,12 @@ import { BehaviorSubject } from 'rxjs';
 import { HttpEvents } from '../../../core/services/http-events';
 
 @Component({
-  selector: 'app-event-list',
-  imports: [RouterLink, JsonPipe, AsyncPipe],
-  templateUrl: './event-list.html',
-  styleUrl: './event-list.css',
+  selector: 'app-event-home',
+  imports: [RouterLink, DatePipe, AsyncPipe],
+  templateUrl: './event-home.html',
+  styleUrl: './event-home.css',
 })
-export default class EventList {
+export default class EventHome {
 
   eventList$ = new BehaviorSubject<any>([]);
 

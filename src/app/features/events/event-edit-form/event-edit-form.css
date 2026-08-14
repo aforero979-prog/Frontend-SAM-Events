@@ -1,0 +1,243 @@
+.page.page-event {
+    margin: 9rem 2rem;
+}
+
+
+/* ==========================================================================
+   Contenedor Principal y Estructura
+   ========================================================================== */
+.page-event {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem 1rem;
+  background-color: #f4f6f9;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-sizing: border-box;
+}
+
+.event-form {
+  background: #ffffff;
+  width: 100%;
+  max-width: 650px;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.event-form h2 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-size: 1.75rem;
+  color: #1e293b;
+  text-align: center;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 0.75rem;
+}
+
+/* ==========================================================================
+   Campos de Formulario (Form Groups & Controls)
+   ========================================================================== */
+.form-group {
+  margin-bottom: 1.25rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label,
+.field > label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #475569;
+  margin-bottom: 0.4rem;
+}
+
+.form-control {
+  padding: 0.75rem 0.9rem;
+  font-size: 0.95rem;
+  color: #334155;
+  background-color: #f8fafc;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  transition: all 0.2s ease-in-out;
+  box-sizing: border-box;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #2563eb;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+textarea.form-control {
+  resize: vertical;
+  min-height: 90px;
+}
+
+/* Filas con múltiples columnas */
+.form-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.form-row .col {
+  flex: 1;
+  margin-bottom: 0; /* Anula el margin del form-group */
+}
+
+/* ==========================================================================
+   Fieldsets / Grupos de Fechas
+   ========================================================================== */
+.form-section {
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.25rem;
+  background-color: #fafafa;
+}
+
+.form-section legend {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #2563eb;
+  padding: 0 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ==========================================================================
+   Opciones de Localidades (Radio Buttons / Options)
+   ========================================================================== */
+.field {
+  margin-bottom: 1.25rem;
+}
+
+.options {
+  display: block;
+  align-items: center;
+  gap: 0.5rem;
+  margin-right: 1.25rem;
+  margin-top: 0.5rem;
+  cursor: pointer;
+}
+
+.options input[type="radio"],
+.checkbox-group input[type="checkbox"] {
+  accent-color: #2563eb;
+  width: 1.1rem;
+  height: 1.1rem;
+  cursor: pointer;
+}
+
+.options label,
+.checkbox-group label {
+  font-weight: 500;
+  color: #334155;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ==========================================================================
+   Botón y Mensajes de Validación
+   ========================================================================== */
+.error-msg {
+  color: #dc2626 !important;
+  margin-top: 0.35rem;
+  font-weight: 500;
+}
+
+.error-msg.alert {
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  padding: 0.75rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.btn-submit {
+  width: 100%;
+  padding: 0.85rem 1.5rem;
+  background-color: #2563eb;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.btn-submit:hover:not(:disabled) {
+  background-color: #1d4ed8;
+}
+
+.btn-submit:active:not(:disabled) {
+  transform: scale(0.99);
+}
+
+.btn-submit:disabled {
+  background-color: #94a3b8;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.localidades {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    flex-direction: row;
+    justify-content: start;
+}
+
+.option {
+    width: 48%;
+}
+
+.field-group {
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    margin: 1rem 0;
+    gap: 1rem;
+}
+
+.field-aforo {
+    width: 5rem;
+}
+
+/* ==========================================================================
+   Diseño Adaptable (Responsive - Móviles)
+   ========================================================================== */
+@media (max-width: 600px) {
+  .localidades {
+    flex-direction: column;
+  }
+
+
+  .event-form {
+    padding: 1.5rem;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .form-row .col {
+    margin-bottom: 1.25rem;
+  }
+
+  .options {
+    display: flex;
+    margin-bottom: 0.5rem;
+  }
+}

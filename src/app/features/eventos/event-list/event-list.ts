@@ -1,7 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { HttpEvents } from '../../../core/services/http-events';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-admin-event-list',
@@ -10,12 +11,16 @@ import { HttpEvents } from '../../../core/services/http-events';
   styleUrl: './event-list.css',
 })
 export default class AdminEventList implements OnInit {
+
+  eventList$ = new BehaviorSubject<any>([])
   private httpEvents = inject(HttpEvents);
+
   events: any[] = [];
 
   showDeleteModal = false;
   showSuccessModal = false;
   private pendingDeleteId = '';
+  private router = inject( Router )
 
   ngOnInit() {
     this.loadEvents();
@@ -53,5 +58,10 @@ export default class AdminEventList implements OnInit {
   cancelDelete() {
     this.showDeleteModal = false;
     this.pendingDeleteId = '';
+  }
+
+  onEdit(id: string) {
+    console.log('Editar', id)
+    this.router.navigateByUrl( '/dashboard/event/edit')
   }
 }
