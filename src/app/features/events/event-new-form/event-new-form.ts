@@ -142,7 +142,7 @@ export default class EventCreateComponent {
     console.log('DATOS COMPLETOS DEL FORMULARIO CAPTURADOS:', payload);
     this.httpEvents.createEvent(payload).subscribe({
       next: () => {
-        //this.router.navigate(['/events']);
+        this.router.navigate(['/dashboard/events']);
       },
       error: (error) => {
         console.error('Error al crear el evento:', error);

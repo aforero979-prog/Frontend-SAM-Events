@@ -33,7 +33,7 @@ export default class CategoryNewForm {
       next: ( data ) => {
         console.log( data )
         this.formData.reset()
-        this.router.navigateByUrl( '/category/list' )
+        this.router.navigateByUrl( '/dashboard/categories' )
       },
       error: ( err ) => {
         console.error( err )

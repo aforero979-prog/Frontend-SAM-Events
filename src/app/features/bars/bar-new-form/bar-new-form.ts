@@ -95,7 +95,7 @@ export default class BarNewForm implements OnInit {
                 next: (data) => {
                     console.log(data)
                     this.formData.reset()
-                    this.router.navigateByUrl('/bar/list')
+                    this.router.navigateByUrl('/dashboard/bars')
                 },
                 error: (err) => {
                     console.error(err)
