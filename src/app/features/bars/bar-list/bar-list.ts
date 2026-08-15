@@ -20,6 +20,7 @@ export default class BarList {
   private router = inject( Router )
 
   ngOnInit() {
+    window.scrollTo(0, 0);
     this.loadBars();
   }
 

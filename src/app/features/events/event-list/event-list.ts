@@ -23,6 +23,7 @@ export default class EventList {
   
 
   ngOnInit() {
+    window.scrollTo(0, 0);
     this.loadEvents();
   }
 

@@ -146,6 +146,7 @@ export default class EventEditForm {
   };
 
   ngOnInit() {
+    window.scrollTo(0, 0);
     this.selectedId = this.activatedRoute.snapshot.paramMap.get('id');
 
     this.httpBar.getBars().subscribe({

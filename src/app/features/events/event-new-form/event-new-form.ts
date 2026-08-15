@@ -29,6 +29,7 @@ export default class EventCreateComponent {
   private httpBar = inject(HttpBar);
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     this.httpCategory.getCategories().subscribe({
       next: (response) => {
         console.log('Categorías obtenidas:', response);
