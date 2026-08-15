@@ -194,50 +194,117 @@ textarea.form-control {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
-    flex-direction: row;
-    justify-content: start;
 }
 
 .option {
-    width: 48%;
+    width: calc(50% - 0.5rem);
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    box-sizing: border-box;
 }
 
-.field-group {
+.localidad-name {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+    display: block;
+    cursor: pointer;
+}
+
+.localidad-row {
     display: flex;
-    justify-content: start;
-    align-items: start;
-    margin: 1rem 0;
+    align-items: flex-start;
+    gap: 0.75rem;
+}
+
+.localidad-chk {
+    accent-color: #2563eb;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-top: 1.8rem;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.field-inline {
+    flex: 1;
+    min-width: 0;
+    margin-bottom: 0 !important;
+}
+
+.field-inline label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 0.25rem;
+}
+
+.field-inline .form-control {
+    width: 100%;
+}
+
+.bar-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.bar-row .col {
+    flex: 1;
+    min-width: 0;
+    margin-bottom: 0;
+}
+
+.date-time-row {
+    display: flex;
     gap: 1rem;
 }
 
-.field-aforo {
-    width: 5rem;
+.date-time-row .col {
+    flex: 1;
+    min-width: 0;
+}
+
+.dates-row {
+    display: flex;
+    gap: 1rem;
+}
+
+.dates-row .form-section {
+    flex: 1;
+    min-width: 0;
+    margin-bottom: 1.25rem;
 }
 
 /* ==========================================================================
    Diseño Adaptable (Responsive - Móviles)
    ========================================================================== */
 @media (max-width: 600px) {
-  .localidades {
-    flex-direction: column;
+  .option {
+    width: 100%;
   }
-
 
   .event-form {
-    padding: 1.5rem;
+    padding: 1.25rem;
   }
 
-  .form-row {
+  .bar-row {
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .dates-row {
     flex-direction: column;
     gap: 0;
   }
 
-  .form-row .col {
-    margin-bottom: 1.25rem;
-  }
-
-  .options {
-    display: flex;
-    margin-bottom: 0.5rem;
+  .date-time-row {
+    flex-direction: row;
+    gap: 0.5rem;
   }
 }

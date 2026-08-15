@@ -17,6 +17,8 @@ import { AsyncPipe } from '@angular/common';
 })
 export default class EventCreateComponent {
   formData!: FormGroup;
+  serverErrorMessage: string = '';
+  bars: any[] = [];
 
   categoryList$ = new BehaviorSubject<any[]>([]); // Observable para almacenar la lista de categorías
   barList$ = new BehaviorSubject<any[]>([]); // Observable para almacenar la lista de bares
@@ -40,7 +42,10 @@ export default class EventCreateComponent {
     this.httpBar.getBars().subscribe({
       next: (response) => {
         console.log('Bares obtenidos:', response);
-        this.barList$.next(Array.isArray(response) ? response : response?.data || []);
+        const list = Array.isArray(response) ? response : response?.data || [];
+        this.bars = list;
+        this.barList$.next(list);
+        this.formData.updateValueAndValidity();
       },
       error: (error) => {
         console.error('Error al obtener bares:', error);
@@ -90,33 +95,99 @@ export default class EventCreateComponent {
           time: new FormControl('', [Validators.required])
         }),
 
-        category: new FormControl('', [Validators.required]),
+        category: new FormControl('General'),
         bar: new FormControl(''),
         imageUrl: new FormControl('', [Validators.required]),
         status: new FormControl(true)
       },
       {
-        validators: [this.dateRangeValidator]
+        validators: [this.dateRangeValidator, this.barCapacityValidator]
       }
     );
   }
 
-  private dateRangeValidator = (group: AbstractControl): ValidationErrors | null => {
-    const init = group.get('initialDate')?.value;
-    const final = group.get('finalDate')?.value;
+  private barCapacityValidator = (group: AbstractControl): ValidationErrors | null => {
+    const barId = group.get('bar')?.value;
+    if (!barId) return null;
 
-    if (init?.date && init?.time && final?.date && final?.time) {
-      const start = new Date(`${init.date}T${init.time}:00`);
-      const end = new Date(`${final.date}T${final.time}:00`);
+    const selectedBar = this.bars.find(b => (b._id || b.id) === barId);
+    if (!selectedBar || selectedBar.capacity === undefined || selectedBar.capacity === null) return null;
 
-      if (end < start) {
-        return { dateRangeInvalid: true };
-      }
+    const localidades = group.get('localidades')?.value || {};
+    const general = Number(localidades.general?.stock) || 0;
+    const vip = Number(localidades.vip?.stock) || 0;
+    const backstage = Number(localidades.backstage?.stock) || 0;
+    const palco = Number(localidades.palco?.stock) || 0;
+
+    const totalStock = general + vip + backstage + palco;
+    if (totalStock > selectedBar.capacity) {
+      return {
+        capacityExceeded: {
+          totalStock,
+          capacity: selectedBar.capacity
+        }
+      };
     }
     return null;
   };
 
+  /**
+   * Validador personalizado para el rango de fechas y horas del evento.
+   * Valida:
+   * 1. Que la fecha/hora de finalización no sea anterior o igual a la de inicio.
+   * 2. Que la duración total del evento sea de al menos 40 minutos.
+   * Funciona dinámicamente tanto si el evento es el mismo día como si abarca días diferentes.
+   */
+  private dateRangeValidator = (group: AbstractControl): ValidationErrors | null => {
+    const init = group.get('initialDate')?.value;
+    const final = group.get('finalDate')?.value;
+
+    // Si falta alguno de los valores requeridos de fecha u hora, omitimos la validación de rango (Validators.required se encarga)
+    if (!init?.date || !init?.time || !final?.date || !final?.time) {
+      return null;
+    }
+
+    // Construir los objetos Date a partir de la fecha (AAAA-MM-DD) y la hora (HH:mm)
+    const startDate = new Date(`${init.date}T${init.time}:00`);
+    const endDate = new Date(`${final.date}T${final.time}:00`);
+
+    // Comprobación de seguridad: verificar que las fechas sean instancias válidas de Date
+    if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+      return { invalidDateFormat: true };
+    }
+
+    // Caso 1: La fecha y hora final es estrictamente anterior o igual a la fecha y hora inicial
+    if (endDate <= startDate) {
+      return { endDateBeforeStartDate: true };
+    }
+
+    // Caso 2: Calcular la diferencia real en minutos (1 minuto = 60,000 ms)
+    const diffInMs = endDate.getTime() - startDate.getTime();
+    const diffInMinutes = diffInMs / (1000 * 60);
+    const MIN_DURATION_MINUTES = 40;
+
+    // Si la duración calculada es inferior a 40 minutos, devolver error con los datos de tiempo
+    if (diffInMinutes < MIN_DURATION_MINUTES) {
+      return {
+        minDurationInvalid: {
+          currentMinutes: Math.round(diffInMinutes),
+          minRequiredMinutes: MIN_DURATION_MINUTES
+        }
+      };
+    }
+
+    // Si cumple todas las restricciones de tiempo y duración, el rango es coherente y válido
+    return null;
+  };
+
+  get selectedBar() {
+    const barId = this.formData.get('bar')?.value;
+    if (!barId) return null;
+    return this.bars.find(b => (b._id || b.id) === barId) || null;
+  }
+
   onSubmit(): void {
+    this.serverErrorMessage = '';
     if (this.formData.invalid) {
       this.formData.markAllAsTouched();
       return;
@@ -144,6 +215,7 @@ export default class EventCreateComponent {
       },
       error: (error) => {
         console.error('Error al crear el evento:', error);
+        this.serverErrorMessage = error.error?.msj || error.message || 'Error al crear el evento';
       }
     });
   }

@@ -2,33 +2,101 @@
     <form [formGroup]="formData" (ngSubmit)="onSubmit()" class="event-form">
         <h2>Crear / Editar Evento</h2>
 
-        <!-- Nombre del Evento -->
-        <div class="form-group">
-            <label for="name">Nombre del Evento*</label>
-            <input id="name" type="text" formControlName="name" class="form-control" />
+        <!-- GRUPO: Información General del Evento -->
+        <fieldset class="form-section">
+            <legend>Información General</legend>
 
-            @if (formData.get('name')?.touched && formData.get('name')?.invalid) {
-            <div class="error-msg" style="color: red; font-size: 0.8em;">
-                @if (formData.get('name')?.errors?.['required']) {
-                <small>El nombre es obligatorio.</small>
-                }
-                @if (formData.get('name')?.errors?.['maxlength']) {
-                <small>Máximo 100 caracteres.</small>
+            <!-- Fila 1: Nombre del Evento (Izquierda) | URL de la Imagen (Derecha) -->
+            <div class="form-row">
+                <div class="form-group col">
+                    <label for="name">Nombre del Evento*</label>
+                    <input id="name" type="text" formControlName="name" class="form-control" />
+
+                    @if (formData.get('name')?.touched && formData.get('name')?.invalid) {
+                    <div class="error-msg" style="color: red; font-size: 0.8em;">
+                        @if (formData.get('name')?.errors?.['required']) {
+                        <small>El nombre es obligatorio.</small>
+                        }
+                        @if (formData.get('name')?.errors?.['maxlength']) {
+                        <small>Máximo 100 caracteres.</small>
+                        }
+                    </div>
+                    }
+                </div>
+
+                <div class="form-group col">
+                    <label for="imageUrl">URL de la Imagen*</label>
+                    <input id="imageUrl" type="url" formControlName="imageUrl" class="form-control" />
+                    @if (formData.get('imageUrl')?.touched && formData.get('imageUrl')?.invalid) {
+                    <div class="error-msg" style="color: red; font-size: 0.8em;">
+                        <small>La URL de la imagen es obligatoria.</small>
+                    </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Descripción -->
+            <div class="form-group">
+                <label for="description">Descripción*</label>
+                <textarea id="description" formControlName="description" class="form-control" rows="3"></textarea>
+                @if (formData.get('description')?.touched && formData.get('description')?.invalid) {
+                <div class="error-msg" style="color: red; font-size: 0.8em;">
+                    <small>La descripción es obligatoria.</small>
+                </div>
                 }
             </div>
-            }
-        </div>
 
-        <!-- Descripción -->
-        <div class="form-group">
-            <label for="description">Descripción*</label>
-            <textarea id="description" formControlName="description" class="form-control" rows="3"></textarea>
-            @if (formData.get('description')?.touched && formData.get('description')?.invalid) {
-            <div class="error-msg" style="color: red; font-size: 0.8em;">
-                <small>La descripción es obligatoria.</small>
+            <!-- Estado (Activo / Inactivo) -->
+            <div class="form-group checkbox-group" style="margin-top: 0.75rem; margin-bottom: 0.25rem;">
+                <label for="status">
+                    <input id="status" type="checkbox" formControlName="status" />Evento Activo
+                </label>
+            </div>
+        </fieldset>
+
+        <!-- GRUPO: Lugar / Bar del Evento -->
+        <fieldset class="form-section">
+            <legend>Lugar / Bar del Evento</legend>
+            <div class="bar-section-grid">
+                <!-- Fila 1: Lugar / Bar (Izquierda) | Capacidad del Bar (Derecha) -->
+                <div class="bar-row">
+                    <div class="form-group col">
+                        <label for="bar">Lugar / Bar del Evento</label>
+                        <select id="bar" formControlName="bar" class="form-control">
+                            <option value="">-- Seleccione un lugar / bar --</option>
+                            @for (b of (barList$ | async); track b._id || b.id || $index) {
+                            <option [value]="b._id || b.id">
+                                {{ b.name }}{{ b.city ? ' - ' + b.city : '' }}
+                            </option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group col">
+                        <label>Capacidad del Bar</label>
+                        <input type="text" [value]="selectedBar ? ((selectedBar.capacity ?? 0) + ' personas') : ''" disabled class="form-control" placeholder="Capacidad" />
+                    </div>
+                </div>
+
+                <!-- Fila 2: Ciudad / Depto (Izquierda) | Dirección (Derecha) -->
+                <div class="bar-row">
+                    <div class="form-group col">
+                        <label>Ciudad / Depto</label>
+                        <input type="text" [value]="selectedBar ? ((selectedBar.city || '') + (selectedBar.department ? ', ' + selectedBar.department : '')) : ''" disabled class="form-control" placeholder="Ciudad, Departamento" />
+                    </div>
+                    <div class="form-group col">
+                        <label>Dirección</label>
+                        <input type="text" [value]="selectedBar?.address || ''" disabled class="form-control" placeholder="Dirección del bar" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alerta de aforo excedido -->
+            @if (formData.errors?.['capacityExceeded']) {
+            <div class="error-msg alert" style="color: red; font-weight: bold; margin-top: 0.75rem; margin-bottom: 0.25rem; padding: 0.75rem; border: 1px solid #ff4d4f; border-radius: 6px; background-color: rgba(255,77,79,0.1);">
+                <small>⚠️ La suma del aforo de las localidades ({{ formData.errors?.['capacityExceeded']?.totalStock }}) supera la capacidad máxima del bar seleccionado ({{ formData.errors?.['capacityExceeded']?.capacity }}).</small>
             </div>
             }
-        </div>
+        </fieldset>
 
         <!-- Localidades del evento -->
         <fieldset formGroupName="localidades" class="form-section">
@@ -37,15 +105,13 @@
 
                 <!-- General -->
                 <div formGroupName="general" class="option option-general">
-                    <input type="checkbox" formControlName="enabled" id="localidad-general-enabled">
-                    <label for="localidad-general-enabled">General</label>
+                    <label for="localidad-general-enabled" class="localidad-name">General</label>
+                    <div class="localidad-row">
+                        <input type="checkbox" formControlName="enabled" id="localidad-general-enabled" class="localidad-chk">
 
-
-                    <div class="field-group">
-                        <div class="field">
+                        <div class="field field-inline">
                             <label for="general-stock">Aforo*</label>
-                            <input id="general-stock" type="number" formControlName="stock"
-                                class="form-control field-aforo" />
+                            <input id="general-stock" type="number" formControlName="stock" class="form-control" />
                             @if (formData.get('localidades.general.stock')?.touched &&
                             formData.get('localidades.general.stock')?.errors?.['min']) {
                             <div class="error-msg" style="color: red; font-size: 0.8em;">
@@ -54,7 +120,7 @@
                             }
                         </div>
 
-                        <div class="field">
+                        <div class="field field-inline">
                             <label for="general-price">Precio*</label>
                             <input id="general-price" type="number" formControlName="price" class="form-control" />
                             @if (formData.get('localidades.general.price')?.touched &&
@@ -69,15 +135,13 @@
 
                 <!-- VIP -->
                 <div formGroupName="vip" class="option option-vip">
-                    <input type="checkbox" formControlName="enabled" id="localidad-vip-enabled">
-                    <label for="localidad-vip-enabled">VIP</label>
+                    <label for="localidad-vip-enabled" class="localidad-name">VIP</label>
+                    <div class="localidad-row">
+                        <input type="checkbox" formControlName="enabled" id="localidad-vip-enabled" class="localidad-chk">
 
-
-                    <div class="field-group">
-                        <div class="field">
+                        <div class="field field-inline">
                             <label for="vip-stock">Aforo*</label>
-                            <input id="vip-stock" type="number" formControlName="stock"
-                                class="form-control field-aforo" />
+                            <input id="vip-stock" type="number" formControlName="stock" class="form-control" />
                             @if (formData.get('localidades.vip.stock')?.touched &&
                             formData.get('localidades.vip.stock')?.errors?.['min']) {
                             <div class="error-msg" style="color: red; font-size: 0.8em;">
@@ -86,7 +150,7 @@
                             }
                         </div>
 
-                        <div class="field">
+                        <div class="field field-inline">
                             <label for="vip-price">Precio*</label>
                             <input id="vip-price" type="number" formControlName="price" class="form-control" />
                             @if (formData.get('localidades.vip.price')?.touched &&
@@ -101,14 +165,13 @@
 
                 <!-- BackStage -->
                 <div formGroupName="backstage" class="option option-backstage">
-                    <input type="checkbox" formControlName="enabled" id="localidad-backstage-enabled">
-                    <label for="localidad-backstage-enabled">BackStage</label>
+                    <label for="localidad-backstage-enabled" class="localidad-name">BackStage</label>
+                    <div class="localidad-row">
+                        <input type="checkbox" formControlName="enabled" id="localidad-backstage-enabled" class="localidad-chk">
 
-                    <div class="field-group">
-                        <div class="field">
+                        <div class="field field-inline">
                             <label for="backstage-stock">Aforo*</label>
-                            <input id="backstage-stock" type="number" formControlName="stock"
-                                class="form-control field-aforo" />
+                            <input id="backstage-stock" type="number" formControlName="stock" class="form-control" />
                             @if (formData.get('localidades.backstage.stock')?.touched &&
                             formData.get('localidades.backstage.stock')?.errors?.['min']) {
                             <div class="error-msg" style="color: red; font-size: 0.8em;">
@@ -117,7 +180,7 @@
                             }
                         </div>
 
-                        <div class="field">
+                        <div class="field field-inline">
                             <label for="backstage-price">Precio*</label>
                             <input id="backstage-price" type="number" formControlName="price" class="form-control" />
                             @if (formData.get('localidades.backstage.price')?.touched &&
@@ -132,14 +195,13 @@
 
                 <!-- Palco -->
                 <div formGroupName="palco" class="option option-palco">
-                    <input type="checkbox" formControlName="enabled" id="localidad-palco-enabled">
-                    <label for="localidad-palco-enabled">Palco</label>
+                    <label for="localidad-palco-enabled" class="localidad-name">Palco</label>
+                    <div class="localidad-row">
+                        <input type="checkbox" formControlName="enabled" id="localidad-palco-enabled" class="localidad-chk">
 
-                    <div class="field-group">
-                        <div class="field">
+                        <div class="field field-inline">
                             <label for="palco-stock">Aforo*</label>
-                            <input id="palco-stock" type="number" formControlName="stock"
-                                class="form-control field-aforo" />
+                            <input id="palco-stock" type="number" formControlName="stock" class="form-control" />
                             @if (formData.get('localidades.palco.stock')?.touched &&
                             formData.get('localidades.palco.stock')?.errors?.['min']) {
                             <div class="error-msg" style="color: red; font-size: 0.8em;">
@@ -148,10 +210,9 @@
                             }
                         </div>
 
-                        <div class="field">
+                        <div class="field field-inline">
                             <label for="palco-price">Precio*</label>
-                            <input id="palco-price" type="number" formControlName="price"
-                                class="form-control field-precio" />
+                            <input id="palco-price" type="number" formControlName="price" class="form-control" />
                             @if (formData.get('localidades.palco.price')?.touched &&
                             formData.get('localidades.palco.price')?.errors?.['min']) {
                             <div class="error-msg" style="color: red; font-size: 0.8em;">
@@ -164,87 +225,58 @@
             </div>
         </fieldset>
 
-        <!-- GRUPO: initialDate -->
-        <fieldset formGroupName="initialDate" class="form-section">
-            <legend>Inicio del Evento *</legend>
-            <div class="form-row" style="display: flex; gap: 1rem;">
-                <div class="form-group col">
-                    <label for="initialDate">Fecha:</label>
-                    <input id="initialDate" type="date" formControlName="date" class="form-control" />
+        <!-- GRUPO: Fechas del evento (Inicio y Fin) -->
+        <div class="dates-row">
+            <!-- GRUPO: initialDate -->
+            <fieldset formGroupName="initialDate" class="form-section">
+                <legend>Inicio del Evento *</legend>
+                <div class="date-time-row">
+                    <div class="form-group col">
+                        <label for="initialDate">Fecha:</label>
+                        <input id="initialDate" type="date" formControlName="date" class="form-control" />
+                    </div>
+                    <div class="form-group col">
+                        <label for="initialTime">Hora:</label>
+                        <input id="initialTime" type="time" formControlName="time" class="form-control" />
+                    </div>
                 </div>
-                <div class="form-group col">
-                    <label for="initialTime">Hora:</label>
-                    <input id="initialTime" type="time" formControlName="time" class="form-control" />
-                </div>
-            </div>
-        </fieldset>
+            </fieldset>
 
-        <!-- GRUPO: finalDate -->
-        <fieldset formGroupName="finalDate" class="form-section">
-            <legend>Fin del Evento *</legend>
-            <div class="form-row" style="display: flex; gap: 1rem;">
-                <div class="form-group col">
-                    <label for="finalDate">Fecha:</label>
-                    <input id="finalDate" type="date" formControlName="date" class="form-control" />
+            <!-- GRUPO: finalDate -->
+            <fieldset formGroupName="finalDate" class="form-section">
+                <legend>Fin del Evento *</legend>
+                <div class="date-time-row">
+                    <div class="form-group col">
+                        <label for="finalDate">Fecha:</label>
+                        <input id="finalDate" type="date" formControlName="date" class="form-control" />
+                    </div>
+                    <div class="form-group col">
+                        <label for="finalTime">Hora:</label>
+                        <input id="finalTime" type="time" formControlName="time" class="form-control" />
+                    </div>
                 </div>
-                <div class="form-group col">
-                    <label for="finalTime">Hora:</label>
-                    <input id="finalTime" type="time" formControlName="time" class="form-control" />
-                </div>
-            </div>
-        </fieldset>
+            </fieldset>
+        </div>
 
-        <!-- Error del rango de fechas general -->
-        @if (formData.errors?.['dateRangeInvalid']) {
-        <div class="error-msg alert" style="color: red; font-weight: bold; margin-bottom: 1rem;">
-            <small>La fecha y hora de finalización debe ser posterior al inicio.</small>
+        <!-- Errores de rango y duración de fechas general -->
+        @if (formData.errors?.['endDateBeforeStartDate']) {
+        <div class="error-msg alert" style="color: red; font-weight: bold; margin-bottom: 1rem; padding: 0.75rem; border: 1px solid #ff4d4f; border-radius: 6px; background-color: rgba(255,77,79,0.1);">
+            <small>⚠️ La fecha y hora de finalización no puede ser anterior o igual a la fecha de inicio.</small>
         </div>
         }
 
-        <!-- Categoría del Evento -->
-        <!-- <div class="form-group">
-            <label for="category">Categoría*</label>
-            <input id="category" type="text" formControlName="category" class="form-control"
-                placeholder="Ej: Concierto, Festival..." />
-            @if (formData.get('category')?.touched && formData.get('category')?.invalid) {
-            <div class="error-msg" style="color: red; font-size: 0.8em;">
-                <small>La categoría es obligatoria.</small>
-            </div>
-            }
-        </div> -->
-
-        <!-- Lugar / Bar del Evento -->
-        <div class="form-group">
-            <label for="bar">Lugar / Bar del Evento</label>
-            <select id="bar" formControlName="bar" class="form-control">
-                <option value="">-- Seleccione un lugar / bar --</option>
-                @for (b of (barList$ | async); track b._id || b.id || $index) {
-                <option [value]="b._id || b.id">
-                    <strong>{{ b.name }}</strong>
-                    - {{ b.city ? b.city : '' }}, {{ b.department ? b.department : '' }} -
-                    <em>{{ b.address ? b.address : '' }}</em>
-                </option>
-                }
-            </select>
+        @if (formData.errors?.['minDurationInvalid']) {
+        <div class="error-msg alert" style="color: red; font-weight: bold; margin-bottom: 1rem; padding: 0.75rem; border: 1px solid #ff4d4f; border-radius: 6px; background-color: rgba(255,77,79,0.1);">
+            <small>⚠️ La duración mínima del evento debe ser de al menos 40 minutos (duración actual: {{ formData.errors?.['minDurationInvalid']?.currentMinutes }} min).</small>
         </div>
+        }
 
-        <!-- URL Imagen -->
-        <div class="form-group">
-            <label for="imageUrl">URL de la Imagen*</label>
-            <input id="imageUrl" type="url" formControlName="imageUrl" class="form-control" />
-            @if (formData.get('imageUrl')?.touched && formData.get('imageUrl')?.invalid) {
-            <div class="error-msg" style="color: red; font-size: 0.8em;">
-                <small>La URL de la imagen es obligatoria.</small>
-            </div>
-            }
+        <!-- Mensaje de error retornado por el servidor -->
+        @if (serverErrorMessage) {
+        <div class="error-msg alert" style="color: red; font-weight: bold; margin-top: 1rem; padding: 0.75rem; border: 1px solid #ff4d4f; border-radius: 6px; background-color: rgba(255,77,79,0.1);">
+            <small>❌ {{ serverErrorMessage }}</small>
         </div>
-
-        <!-- Estado (Activo / Inactivo) -->
-        <div class="form-group checkbox-group" style="margin-top: 1rem;">
-            <label for="status">
-                <input id="status" type="checkbox" formControlName="status" />Evento Activo
-            </label>
-        </div>
+        }
 
         <!-- Botón Guardar -->
         <div style="margin-top: 1.5rem;">
