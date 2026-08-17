@@ -23,9 +23,13 @@ export const routes: Routes = [
   // Tickets
   { path: 'buy-ticket', loadComponent: () => import('./features/ticket/ticket-new-form') },
 
-  // Promociones / Landing especiales
-  { path: 'photon', loadComponent: () => import('./features/photon/photon') },
-  { path: 'mindagainst', loadComponent: () => import('./features/mindagainst/mindagainst') },
+  // Bares y Posts públicos
+  { path: 'bares', loadComponent: () => import('./features/bars/bar-home/bar-home') },
+  { path: 'posts', loadComponent: () => import('./features/posts/post-public-list/post-public-list') },
+
+  // Legal y Soporte
+  { path: 'terminos', loadComponent: () => import('./features/support/terms/terms') },
+  { path: 'reembolsos', loadComponent: () => import('./features/support/refunds/refunds') },
 
   { path: 'bar/home', loadComponent: () => import('./features/bars/bar-home/bar-home') },
   { path: 'event/home', loadComponent: () => import('./features/events/event-home/event-home') },

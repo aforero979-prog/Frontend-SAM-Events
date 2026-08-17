@@ -1,1 +1,63 @@
-<p>post-list works!</p>
+<div class="list-header">
+    <h2 class="table-title">Lista de Publicaciones (Posts)</h2>
+    <a class="btn-new" routerLink="/dashboard/post/new">+ Nuevo Post</a>
+</div>
+
+<table class="admin-table">
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>Tipo</th>
+            <th>Fecha creación</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (post of (postList$ | async); track post._id || post.id || $index) {
+            <tr>
+                <td>{{ post.title }}</td>
+                <td>{{ post.type }}</td>
+                <td>{{ post.createdAt | date:'short' }}</td>
+                <td>
+                    @if (post.isActive) {
+                        <span class="badge-active">Activo</span>
+                    } @else {
+                        <span class="badge-inactive">Inactivo</span>
+                    }
+                </td>
+                <td class="actions">
+                    <button class="btn-edit" (click)="onEdit(post._id || post.id)">Editar</button>
+                    <button class="btn-delete" (click)="onDelete(post._id || post.id)">Eliminar</button>
+                </td>
+            </tr>
+        } @empty {
+            <tr><td colspan="5" class="empty">No hay publicaciones registradas</td></tr>
+        }
+    </tbody>
+</table>
+
+<!-- Modal de confirmación -->
+@if (showDeleteModal) {
+  <div class="modal-overlay">
+    <div class="modal-box">
+      <h3 class="modal-title">⚠ ADVERTENCIA</h3>
+      <p class="modal-msg">¿Estás seguro de que quieres eliminar esta publicación?</p>
+      <div class="modal-actions">
+        <button class="btn-modal-cancel" (click)="cancelDelete()">NO, CANCELAR</button>
+        <button class="btn-modal-confirm" (click)="confirmDelete()">SÍ, ELIMINAR</button>
+      </div>
+    </div>
+  </div>
+}
+@if (showSuccessModal) {
+  <div class="modal-overlay">
+    <div class="modal-box success">
+      <h3 class="modal-title success">✔ ÉXITO</h3>
+      <p class="modal-msg">La publicación ha sido eliminada correctamente.</p>
+      <div class="modal-actions">
+        <button class="btn-modal-close" (click)="showSuccessModal = false">CONTINUAR</button>
+      </div>
+    </div>
+  </div>
+}

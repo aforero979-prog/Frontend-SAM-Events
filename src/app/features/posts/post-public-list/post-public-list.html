@@ -1,0 +1,31 @@
+<div class="posts-container">
+  <div class="posts-header">
+    <h1>Blog & Noticias</h1>
+    <p>Últimas novedades, anuncios y actualizaciones del ecosistema S.A.M.</p>
+  </div>
+
+  <div class="posts-grid">
+    @for (post of (publicPosts$ | async); track post._id || post.id || $index) {
+      <article class="post-card">
+        @if (post.imageUrl) {
+          <div class="post-image" [style.backgroundImage]="'url(' + post.imageUrl + ')'"></div>
+        } @else {
+          <div class="post-image placeholder-image"></div>
+        }
+        
+        <div class="post-content">
+          <div class="post-meta">
+            <span class="post-type">{{ post.type }}</span>
+            <span class="post-date">{{ post.createdAt | date:'mediumDate' }}</span>
+          </div>
+          <h2 class="post-title">{{ post.title }}</h2>
+          <p class="post-text">{{ post.content }}</p>
+        </div>
+      </article>
+    } @empty {
+      <div class="no-posts">
+        <p>Aún no hay publicaciones disponibles.</p>
+      </div>
+    }
+  </div>
+</div>

@@ -24,6 +24,10 @@
         <span class="nav-icon">◐</span>
         <span>BARES</span>
       </a>
+      <a routerLink="/dashboard/posts" routerLinkActive="nav-active" class="nav-item">
+        <span class="nav-icon">▤</span>
+        <span>POSTS</span>
+      </a>
     </nav>
 
     <div class="sidebar-footer">
@@ -53,6 +57,11 @@
         <span class="stat-number">{{ barCount }}</span>
         <span class="stat-label">BARES</span>
         <a routerLink="/dashboard/bars" class="stat-link">VER →</a>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">{{ postCount }}</span>
+        <span class="stat-label">POSTS</span>
+        <a routerLink="/dashboard/posts" class="stat-link">VER →</a>
       </div>
     </div>
 
