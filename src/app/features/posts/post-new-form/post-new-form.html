@@ -1,76 +1,81 @@
-<h2>Crear nueva publicación</h2>
+<div class="form-wrapper">
 
-@if (successMsg) { <p style="color:green">{{ successMsg }}</p> }
-@if (errorMsg)   { <p style="color:red">{{ errorMsg }}</p> }
+  <span class="corner tl"></span>
+  <span class="corner tr"></span>
+  <span class="corner bl"></span>
+  <span class="corner br"></span>
 
-<form [formGroup]="formData" (ngSubmit)="onSubmit()">
+  <div class="panel-header">
+    <span class="brand">S.A.M.</span>
+    <span class="badge">NUEVO POST</span>
+  </div>
 
-    <!-- Titulo -->
-    <div>
-        <label for="title">Título</label>
-        <input type="text" id="title" formControlName="title" placeholder="Título de la publicación">
-        @if (formData.get('title')?.invalid && (formData.get('title')?.dirty || formData.get('title')?.touched)) {
-            @if (formData.get('title')?.errors?.['required']) {
-                <small>El título es obligatorio</small>
-            }
-            @if (formData.get('title')?.errors?.['minlength']) {
-                <small>El título debe tener al menos 3 caracteres</small>
-            }
-        }
+  <h2 class="panel-title">REGISTRAR PUBLICACIÓN</h2>
+  <p class="panel-desc">Crea una nueva publicación para la plataforma.</p>
+
+  @if (successMsg) { 
+      <div style="color: #a3e635; margin-bottom: 10px; font-size: 12px;">✔ {{ successMsg }}</div> 
+  }
+  @if (errorMsg) { 
+      <div style="color: #ff4444; margin-bottom: 10px; font-size: 12px;">❌ {{ errorMsg }}</div> 
+  }
+
+  <form class="admin-form" [formGroup]="formData" (ngSubmit)="onSubmit()">
+
+    <div class="field">
+      <label class="field-label" for="title">Título</label>
+      <input class="field-input" type="text" id="title" formControlName="title" placeholder="Ej: Nuevo Lineup">
+      @if (formData.get('title')?.invalid && (formData.get('title')?.dirty || formData.get('title')?.touched)) {
+          @if (formData.get('title')?.errors?.['required']) {
+              <small class="field-error">El título es obligatorio</small>
+          }
+          @if (formData.get('title')?.errors?.['minlength']) {
+              <small class="field-error">El título debe tener al menos 3 caracteres</small>
+          }
+      }
     </div>
 
-    <!-- Contenido -->
-    <div>
-        <label for="content">Contenido</label>
-        <textarea id="content" formControlName="content" placeholder="Escribe el contenido del post..." rows="5"></textarea>
-        @if (formData.get('content')?.invalid && (formData.get('content')?.dirty || formData.get('content')?.touched)) {
-            @if (formData.get('content')?.errors?.['required']) {
-                <small>El contenido es obligatorio</small>
-            }
-        }
+    <div class="field">
+      <label class="field-label" for="content">Contenido</label>
+      <textarea class="field-input field-textarea" id="content" formControlName="content"
+        placeholder="Escribe el contenido del post..."></textarea>
+      @if (formData.get('content')?.invalid && (formData.get('content')?.dirty || formData.get('content')?.touched)) {
+          @if (formData.get('content')?.errors?.['required']) {
+              <small class="field-error">El contenido es obligatorio</small>
+          }
+      }
     </div>
 
-    <!-- URL de imagen (opcional) -->
-    <div>
-        <label for="imageUrl">URL de imagen (opcional)</label>
-        <input type="url" id="imageUrl" formControlName="imageUrl" placeholder="https://ejemplo.com/imagen.jpg">
+    <div class="field-row">
+      <div class="field">
+        <label class="field-label" for="imageUrl">URL de imagen (opcional)</label>
+        <input class="field-input" type="text" id="imageUrl" formControlName="imageUrl" placeholder="https://...">
+      </div>
+      <div class="field">
+        <label class="field-label" for="imageFile">Subir imagen (opcional)</label>
+        <input class="field-input" type="file" id="imageFile" (change)="onFileSelected($event)" accept="image/*">
+      </div>
     </div>
 
-    <!-- Tipo de publicacion -->
-    <div>
-        <label for="type">Tipo de publicación</label>
-        <select id="type" formControlName="type">
-            @for (tipo of postTypes; track tipo) {
-                <option [value]="tipo">{{ tipo }}</option>
-            }
-        </select>
+    <div class="field">
+      <label class="field-label" for="type">Tipo de publicación</label>
+      <select class="field-input" id="type" formControlName="type">
+          @for (tipo of postTypes; track tipo) {
+              <option [value]="tipo">{{ tipo }}</option>
+          }
+      </select>
     </div>
 
-    <!-- Author (ID del usuario - auto-llenado) -->
-    <div>
-        <label for="author">Autor (ID usuario logueado)</label>
-        <input type="text" id="author" formControlName="author" placeholder="Inicia sesión para auto-rellenar" readonly style="opacity:0.6;cursor:not-allowed">
-        @if (formData.get('author')?.invalid && (formData.get('author')?.dirty || formData.get('author')?.touched)) {
-            @if (formData.get('author')?.errors?.['required']) {
-                <small style="color:red">Debes iniciar sesión para publicar</small>
-            }
-        }
+    <div class="field field-checkbox">
+      <label class="field-label">
+        <input type="checkbox" formControlName="isActive">
+        <span>Activo</span>
+      </label>
     </div>
 
-    <!-- Evento relacionado (opcional) -->
-    <div>
-        <label for="event">ID del evento relacionado (opcional)</label>
-        <input type="text" id="event" formControlName="event" placeholder="ID del evento (dejar vacío si no aplica)">
-    </div>
+    <button class="btn-submit" type="submit" [disabled]="formData.invalid">
+      GUARDAR PUBLICACIÓN →
+    </button>
+  </form>
 
-    <!-- Estado activo -->
-    <div>
-        <label for="isActive">Activo</label>
-        <input type="checkbox" id="isActive" formControlName="isActive">
-    </div>
-
-    <div>
-        <button type="submit">GUARDAR</button>
-    </div>
-
-</form>
+</div>

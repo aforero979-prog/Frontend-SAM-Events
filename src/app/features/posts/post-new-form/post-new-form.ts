@@ -30,49 +30,87 @@ export default class PostNewForm {
   // atributo de la clase que va a contener el formulario
   formData: FormGroup;
 
+  selectedFile: File | null = null;
+
   constructor() {
-    // Obtener el ID del usuario logueado desde localStorage
+    // Obtener el ID del usuario logueado desde localStorage, o usar un ID dummy para que no falle la db
     const currentUser = this.httpAuth.getCurrentUser();
-    const authorId = currentUser?._id || '';
+    const authorId = currentUser?._id || '000000000000000000000000';
 
     this.formData = new FormGroup({
       title:    new FormControl('', [Validators.required, Validators.minLength(3)]),
       content:  new FormControl('', [Validators.required]),
       imageUrl: new FormControl(''),
       type:     new FormControl('general', [Validators.required]),
-      author:   new FormControl(authorId, [Validators.required]),  // auto-relleno con ID del usuario
-      event:    new FormControl(''),
+      author:   new FormControl(authorId),  // auto-relleno pero oculto en UI
       isActive: new FormControl(true),
     });
   }
+
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+    }
+  }
+
   // al presionar el boton de enviar se ejecuta esta funcion
   onSubmit() {
     // si el formulario es valido se ejecuta lo siguiente
     if (this.formData.valid) {
-      console.log(this.formData.value);
-      // se hace la peticion http
-      this.httpPost.createPost(this.formData.value).subscribe({
-        // si la peticion es exitosa se ejecuta lo siguiente
-        next: (res) => {
-          console.log(res);
-          this.successMsg = 'Publicación creada correctamente';
-          this.errorMsg = '';
-          // limpiar form pero dejar author y tipo
-          const authorId = this.httpAuth.getCurrentUser()?._id || '';
-          this.formData.reset({ type: 'general', isActive: true, author: authorId });
-        },
-        // si la peticion falla se ejecuta lo siguiente
-        error: (error) => {
-          console.error(error);
-          this.errorMsg = error.error?.msg || 'Error al crear la publicación';
-          this.successMsg = '';
-        },
-        complete: () => { console.log('complete execute'); }
-      });
+      let payload = { ...this.formData.value };
+
+      // asegurar un id valido si por algun motivo esta vacio
+      if (!payload.author) {
+        payload.author = '000000000000000000000000';
+      }
+
+      // Si hay archivo, lo convertimos a base64 para guardarlo en la db (ya que el backend no usa multer)
+      if (this.selectedFile) {
+        const reader = new FileReader();
+        reader.readAsDataURL(this.selectedFile);
+        reader.onload = () => {
+          payload.imageUrl = reader.result as string;
+          this.sendData(payload);
+        };
+        reader.onerror = (error) => {
+          console.error('Error leyendo archivo:', error);
+          this.sendData(payload);
+        };
+      } else {
+        this.sendData(payload);
+      }
     } else {
       console.log('El formulario no es valido');
     }
   }
+
+  // envia la peticion HTTP con el payload final (JSON)
+  sendData(payload: any) {
+    console.log('Enviando payload:', payload);
+    this.httpPost.createPost(payload).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.successMsg = 'Publicación creada correctamente';
+        this.errorMsg = '';
+        
+        // limpiar form pero dejar author y tipo
+        const authorId = this.httpAuth.getCurrentUser()?._id || '000000000000000000000000';
+        this.formData.reset({ type: 'general', isActive: true, author: authorId });
+        this.selectedFile = null;
+        
+        const fileInput = document.getElementById('imageFile') as HTMLInputElement;
+        if (fileInput) fileInput.value = '';
+      },
+      error: (error) => {
+        console.error(error);
+        this.errorMsg = error.error?.msg || 'Error al crear la publicación';
+        this.successMsg = '';
+      },
+      complete: () => { console.log('complete execute'); }
+    });
+  }
+
   // getters para acceder a los campos del formulario
   get title() {
     return this.formData.get('title');

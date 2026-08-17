@@ -1,7 +1,15 @@
+:host {
+  display: block;
+  background-color: #000; /* Fondo oscuro general */
+  min-height: 100vh;
+  width: 100%;
+  padding: 40px 0;
+}
+
 .terms-container {
   max-width: 800px;
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 0 20px;
   color: var(--text, #e4e2e1);
 }
 
