@@ -72,10 +72,19 @@ export const routes: Routes = [
       { path: 'gateway/new', loadComponent: () => import('./features/gateways/gateway-new-form/gateway-new-form') },
     ]
   },
+  //Dashboard Bar
+  {
+    path: 'bar-dashboard',
+    loadComponent: () => import('./features/bar-dashboard/bar-dashboard'),
+    children: [
+      { path: 'events', loadComponent: () => import('./features/eventos/event-list/event-list') },
+    ]
+  },
   {
     path: 'events-details',
     loadComponent: () => import('./features/events/event-details/event-details'),
   },
+
 
 
   // ── 4. Manejo de Errores y Comodín ─────────────────────────────

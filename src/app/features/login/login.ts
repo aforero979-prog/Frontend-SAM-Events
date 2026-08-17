@@ -19,7 +19,7 @@ export default class Login {
 
   constructor() {
     this.formData = new FormGroup({
-      email:    new FormControl('', [Validators.required, Validators.email]),
+      email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required]),
     });
   }
@@ -35,8 +35,14 @@ export default class Login {
           this.formData.reset();
           // Muestra un anuncio de confirmación al usuario
           alert('¡Inicio de sesión exitoso! Bienvenido.');
-          // Navega al dashboard
-          this.router.navigateByUrl('/dashboard');
+          
+          // Navega al dashboard dependiendo del rol
+          const userObj = this.httpAuth.getCurrentUser();
+          if (userObj?.role === 'BAR') {
+            this.router.navigateByUrl('/bar-dashboard');
+          } else {
+            this.router.navigateByUrl('/dashboard');
+          }
         },
         error: (err) => {
           console.error(err);

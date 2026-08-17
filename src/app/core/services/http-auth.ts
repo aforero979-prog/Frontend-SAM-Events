@@ -45,16 +45,24 @@ export class HttpAuth {
     //Credentials = email y password
     return this.http.post<any>(`${environment.apiUrl}/auth/login`, credentials).pipe(
       tap((data) => {
+        const token = data?.token;
+        const user = data?.data || data?.user || data; // Fallback directly to data if the object itself is the user
 
-        if(data?.token && data?.data) {
-          localStorage.setItem('token', data?.token);
+        if(token && user && user.email) { // Ensure user has at least an email or id to consider it valid
+          localStorage.setItem('token', token);
+          localStorage.setItem('user', JSON.stringify(user));
+          this.currentToken.next(token);
+          this.currentUser$.next(user);
+          this.isLoggedIn.set(true);
+        } else if (token && data?.data) {
+          localStorage.setItem('token', token);
           localStorage.setItem('user', JSON.stringify(data.data));
-          this.currentToken.next(data.token);
+          this.currentToken.next(token);
           this.currentUser$.next(data.data);
           this.isLoggedIn.set(true);
         }
       }),
-      map((data) => data.msg),
+      map((data) => data.msg || 'Success'),
 
       catchError((err: HttpErrorResponse) => {
         const msgError = err.error?.msg || 'Error al iniciar sesión';

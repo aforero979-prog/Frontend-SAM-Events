@@ -1,0 +1,46 @@
+<div class="admin-shell">
+
+  <!-- ── Sidebar ─────────────────────────────────── -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <span class="brand-logo">S.A.M.</span>
+      <span class="brand-badge">BAR</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a routerLink="/bar-dashboard" routerLinkActive="nav-active" [routerLinkActiveOptions]="{exact: true}" class="nav-item">
+        <span class="nav-icon">◈</span>
+        <span>PANEL</span>
+      </a>
+      <a routerLink="/bar-dashboard/events" routerLinkActive="nav-active" class="nav-item">
+        <span class="nav-icon">◎</span>
+        <span>MIS EVENTOS</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-welcome">Hola, {{ userName }}</div>
+      <a routerLink="/home" class="nav-item nav-item--back">
+        <span class="nav-icon">←</span>
+        <span>VOLVER AL SITIO</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- ── Main content ────────────────────────────── -->
+  <main class="admin-main">
+
+    <!-- Stats cards (solo se ven en /bar-dashboard exacto) -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <span class="stat-number">{{ eventCount }}</span>
+        <span class="stat-label">MIS EVENTOS</span>
+        <a routerLink="/bar-dashboard/events" class="stat-link">VER →</a>
+      </div>
+    </div>
+
+    <!-- Child routes render here -->
+    <router-outlet></router-outlet>
+  </main>
+
+</div>

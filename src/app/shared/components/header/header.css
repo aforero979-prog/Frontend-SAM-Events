@@ -2,10 +2,10 @@
 
 /* ── Variables S.A.M. ───────────────────────────── */
 :host {
-  --accent:  #e8ff00;
-  --text:    #e4e2e1;
-  --muted:   #c4c9ac;
-  --border:  #2a2a2a;
+  --accent: #e8ff00;
+  --text: #e4e2e1;
+  --muted: #c4c9ac;
+  --border: #2a2a2a;
 
   display: block;
 }
@@ -60,7 +60,9 @@
       letter-spacing: 0.06em;
       color: var(--muted);
 
-      .loc-icon { font-size: 14px; }
+      .loc-icon {
+        font-size: 14px;
+      }
 
       .loc-text {
         position: relative;
@@ -76,11 +78,9 @@
           content: '';
           position: absolute;
           inset: 0;
-          background: repeating-linear-gradient(
-            45deg,
-            transparent, transparent 2px,
-            rgba(0,0,0,0.8) 2px, rgba(0,0,0,0.8) 4px
-          );
+          background: repeating-linear-gradient(45deg,
+              transparent, transparent 2px,
+              rgba(0, 0, 0, 0.8) 2px, rgba(0, 0, 0, 0.8) 4px);
           opacity: 1;
           transition: opacity 0.4s;
           pointer-events: none;
@@ -91,7 +91,9 @@
           color: var(--accent);
           text-shadow: 0 0 8px rgba(232, 255, 0, 0.5);
 
-          &::after { opacity: 0; }
+          &::after {
+            opacity: 0;
+          }
         }
       }
     }
@@ -165,7 +167,9 @@
         box-shadow: 0 0 22px rgba(232, 255, 0, 0.45);
       }
 
-      .btn-plus { display: none; }
+      .btn-plus {
+        display: none;
+      }
     }
 
     /* Nombre del usuario logueado */
@@ -221,14 +225,24 @@
     grid-template-columns: 1fr 1fr;
     padding: 0 16px;
 
-    .nav-links { display: none; }
+    .nav-links {
+      display: none;
+    }
 
     .header-right {
-      .btn-ghost { display: none; }
+      .btn-ghost {
+        display: none;
+      }
 
       .btn-accent {
-        .btn-txt { display: none; }
-        .btn-plus { display: inline; font-size: 18px; }
+        .btn-txt {
+          display: none;
+        }
+
+        .btn-plus {
+          display: inline;
+          font-size: 18px;
+        }
       }
     }
   }

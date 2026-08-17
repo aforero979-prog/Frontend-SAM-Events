@@ -19,9 +19,20 @@
 
   <!-- Actions -->
   <div class="header-right">
-    <a routerLink="/login"   routerLinkActive="nav-active">INICIAR SESIÓN</a>
-    @if (auth.isLoggedIn()) {
-      <span class="user-name">{{ (auth.currentUser$ | async)?.name || 'Usuario' }}</span>
+    
+    @if (!auth.isLoggedIn() || (auth.currentUser$ | async)?.role === 'USER') {
+      <a routerLink="/cart" class="cart-btn" title="Carrito">
+        <span class="cart-icon">🛒</span>
+      </a>
+    }
+
+    @if (!auth.isLoggedIn()) {
+      <a routerLink="/login" routerLinkActive="nav-active">INICIAR SESIÓN</a>
+    } @else {
+      <div class="user-info">
+        <span class="user-name">{{ (auth.currentUser$ | async)?.name || 'Usuario' }}</span>
+        <span class="user-role">{{ (auth.currentUser$ | async)?.role || 'USER' }}</span>
+      </div>
       <button class="btn-logout" (click)="logout()" title="Cerrar sesión">
         <span class="logout-icon">⏻</span>
         <span class="logout-txt">SALIR</span>
