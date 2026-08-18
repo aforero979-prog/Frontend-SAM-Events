@@ -39,19 +39,21 @@ main{
 }
 
 table {
-  font-family: arial, sans-serif;
+  font-family: inherit;
   border-collapse: collapse;
   width: 100%;
+  color: var(--text);
+  background-color: var(--bg-dark);
 }
 
 td, th {
-  border: 1px solid #dddddd;
+  border: 1px solid var(--border);
   text-align: left;
   padding: 8px;
 }
 
 tr:nth-child(even) {
-  background-color: #dddddd;
+  background-color: var(--bg-dark);
 }
 
 pre {

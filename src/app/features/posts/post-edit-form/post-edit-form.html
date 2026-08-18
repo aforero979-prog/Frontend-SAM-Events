@@ -1,1 +1,81 @@
-<p>post-edit-form works!</p>
+<div class="form-wrapper">
+
+  <span class="corner tl"></span>
+  <span class="corner tr"></span>
+  <span class="corner bl"></span>
+  <span class="corner br"></span>
+
+  <div class="panel-header">
+    <span class="brand">S.A.M.</span>
+    <span class="badge">EDITAR POST</span>
+  </div>
+
+  <h2 class="panel-title">EDITAR PUBLICACIÓN</h2>
+  <p class="panel-desc">Modifica la publicación seleccionada.</p>
+
+  @if (successMsg) { 
+      <div style="color: #a3e635; margin-bottom: 10px; font-size: 12px;">✔ {{ successMsg }}</div> 
+  }
+  @if (errorMsg) { 
+      <div style="color: #ff4444; margin-bottom: 10px; font-size: 12px;">❌ {{ errorMsg }}</div> 
+  }
+
+  <form class="admin-form" [formGroup]="formData" (ngSubmit)="onSubmit()">
+
+    <div class="field">
+      <label class="field-label" for="title">Título</label>
+      <input class="field-input" type="text" id="title" formControlName="title" placeholder="Ej: Nuevo Lineup">
+      @if (formData.get('title')?.invalid && (formData.get('title')?.dirty || formData.get('title')?.touched)) {
+          @if (formData.get('title')?.errors?.['required']) {
+              <small class="field-error">El título es obligatorio</small>
+          }
+          @if (formData.get('title')?.errors?.['minlength']) {
+              <small class="field-error">El título debe tener al menos 3 caracteres</small>
+          }
+      }
+    </div>
+
+    <div class="field">
+      <label class="field-label" for="content">Contenido</label>
+      <textarea class="field-input field-textarea" id="content" formControlName="content"
+        placeholder="Escribe el contenido del post..."></textarea>
+      @if (formData.get('content')?.invalid && (formData.get('content')?.dirty || formData.get('content')?.touched)) {
+          @if (formData.get('content')?.errors?.['required']) {
+              <small class="field-error">El contenido es obligatorio</small>
+          }
+      }
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label class="field-label" for="imageUrl">URL de imagen (opcional)</label>
+        <input class="field-input" type="text" id="imageUrl" formControlName="imageUrl" placeholder="https://...">
+      </div>
+      <div class="field">
+        <label class="field-label" for="imageFile">Subir imagen (opcional)</label>
+        <input class="field-input" type="file" id="imageFile" (change)="onFileSelected($event)" accept="image/*">
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="field-label" for="type">Tipo de publicación</label>
+      <select class="field-input" id="type" formControlName="type">
+          @for (tipo of postTypes; track tipo) {
+              <option [value]="tipo">{{ tipo }}</option>
+          }
+      </select>
+    </div>
+
+    <div class="field field-checkbox">
+      <label class="field-label">
+        <input type="checkbox" formControlName="isActive">
+        <span>Activo</span>
+      </label>
+    </div>
+
+    <button class="btn-submit" type="submit" [disabled]="formData.invalid">
+      GUARDAR PUBLICACIÓN →
+    </button>
+  </form>
+
+</div>

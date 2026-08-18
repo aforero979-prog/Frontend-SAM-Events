@@ -37,7 +37,10 @@ export default class Dashboard implements OnInit {
       error: () => this.barCount = 0,
     });
     this.httpPost.getPosts().subscribe({
-      next: (data: any) => this.postCount = Array.isArray(data) ? data.length : 0,
+      next: (data: any) => {
+        const list = Array.isArray(data) ? data : (data?.data || []);
+        this.postCount = list.length;
+      },
       error: () => this.postCount = 0,
     });
   }
