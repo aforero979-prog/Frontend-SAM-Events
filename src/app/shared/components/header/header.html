@@ -20,14 +20,12 @@
   <!-- Actions -->
   <div class="header-right">
     
-    @if (!auth.isLoggedIn() || (auth.currentUser$ | async)?.role === 'USER') {
-      <a routerLink="/cart" class="cart-btn" title="Carrito">
-        <span class="cart-icon">🛒</span>
-      </a>
-    }
-
+    
     @if (!auth.isLoggedIn()) {
-      <a routerLink="/login" routerLinkActive="nav-active">INICIAR SESIÓN</a>
+      <a routerLink="/login" class="btn-accent" routerLinkActive="nav-active">
+        <span class="btn-txt">INICIAR SESIÓN</span>
+        <span class="btn-plus">➜</span>
+      </a>
     } @else {
       <div class="user-info">
         <span class="user-name">{{ (auth.currentUser$ | async)?.name || 'Usuario' }}</span>
