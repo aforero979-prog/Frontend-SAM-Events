@@ -15,6 +15,7 @@ export const appConfig: ApplicationConfig = {
       })
     ),
     // Registra el interceptor que agrega el header X-Token a todas las peticiones
-    provideHttpClient(withInterceptors([authInterceptor]))
+    provideHttpClient(
+      withInterceptors([authInterceptor]))
   ]
 };

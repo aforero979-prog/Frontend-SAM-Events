@@ -46,19 +46,15 @@ export class HttpAuth {
     return this.http.post<any>(`${environment.apiUrl}/auth/login`, credentials).pipe(
       tap((data) => {
         const token = data?.token;
-        const user = data?.data || data?.user || data; // Fallback directly to data if the object itself is the user
+        // El backend puede devolver el usuario en data.data, data.user, data.bar o en el mismo data
+        const user = data?.data || data?.user || data?.bar || data; 
 
-        if(token && user && user.email) { // Ensure user has at least an email or id to consider it valid
+        if (token && user) {
+          // Guardamos el usuario incluso si no tiene email (por ejemplo, si es un BAR y solo tiene id/role)
           localStorage.setItem('token', token);
           localStorage.setItem('user', JSON.stringify(user));
           this.currentToken.next(token);
           this.currentUser$.next(user);
-          this.isLoggedIn.set(true);
-        } else if (token && data?.data) {
-          localStorage.setItem('token', token);
-          localStorage.setItem('user', JSON.stringify(data.data));
-          this.currentToken.next(token);
-          this.currentUser$.next(data.data);
           this.isLoggedIn.set(true);
         }
       }),
