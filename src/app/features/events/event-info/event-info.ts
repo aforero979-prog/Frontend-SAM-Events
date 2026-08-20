@@ -4,6 +4,7 @@ import { HttpEvents } from '../../../core/services/http-events';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
 
+
 @Component({
   selector: 'app-event-info',
   imports: [ AsyncPipe, RouterLink],
@@ -32,6 +33,5 @@ export default class EventInfo {
         },
     });
 }
-
 
 }

@@ -1,33 +1,57 @@
-
 <div class="page">
     <div class="infoEvento">
 
-    @if ( event$ | async; as event ) {
-        
+        @if ( event$ | async; as event ) {
+
         <div class="evento">
-            <img class="img-event" [alt]="event.name" [src]="event.imageUrl">   
+            <img class="img-event" [alt]="event.name" [src]="event.imageUrl">
         </div>
 
         <h1 class="titulo">{{ event.name }}</h1>
 
         <p class="descripcion">{{ event.description}}</p>
 
-        <p class="precio">{{ event.price }}</p>
 
-        <p class="date">{{ event.initialDate }}</p>
 
-        <p class="ciudad">{{ event.city }}</p>
+        <div class="info">
 
+            <p class="date">{{ event.initialDate }}</p>
+
+            <p class="ciudad">{{ event.city }}</p>
+
+            <p class="direccion">{{ event.direccion }}</p>
+
+        </div>
+
+        <!-- <div class="precios">
+
+            <thead>
+                <tr>
+                    
+                    <th>Localidades</th>
+                    <th>precio</th>
+                    <th>numero de tickets</th>
+                    
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <td>{{ event.name }}</td>
+                <td>{{ event.price }}</td>
+                <td>{{ event.price }}</td>
+            </tbody>
+
+
+        </div> -->
 
         <div class="button">
-            <a class="btn-accent" [routerLink]="[ 'xxxxxxxxxxxxxxxx', event._id]">COMPRAR TICKET</a>
+            <a class="btn-accent" [routerLink]="[ '/event-details', event._id]">COMPRAR TICKET</a>
         </div>
 
 
 
-    }
-    
+        }
+
 
     </div>
 </div>
-

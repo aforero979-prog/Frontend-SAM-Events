@@ -14,7 +14,7 @@ export const routes: Routes = [
 
   // Eventos públicos
   { path: 'events', loadComponent: () => import('./features/events/event-list/event-list') },
-  { path: 'event-details', loadComponent: () => import('./features/events/event-details/event-details') },
+  { path: 'event-details/:id', loadComponent: () => import('./features/events/event-details/event-details') },
   { path: 'event/home', loadComponent: () => import('./features/events/event-home/event-home') },
   { path: 'event-info/:id', loadComponent: () => import('./features/events/event-info/event-info')},
 

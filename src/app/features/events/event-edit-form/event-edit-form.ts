@@ -8,7 +8,7 @@ import { HttpBar } from '../../../core/services/http-bar';
 
 @Component({
   selector: 'app-event-edit-form',
-  imports: [ReactiveFormsModule, AsyncPipe, JsonPipe],
+  imports: [ReactiveFormsModule, AsyncPipe],
   templateUrl: './event-edit-form.html',
   styleUrl: './event-edit-form.css',
 })
@@ -56,6 +56,7 @@ export default class EventEditForm {
           date: new FormControl('', [Validators.required]),
           time: new FormControl('', [Validators.required])
         }),
+        direccion: new FormControl('', [Validators.required, Validators.maxLength(50)]),
         finalDate: new FormGroup({
           date: new FormControl('', [Validators.required]),
           time: new FormControl('', [Validators.required])
@@ -196,7 +197,8 @@ export default class EventEditForm {
             finalDate: { date: endDate, time: endTime },
             bar: barId || '',
             imageUrl: data.imageUrl,
-            status: data.status ?? true
+            status: data.status ?? true,
+            direccion: data.direccion || ''
           });
         },
         error: (err) => {

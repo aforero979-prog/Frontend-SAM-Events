@@ -90,6 +90,9 @@ export default class EventCreateComponent {
           time: new FormControl('', [Validators.required])
         }),
 
+        //lugar/bar del evento
+        direccion: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+
         // Controles anidados para la fecha final
         finalDate: new FormGroup({
           date: new FormControl('', [Validators.required]),
@@ -201,6 +204,7 @@ export default class EventCreateComponent {
       name: rawValues.name,
       description: rawValues.description,
       localidades: rawValues.localidades,
+      direccion: rawValues.direccion,
       initialDate: new Date(`${rawValues.initialDate.date}T${rawValues.initialDate.time}:00`).toISOString(),
       finalDate: new Date(`${rawValues.finalDate.date}T${rawValues.finalDate.time}:00`).toISOString(),
       category: rawValues.category,
