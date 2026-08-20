@@ -63,3 +63,7 @@ pre {
 .pre {
   display: none;
 }
+
+.page {
+    margin: 6.4rem 2rem;
+}

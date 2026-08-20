@@ -14,7 +14,9 @@ export const routes: Routes = [
 
   // Eventos públicos
   { path: 'events', loadComponent: () => import('./features/events/event-list/event-list') },
-  { path: 'events-details', loadComponent: () => import('./features/events/event-details/event-details') },
+  { path: 'event-details', loadComponent: () => import('./features/events/event-details/event-details') },
+  { path: 'event/home', loadComponent: () => import('./features/events/event-home/event-home') },
+  { path: 'event-info/:id', loadComponent: () => import('./features/events/event-info/event-info')},
 
   // Bares públicos
   { path: 'bar/home', loadComponent: () => import('./features/bars/bar-home/bar-home') },
@@ -32,7 +34,6 @@ export const routes: Routes = [
   { path: 'reembolsos', loadComponent: () => import('./features/support/refunds/refunds') },
 
   { path: 'bar/home', loadComponent: () => import('./features/bars/bar-home/bar-home') },
-  { path: 'event/home', loadComponent: () => import('./features/events/event-home/event-home') },
 
 
   

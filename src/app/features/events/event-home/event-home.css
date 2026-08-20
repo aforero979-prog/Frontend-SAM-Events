@@ -36,6 +36,7 @@ p {
 /* Contenedor de eventos */
 .eventos {
   display: grid;
+  
   /* Fuerza exactamente 3 columnas de igual tamaño */
   grid-template-columns: repeat(3, 1fr); 
   gap: 20px;
@@ -55,7 +56,7 @@ p {
 /* Control de la imagen */
 .img-event {
   width: 100%;
-  height: 200px;
+  height: 550px;
   object-fit: cover;
   display: block;
 }

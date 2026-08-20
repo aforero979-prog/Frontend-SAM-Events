@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpEvents } from '../../../core/services/http-events';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
+
 @Component({
   selector: 'app-event-details',
   imports: [],

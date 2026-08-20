@@ -5,7 +5,7 @@
     @for (event of (eventList$ | async); track $index) {
     <div class="evento">
 
-        <a [routerLink]="['dashboard', 'event-details', event._id]">
+        <a [routerLink]="[ '/event-info', event._id]">
             <img class="img-event" [alt]="event.name" [src]="event.imageUrl">
         </a>
 
@@ -15,7 +15,7 @@
         </div>
 
         <div class="button">
-            <a class="btn-accent" [routerLink]="['/dashboard', 'event-details', event._id]">COMPRAR TICKET</a>
+            <a class="btn-accent" [routerLink]="[ '/event-info', event._id]">INFORMACIÓN DEL EVENTO</a>
         </div>
 
     </div>

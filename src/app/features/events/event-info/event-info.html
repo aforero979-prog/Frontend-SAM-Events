@@ -1,0 +1,33 @@
+
+<div class="page">
+    <div class="infoEvento">
+
+    @if ( event$ | async; as event ) {
+        
+        <div class="evento">
+            <img class="img-event" [alt]="event.name" [src]="event.imageUrl">   
+        </div>
+
+        <h1 class="titulo">{{ event.name }}</h1>
+
+        <p class="descripcion">{{ event.description}}</p>
+
+        <p class="precio">{{ event.price }}</p>
+
+        <p class="date">{{ event.initialDate }}</p>
+
+        <p class="ciudad">{{ event.city }}</p>
+
+
+        <div class="button">
+            <a class="btn-accent" [routerLink]="[ 'xxxxxxxxxxxxxxxx', event._id]">COMPRAR TICKET</a>
+        </div>
+
+
+
+    }
+    
+
+    </div>
+</div>
+
