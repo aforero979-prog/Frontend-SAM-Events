@@ -8,9 +8,9 @@ import { BehaviorSubject, catchError, map, of, tap } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class HttpAuth {
 
-  private http = inject( HttpClient );
-  private router = inject( Router )
-  private platformId = inject( PLATFORM_ID )
+  private http = inject(HttpClient);
+  private router = inject(Router)
+  private platformId = inject(PLATFORM_ID)
 
   currentUser$ = new BehaviorSubject<any>(null)
   currentToken = new BehaviorSubject<any>(null)
@@ -47,7 +47,7 @@ export class HttpAuth {
       tap((data) => {
         const token = data?.token;
         // El backend puede devolver el usuario en data.data, data.user, data.bar o en el mismo data
-        const user = data?.data || data?.user || data?.bar || data; 
+        const user = data?.data || data?.user || data?.bar || data;
 
         if (token && user) {
           // Guardamos el usuario incluso si no tiene email (por ejemplo, si es un BAR y solo tiene id/role)
@@ -66,6 +66,9 @@ export class HttpAuth {
         throw err;
       }),
     );
+  }
+  checkAuth() {
+
   }
 
   /** Cierra sesión: limpia localStorage y redirige a /home */
@@ -91,9 +94,9 @@ export class HttpAuth {
     return null;
   }
 
-  seveDataLocalStorage( token: any, user: any) {
+  seveDataLocalStorage(token: any, user: any) {
 
-    if( isPlatformBrowser(this.platformId)) {
+    if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem('token', token)
       localStorage.setItem('user', JSON.stringify(user))
     }
@@ -107,7 +110,7 @@ export class HttpAuth {
 
     let token;
 
-    if( isPlatformBrowser(this.platformId)) {
+    if (isPlatformBrowser(this.platformId)) {
       token = localStorage.getItem('token')
     }
     return token;
