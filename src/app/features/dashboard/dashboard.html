@@ -28,6 +28,10 @@
         <span class="nav-icon">▤</span>
         <span>POSTS</span>
       </a>
+      <a routerLink="/dashboard/music" routerLinkActive="nav-active" class="nav-item">
+        <span class="nav-icon">♫</span>
+        <span>MÚSICA</span>
+      </a>
     </nav>
 
     <div class="sidebar-footer">
@@ -62,6 +66,11 @@
         <span class="stat-number">{{ postCount }}</span>
         <span class="stat-label">POSTS</span>
         <a routerLink="/dashboard/posts" class="stat-link">VER →</a>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">{{ musicCount }}</span>
+        <span class="stat-label">MÚSICA</span>
+        <a routerLink="/dashboard/music" class="stat-link">VER →</a>
       </div>
     </div>
 

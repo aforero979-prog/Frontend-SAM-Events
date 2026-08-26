@@ -5,6 +5,7 @@ import { HttpUser } from '../../core/services/http-user';
 import { HttpEvents } from '../../core/services/http-events';
 import { HttpBar } from '../../core/services/http-bar';
 import { HttpPost } from '../../core/services/http-post';
+import { HttpMusic } from '../../core/services/http-music';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,11 +18,13 @@ export default class Dashboard implements OnInit {
   private httpEvents = inject(HttpEvents);
   private httpBar = inject(HttpBar);
   private httpPost = inject(HttpPost);
+  private httpMusic = inject(HttpMusic);
 
   userCount = 0;
   eventCount = 0;
   barCount = 0;
   postCount = 0;
+  musicCount = 0;
 
   ngOnInit() {
     this.httpUser.getUsers().subscribe({
@@ -42,6 +45,13 @@ export default class Dashboard implements OnInit {
         this.postCount = list.length;
       },
       error: () => this.postCount = 0,
+    });
+    this.httpMusic.getMusic().subscribe({
+      next: (data: any) => {
+        const list = Array.isArray(data) ? data : (data?.data || []);
+        this.musicCount = list.length;
+      },
+      error: () => this.musicCount = 0,
     });
   }
 }

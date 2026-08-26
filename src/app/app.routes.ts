@@ -68,6 +68,11 @@ export const routes: Routes = [
       { path: 'post/new', loadComponent: () => import('./features/posts/post-new-form/post-new-form') },
       { path: 'post/edit/:id', loadComponent: () => import('./features/posts/post-edit-form/post-edit-form') },
 
+      // Música
+      { path: 'music', loadComponent: () => import('./features/music/music-list/music-list') },
+      { path: 'music/new', loadComponent: () => import('./features/music/music-new-form/music-new-form') },
+      { path: 'music/edit/:id', loadComponent: () => import('./features/music/music-edit-form/music-edit-form') },
+
       // Carritos
       { path: 'carts', loadComponent: () => import('./features/cart/cart-list/cart-list') },
       { path: 'cart/new', loadComponent: () => import('./features/cart/cart-new-form/cart-new-form') },
