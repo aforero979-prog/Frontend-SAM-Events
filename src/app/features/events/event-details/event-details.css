@@ -26,3 +26,25 @@ p {
 .titulo{
     margin-top: 6.4rem;
 }
+
+.img-event{
+  width: 30%;
+}
+
+.modulodecompra{
+  padding: 5rem;
+
+}
+
+.evento{
+  justify-content: center;
+  text-align: center;
+}
+
+.field{
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  gap: 2rem;
+}
+

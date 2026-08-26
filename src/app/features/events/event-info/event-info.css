@@ -38,19 +38,24 @@ p {
 .titulo{
     text-align: center;
     justify-content: center;
-    font-size: 35px;
+    font-size: 40px;
     padding: 1rem;
 }
 
 .descripcion{
     /* text-align: center; */
     text-align: justify;
-    font-size: small;
-    padding: 1rem 10rem 1rem 10rem
-    ;
+    font-size: 17px;
+    padding: 1rem 10rem 1rem 10rem;
 }
 
-
+.info{
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  padding: 1rem;
+  font-size: 15px;
+}
 
 
 /* ------------------------------------------------- */
@@ -81,3 +86,12 @@ p {
   color: #000000;
   box-shadow: 0 0 20px rgba(232, 255, 0, 0.5);
 }
+
+
+
+
+
+
+
+
+
