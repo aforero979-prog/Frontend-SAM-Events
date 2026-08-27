@@ -13,11 +13,18 @@ import { AsyncPipe, DatePipe, JsonPipe } from '@angular/common';
 
 export default class Home {
   eventList$ = new BehaviorSubject<any>([]);
+  eventFeaturedList$ = new BehaviorSubject<any>([]);
 
   private httpEvents = inject(HttpEvents);
 
   ngOnInit() {
-    this.httpEvents.getEvents().subscribe({
+    this.getEventsForInitialDate('initialDate', 3);
+    this.getEventsForFeatured(1);
+  }
+
+  getEventsForInitialDate(field: string, quantity: number) {
+
+        this.httpEvents.getEventsByField(field, quantity).subscribe({
       next: (res) => {
         console.log(res);
 
@@ -30,6 +37,17 @@ export default class Home {
     });
   }
 
-  
-}
+  getEventsForFeatured(quantity: number) {
+    this.httpEvents.getFeaturedEvents(quantity).subscribe({
+      next: (res) => {
+        console.log(res);
 
+        this.eventFeaturedList$.next(res);
+      },
+      error: (err) => {
+        console.error(err);
+      },
+      complete: () => {},
+    });
+  }
+}

@@ -4,16 +4,19 @@
 
 <div class="destacados">
 
-    <div class="photon">
+    @for (event of (eventFeaturedList$ | async); track $index) {
+        <div class="mindagainst">
 
-        <a routerLink="event-info/:id"><img class="photonimg" src="assets/imagenes/photon.jpg" alt="Photon"></a>
+            <a [routerLink]="['/event-info', event._id]">
+                <img class="img-event" [src]="event.imageUrl" [alt]="event.name"></a>
 
-        <div class="descripcion">
-            <h2>Photon</h2>
-            <p>Vie, 25 sept | Bogotá</p>
-            <p>Locación Secreta</p>
+            <div class="descripcion">
+                <h2>{{ event.name }}</h2>
+                <p>{{ event.initialDate | date }}</p>
+                <p>{{ event.location }}</p>
+            </div>
         </div>
-    </div>
+    }
 
     <div class="eventosdestacadosgrupo">
 
