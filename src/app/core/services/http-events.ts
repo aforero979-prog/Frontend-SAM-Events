@@ -8,7 +8,7 @@ export class HttpEvents {
   private http = inject(HttpClient);
 
   getEvents() {
-    return this.http.get<any>(`${environment.apiUrl}/events`).pipe(
+    return this.http.get<any>(`${environment.apiUrl}/events?page=1&limit=4`).pipe(
       map((res) => (Array.isArray(res) ? res : res?.data || []))
     );
   }

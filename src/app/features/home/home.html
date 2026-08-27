@@ -6,7 +6,7 @@
 
     <div class="photon">
 
-        <a routerLink="/photon"><img class="photonimg" src="assets/imagenes/photon.jpg" alt="Photon"></a>
+        <a routerLink="event-info/:id"><img class="photonimg" src="assets/imagenes/photon.jpg" alt="Photon"></a>
 
         <div class="descripcion">
             <h2>Photon</h2>
@@ -22,7 +22,7 @@
             @for (event of (eventList$ | async); track $index) {
                 <div class="mindagainst">
     
-                    <a [routerLink]="['dashboard', 'event-details', event._id]">
+                    <a [routerLink]="['/event-info', event._id]">
                         <img class="img-event" [src]="event.imageUrl" [alt]="event.name"></a>
     
                     <div class="descripcion">

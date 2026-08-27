@@ -68,7 +68,6 @@ export class HttpAuth {
     );
   }
   checkAuth() {
-
   }
 
   /** Cierra sesión: limpia localStorage y redirige a /home */
@@ -115,4 +114,7 @@ export class HttpAuth {
     }
     return token;
   }
+
+
+
 }
