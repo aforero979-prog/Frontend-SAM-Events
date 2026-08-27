@@ -1,0 +1,43 @@
+<div class="form-wrapper">
+
+  <span class="corner tl"></span>
+  <span class="corner tr"></span>
+  <span class="corner bl"></span>
+  <span class="corner br"></span>
+
+  <div class="panel-header">
+    <span class="brand">S.A.M.</span>
+    <span class="badge">EDITAR MÚSICA</span>
+  </div>
+
+  <h2 class="panel-title">ACTUALIZAR MÚSICA</h2>
+  <p class="panel-desc">Edita el enlace de YouTube en la plataforma.</p>
+
+  @if (successMsg) { 
+      <div style="color: #a3e635; margin-bottom: 10px; font-size: 12px;">✔ {{ successMsg }}</div> 
+  }
+  @if (errorMsg) { 
+      <div style="color: #ff4444; margin-bottom: 10px; font-size: 12px;">❌ {{ errorMsg }}</div> 
+  }
+
+  <form class="admin-form" [formGroup]="formData" (ngSubmit)="onSubmit()">
+
+    <div class="field">
+      <label class="field-label" for="youtubeUrl">URL de YouTube</label>
+      <input class="field-input" type="text" id="youtubeUrl" formControlName="youtubeUrl" placeholder="Ej: https://www.youtube.com/watch?v=...">
+      @if (formData.get('youtubeUrl')?.invalid && (formData.get('youtubeUrl')?.dirty || formData.get('youtubeUrl')?.touched)) {
+          @if (formData.get('youtubeUrl')?.errors?.['required']) {
+              <small class="field-error">La URL de YouTube es obligatoria</small>
+          }
+          @if (formData.get('youtubeUrl')?.errors?.['pattern']) {
+              <small class="field-error">Por favor ingresa una URL válida de YouTube</small>
+          }
+      }
+    </div>
+
+    <button class="btn-submit" type="submit" [disabled]="formData.invalid">
+      GUARDAR CAMBIOS →
+    </button>
+  </form>
+
+</div>

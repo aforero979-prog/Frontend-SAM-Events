@@ -1,0 +1,55 @@
+<div class="list-header">
+    <h2 class="table-title">Lista de Música (YouTube)</h2>
+    <a class="btn-new" routerLink="/dashboard/music/new">+ NUEVA MÚSICA</a>
+</div>
+
+<table class="admin-table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>URL YouTube</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (music of (musicList$ | async); track music._id || music.id || $index) {
+            <tr>
+                <td>{{ music._id || music.id }}</td>
+                <td>
+                  <a [href]="music.youtubeUrl" target="_blank" style="color: var(--accent);">{{ music.youtubeUrl }}</a>
+                </td>
+                <td class="actions">
+                    <button class="btn-edit" (click)="onEdit(music._id || music.id)">Editar</button>
+                    <button class="btn-delete" (click)="onDelete(music._id || music.id)">Eliminar</button>
+                </td>
+            </tr>
+        } @empty {
+            <tr><td colspan="3" class="empty">No hay música registrada</td></tr>
+        }
+    </tbody>
+</table>
+
+<!-- Modal de confirmación -->
+@if (showDeleteModal) {
+  <div class="modal-overlay">
+    <div class="modal-box">
+      <h3 class="modal-title">⚠ ADVERTENCIA</h3>
+      <p class="modal-msg">¿Estás seguro de que quieres eliminar esta canción?</p>
+      <div class="modal-actions">
+        <button class="btn-modal-cancel" (click)="cancelDelete()">NO, CANCELAR</button>
+        <button class="btn-modal-confirm" (click)="confirmDelete()">SÍ, ELIMINAR</button>
+      </div>
+    </div>
+  </div>
+}
+@if (showSuccessModal) {
+  <div class="modal-overlay">
+    <div class="modal-box success">
+      <h3 class="modal-title success">✔ ÉXITO</h3>
+      <p class="modal-msg">La canción ha sido eliminada correctamente.</p>
+      <div class="modal-actions">
+        <button class="btn-modal-close" (click)="showSuccessModal = false">CONTINUAR</button>
+      </div>
+    </div>
+  </div>
+}
