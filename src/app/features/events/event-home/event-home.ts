@@ -10,6 +10,7 @@ import { HttpEvents } from '../../../core/services/http-events';
   templateUrl: './event-home.html',
   styleUrl: './event-home.css',
 })
+
 export default class EventHome {
 
   eventList$ = new BehaviorSubject<any>([]);

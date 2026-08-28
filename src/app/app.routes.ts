@@ -22,8 +22,11 @@ export const routes: Routes = [
   { path: 'bar/home', loadComponent: () => import('./features/bars/bar-home/bar-home') },
   { path: 'club-new', loadComponent: () => import('./features/bars/bar-new-form/bar-new-form') },
 
-  // Tickets
+  // Tickets publico
   { path: 'buy-ticket', loadComponent: () => import('./features/ticket/ticket-new-form') },
+
+  // Musica pública
+  { path: 'music/home', loadComponent: () => import('./features/music/music-home/music-home') },
 
   // Bares y Posts públicos
   { path: 'bares', loadComponent: () => import('./features/bars/bar-home/bar-home') },

@@ -1,0 +1,21 @@
+<h1 class="titulo">DESCUBRE MUSICA</h1>
+
+<div class="musica">
+
+    @for (music of (musicList$ | async); track $index) {
+        <div class="canciones">
+
+            <div class="music-name">
+                <h2 class="name">{{ music.name }}</h2>
+            </div>
+
+            <a [routerLink]="['dashboard', 'music-ditails', music._id]">
+                <img [src]="music.imageUrl" [alt]="music.name" class="img-music">
+            </a>
+
+            <div class="description">
+                <p class="description">{{ music.address }}, {{ music.contactPhone }}</p>
+            </div>
+        </div>
+    }
+</div>
