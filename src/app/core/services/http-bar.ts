@@ -29,5 +29,9 @@ export class HttpBar {
   deleteBar(id: string) {
     return this.http.delete(`${environment.apiUrl}/bars/${id}`);
   }
+
+  getBarByUserId(userId: string) {
+    return this.http.get<any>(`${environment.apiUrl}/bars/user/${userId}`);
+  }
 }
 
