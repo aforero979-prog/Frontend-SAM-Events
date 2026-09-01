@@ -172,14 +172,58 @@
       }
     }
 
-    /* Nombre del usuario logueado */
-    .user-name {
-      font-weight: 700;
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--accent);
-      padding: 0 4px;
+    /* Contenedor de info de usuario */
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-right: 12px;
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+
+      .user-details {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+      }
+
+      .user-name {
+        font-weight: 700;
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--accent);
+        line-height: 1.2;
+      }
+
+      .user-role {
+        font-size: 9px;
+        color: var(--muted);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .btn-settings {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid transparent;
+        text-decoration: none;
+        transition: all 0.2s;
+
+        .settings-icon {
+          font-size: 14px;
+        }
+
+        &:hover {
+          background: rgba(232, 255, 0, 0.1);
+          border-color: var(--accent);
+          transform: rotate(45deg);
+        }
+      }
     }
 
     /* Botón cerrar sesión */

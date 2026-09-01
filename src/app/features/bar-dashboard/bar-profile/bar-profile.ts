@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
@@ -18,6 +18,7 @@ export default class BarProfile implements OnInit {
   private httpAuth = inject(HttpAuth);
   private httpColombia = inject(HttpApiColombia);
   private router = inject(Router);
+  private cdr = inject(ChangeDetectorRef);
 
   departments$ = new BehaviorSubject<any[]>([]);
   cities$ = new BehaviorSubject<any[]>([]);
@@ -29,21 +30,28 @@ export default class BarProfile implements OnInit {
 
   constructor() {
     this.formData = new FormGroup({
-      name:         new FormControl('', [Validators.required]),
+      name:         new FormControl('', [Validators.required, Validators.maxLength(100)]),
       description:  new FormControl('', [Validators.required]),
       imageUrl:     new FormControl('', [Validators.required]),
-      department:   new FormControl(''),
+      department:   new FormControl('', [Validators.required]),
       city:         new FormControl('', [Validators.required]),
       address:      new FormControl('', [Validators.required]),
       urlPage:      new FormControl(''),
-      capacity:     new FormControl(0, [Validators.min(0)]),
-      contactPhone: new FormControl(''),
+      capacity:     new FormControl(0, [Validators.min(1)]),
+      contactPhone: new FormControl('', [Validators.required]),
       isActive:     new FormControl(true),
     });
   }
 
   ngOnInit() {
-    const user = this.httpAuth.getCurrentUser();
+    // Timeout de seguridad de 3s para forzar la carga si el backend no responde
+    setTimeout(() => {
+      if (this.isLoading) {
+        console.warn('Timeout cargando datos del bar — forzando formulario vacío');
+        this.isLoading = false;
+        this.cdr.detectChanges();
+      }
+    }, 3000);
 
     // Cargar departamentos
     this.httpColombia.getDepartments().subscribe({
@@ -67,28 +75,41 @@ export default class BarProfile implements OnInit {
       }
     });
 
-    // Cargar datos del bar del usuario logueado
-    if (user?.barId) {
-      this.barId = user.barId;
-      this.loadBarData(user.barId);
-    } else if (user?._id) {
-      // Intentar buscar el bar por userId
-      this.httpBar.getBarByUserId(user._id).subscribe({
-        next: (res: any) => {
-          const bar = res?.data ?? res;
-          if (bar?._id) {
-            this.barId = bar._id;
-            this.patchForm(bar);
+    this.httpAuth.currentUser$.subscribe(user => {
+      if (!user) {
+        // Aún no hay usuario (puede estar cargando)
+        return;
+      }
+
+      // Caso 1: el usuario tiene barId explícito
+      if (user.barId) {
+        this.barId = user.barId;
+        this.loadBarData(user.barId);
+      }
+      // Caso 2: buscar el bar por userId (si ya creó su perfil antes)
+      else if (user._id) {
+        this.httpBar.getBarByUserId(user._id).subscribe({
+          next: (res: any) => {
+            const bar = res?.data ?? res;
+            if (bar?._id) {
+              this.barId = bar._id;
+              this.patchForm(bar);
+            }
+            this.isLoading = false;
+            this.cdr.detectChanges();
+          },
+          error: () => {
+            // Si da error (ej. 404 porque no existe), simplemente no tiene barId aún.
+            // Así, al guardar, llamará a createBar()
+            this.isLoading = false;
+            this.cdr.detectChanges();
           }
-          this.isLoading = false;
-        },
-        error: () => {
-          this.isLoading = false;
-        }
-      });
-    } else {
-      this.isLoading = false;
-    }
+        });
+      } else {
+        this.isLoading = false;
+        this.cdr.detectChanges();
+      }
+    });
   }
 
   loadBarData(barId: string) {
@@ -97,10 +118,12 @@ export default class BarProfile implements OnInit {
         const bar = res?.data ?? res;
         this.patchForm(bar);
         this.isLoading = false;
+        this.cdr.detectChanges();
       },
       error: (err) => {
         console.error(err);
         this.isLoading = false;
+        this.cdr.detectChanges();
       }
     });
   }
@@ -141,6 +164,16 @@ export default class BarProfile implements OnInit {
   onSubmit() {
     if (this.formData.invalid) {
       this.errorMsg = 'Completa todos los campos requeridos';
+      
+      // Depuración: Encontrar qué campos son inválidos
+      const invalidFields = [];
+      for (const name in this.formData.controls) {
+        if (this.formData.controls[name].invalid) {
+          invalidFields.push(name);
+        }
+      }
+      console.error('Formulario inválido. Campos faltando/con error:', invalidFields);
+      
       return;
     }
     this.errorMsg = '';

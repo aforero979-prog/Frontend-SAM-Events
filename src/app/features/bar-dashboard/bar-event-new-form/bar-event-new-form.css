@@ -1,0 +1,300 @@
+
+/* ==========================================================================
+   Contenedor Principal y Estructura
+   ========================================================================== */
+.page-event {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem 1rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-sizing: border-box;
+}
+
+.event-form {
+  background: #111;
+  width: 100%;
+  max-width: 700px;
+  padding: 2.5rem;
+  border-radius: 12px;
+  border: 1px solid #2a2a2a;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+}
+
+.event-form h2 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  color: #e8ff00;
+  text-align: center;
+  border-bottom: 1px solid #2a2a2a;
+  padding-bottom: 0.75rem;
+  font-family: 'Syne', sans-serif;
+  letter-spacing: 0.04em;
+}
+
+/* ==========================================================================
+   Campos de Formulario
+   ========================================================================== */
+.form-group {
+  margin-bottom: 1.25rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label,
+.field > label {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #c4c9ac;
+  margin-bottom: 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.form-control {
+  padding: 0.75rem 0.9rem;
+  font-size: 0.9rem;
+  color: #e4e2e1;
+  background-color: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 6px;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #e8ff00;
+  box-shadow: 0 0 0 2px rgba(232, 255, 0, 0.1);
+}
+
+.form-control:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+textarea.form-control {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.form-row .col {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+/* ==========================================================================
+   Fieldsets
+   ========================================================================== */
+.form-section {
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.25rem;
+  background-color: rgba(17, 17, 17, 0.6);
+}
+
+.form-section legend {
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: #e8ff00;
+  padding: 0 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ==========================================================================
+   Localidades
+   ========================================================================== */
+.localidades {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.option {
+  width: calc(50% - 0.5rem);
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  box-sizing: border-box;
+}
+
+.localidad-name {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #e8ff00;
+  margin-bottom: 0.5rem;
+  display: block;
+  cursor: pointer;
+}
+
+.localidad-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.localidad-chk {
+  accent-color: #e8ff00;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-top: 1.8rem;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.field-inline {
+  flex: 1;
+  min-width: 0;
+  margin-bottom: 0 !important;
+}
+
+.field-inline label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #c4c9ac;
+  margin-bottom: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.field-inline .form-control {
+  width: 100%;
+}
+
+.bar-section-grid {
+  margin-bottom: 0;
+}
+
+.bar-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.bar-row .col {
+  flex: 1;
+  min-width: 0;
+  margin-bottom: 0;
+}
+
+.date-time-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.date-time-row .col {
+  flex: 1;
+  min-width: 0;
+}
+
+.dates-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.dates-row .form-section {
+  flex: 1;
+  min-width: 0;
+  margin-bottom: 1.25rem;
+}
+
+/* ==========================================================================
+   Checkbox
+   ========================================================================== */
+.checkbox-group input[type="checkbox"] {
+  accent-color: #e8ff00;
+  width: 1.1rem;
+  height: 1.1rem;
+  cursor: pointer;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  color: #c4c9ac;
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   Errores y Botón
+   ========================================================================== */
+.error-msg {
+  color: #ff4444 !important;
+  margin-top: 0.35rem;
+  font-weight: 500;
+}
+
+.btn-submit {
+  width: 100%;
+  padding: 0.85rem 1.5rem;
+  background-color: #e8ff00;
+  color: #0a0a0a;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-family: 'JetBrains Mono', monospace;
+  transition: all 0.3s ease;
+}
+
+.btn-submit:hover:not(:disabled) {
+  background-color: #d4e600;
+  box-shadow: 0 0 20px rgba(232, 255, 0, 0.3);
+  transform: translateY(-1px);
+}
+
+.btn-submit:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+@media (max-width: 600px) {
+  .option {
+    width: 100%;
+  }
+
+  .event-form {
+    padding: 1.25rem;
+  }
+
+  .form-row {
+    flex-direction: column;
+  }
+
+  .bar-row {
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .dates-row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .date-time-row {
+    flex-direction: row;
+    gap: 0.5rem;
+  }
+}

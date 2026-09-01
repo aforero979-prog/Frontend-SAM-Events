@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { HttpMusic } from '../../../core/services/http-music';
 import { Router, RouterLink } from '@angular/router';
@@ -12,63 +12,143 @@ import { SafeUrlPipe } from '../../../pipes/safe-url-pipe';
   styleUrl: './music-home.css',
 })
 
-export default class MusicHome {
+export default class MusicHome implements OnInit {
 
-      musicList$ = new BehaviorSubject<any>([])
-  
-      private httpMusic = inject( HttpMusic )
-      private router = inject( Router )
-  
-      ngOnInit() {
-          this.httpMusic.getMusic().subscribe({
-              next: ( res ) => {
-                  console.log( res )
-  
-                  this.musicList$.next( res )
-              },
-              error: ( err ) => {
-                  console.error( err )
-              },
-              complete: () => {}
-          })
+  musicList: any[] = [];
+  currentTrackIndex = -1;
+  isPlaying = false;
+  embedUrl: string | null = null;
+
+  private httpMusic = inject(HttpMusic);
+  private router = inject(Router);
+
+  ngOnInit() {
+    this.httpMusic.getMusic().subscribe({
+      next: (res) => {
+        const list = Array.isArray(res) ? res : (res?.data || []);
+        this.musicList = list;
+        // Auto-seleccionar primer track sin reproducir
+        if (list.length > 0) {
+          this.currentTrackIndex = 0;
+        }
+      },
+      error: (err) => {
+        console.error('Error cargando música:', err);
       }
+    });
+  }
 
+  get currentTrack(): any {
+    if (this.currentTrackIndex >= 0 && this.currentTrackIndex < this.musicList.length) {
+      return this.musicList[this.currentTrackIndex];
+    }
+    return null;
+  }
 
-// 1. Agrega esta nueva variable al inicio de tu clase
-videoUrlActiva: string | null = null;
+  /**
+   * Extrae el videoId de una URL de YouTube
+   */
+  extractVideoId(url: string): string | null {
+    if (!url) return null;
 
-// 2. Actualiza la función activarVideo
-activarVideo(event: Event, music: any) {
-  event.preventDefault();
-  event.stopPropagation(); 
+    // Manejo de iframes embebidos
+    if (url.includes('<iframe')) {
+      const match = url.match(/src="([^"]+)"/);
+      if (match && match[1]) {
+        url = match[1];
+      }
+    }
 
-  let url = music.youtubeUrl;
-  if (!url) return;
+    // youtu.be/XXXX
+    const shortMatch = url.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/);
+    if (shortMatch) return shortMatch[1];
 
-  // Defensa contra etiquetas HTML (la que ya teníamos)
-  if (url.includes('<iframe')) {
-    const match = url.match(/src="([^"]+)"/);
-    if (match && match[1]) {
-      url = match[1]; 
+    // youtube.com/watch?v=XXXX
+    const watchMatch = url.match(/[?&]v=([a-zA-Z0-9_-]{11})/);
+    if (watchMatch) return watchMatch[1];
+
+    // youtube.com/embed/XXXX
+    const embedMatch = url.match(/embed\/([a-zA-Z0-9_-]{11})/);
+    if (embedMatch) return embedMatch[1];
+
+    return null;
+  }
+
+  /**
+   * Genera la URL del thumbnail de YouTube
+   */
+  getThumbnail(music: any): string {
+    const videoId = this.extractVideoId(music.youtubeUrl);
+    if (videoId) {
+      return `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`;
+    }
+    return music.imageUrl || '';
+  }
+
+  /**
+   * Genera la URL del thumbnail de alta resolución para el player principal
+   */
+  getHeroThumbnail(music: any): string {
+    const videoId = this.extractVideoId(music.youtubeUrl);
+    if (videoId) {
+      return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+    }
+    return music.imageUrl || '';
+  }
+
+  /**
+   * Genera la URL de embed de YouTube con autoplay
+   */
+  getEmbedUrl(music: any): string | null {
+    const videoId = this.extractVideoId(music.youtubeUrl);
+    if (videoId) {
+      return `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+    }
+    return null;
+  }
+
+  /**
+   * Selecciona y reproduce un track
+   */
+  playTrack(index: number) {
+    this.currentTrackIndex = index;
+    this.isPlaying = true;
+    const track = this.musicList[index];
+    this.embedUrl = this.getEmbedUrl(track);
+  }
+
+  /**
+   * Pausa la reproducción (oculta el iframe)
+   */
+  togglePlay() {
+    if (this.isPlaying) {
+      this.isPlaying = false;
+      this.embedUrl = null;
+    } else if (this.currentTrack) {
+      this.isPlaying = true;
+      this.embedUrl = this.getEmbedUrl(this.currentTrack);
     }
   }
 
-  // Transformación a embed y autoplay
-  if (url.includes('watch?v=')) {
-    const videoId = url.split('v=')[1].split('&')[0];
-    url = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-  } 
-  else if (url.includes('embed/') && !url.includes('autoplay=1')) {
-    const separador = url.includes('?') ? '&' : '?';
-    url = `${url}${separador}autoplay=1`;
+  /**
+   * Track anterior
+   */
+  prevTrack() {
+    if (this.musicList.length === 0) return;
+    this.currentTrackIndex = (this.currentTrackIndex - 1 + this.musicList.length) % this.musicList.length;
+    if (this.isPlaying) {
+      this.embedUrl = this.getEmbedUrl(this.currentTrack);
+    }
   }
 
-  // 3. En lugar de modificar "music", asignamos la URL a la variable global del componente
-  this.videoUrlActiva = url;
-}
-
-// 4. Nueva función para cerrar el modal
-cerrarModal() {
-  this.videoUrlActiva = null;
-}
+  /**
+   * Siguiente track
+   */
+  nextTrack() {
+    if (this.musicList.length === 0) return;
+    this.currentTrackIndex = (this.currentTrackIndex + 1) % this.musicList.length;
+    if (this.isPlaying) {
+      this.embedUrl = this.getEmbedUrl(this.currentTrack);
+    }
+  }
 }

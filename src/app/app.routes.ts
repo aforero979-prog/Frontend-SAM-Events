@@ -34,6 +34,9 @@ export const routes: Routes = [
   { path: 'bares', loadComponent: () => import('./features/bars/bar-home/bar-home') },
   { path: 'posts', loadComponent: () => import('./features/posts/post-public-list/post-public-list') },
 
+  // Perfil de Usuario regular
+  { path: 'user/profile', loadComponent: () => import('./features/users/user-profile/user-profile') },
+
   // Legal y Soporte
   { path: 'terminos', loadComponent: () => import('./features/support/terms/terms') },
   { path: 'reembolsos', loadComponent: () => import('./features/support/refunds/refunds') },
@@ -94,7 +97,8 @@ export const routes: Routes = [
     canActivate: [barGuard],
     loadComponent: () => import('./features/bar-dashboard/bar-dashboard'),
     children: [
-      { path: 'events', loadComponent: () => import('./features/eventos/event-list/event-list') },
+      { path: 'events', loadComponent: () => import('./features/bar-dashboard/bar-event-list/event-list') },
+      { path: 'event/new', loadComponent: () => import('./features/bar-dashboard/bar-event-new-form/bar-event-new-form') },
       { path: 'profile', loadComponent: () => import('./features/bar-dashboard/bar-profile/bar-profile') },
     ]
   },
