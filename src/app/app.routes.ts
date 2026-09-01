@@ -40,7 +40,7 @@ export const routes: Routes = [
 
 
   
-  // ── 3. Panel de Administración (Dashboard) ──────────────────────
+  // ── 3. Panel de Administración ) ──────────────────────
   {
     path: 'dashboard',
     loadComponent: () => import('./features/dashboard/dashboard'),

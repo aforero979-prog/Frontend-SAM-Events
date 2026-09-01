@@ -1,13 +1,20 @@
+
 <h1 class="titulo">DESCUBRE MUSICA</h1>
 
 <div class="musica">
-
     @for (music of (musicList$ | async); track $index) {
     <div class="canciones">
-
-        <a [routerLink]="[ 'dashboard', 'music-ditails', music._id ]">
-            <img [src]="music.imageUrl" [alt]="music.name" class="img-music">
-        </a>
+        
+        <div class="card-media-container">
+            <!-- La imagen siempre se muestra en la tarjeta -->
+            <a [routerLink]="[ 'dashboard', 'music-ditails', music._id ]">
+                <img 
+                    [src]="music.imageUrl" 
+                    [alt]="music.name" 
+                    class="img-music imagen-clickable"
+                    (click)="activarVideo($event, music)"> 
+            </a>
+        </div>
 
         <div class="music-name">
             <h2 class="name">{{ music.name }}</h2>
@@ -17,3 +24,30 @@
     </div>
     }
 </div>
+
+<!-- ========================================== -->
+<!-- NUEVO: ESTRUCTURA DEL MODAL SUPERPUESTO    -->
+<!-- ========================================== -->
+
+@if (videoUrlActiva) {
+    <!-- El fondo oscuro. El (click) aquí permite cerrar al hacer clic afuera -->
+    <div class="modal-backdrop" (click)="cerrarModal()">
+        
+        <!-- Contenedor del video. $event.stopPropagation() evita que se cierre si haces clic en los bordes del video -->
+        <div class="modal-content" (click)="$event.stopPropagation()">
+            
+            <!-- Botón opcional de cerrar (buena práctica de UX) -->
+            <button class="btn-cerrar" (click)="cerrarModal()">X</button>
+
+            <!-- El iframe ahora ocupa el 100% del modal -->
+            <iframe 
+                width="100%" 
+                height="100%" 
+                [src]="videoUrlActiva | safeUrl" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+            </iframe>
+        </div>
+    </div>
+}
