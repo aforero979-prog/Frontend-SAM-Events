@@ -33,6 +33,17 @@ p {
     display: flex;
 }  */
 
+/* .conttitulo{
+  background-color: #1c1c1c;
+  padding: .5rem;
+} */
+
+.titulo{
+    text-align: center;
+    padding: 2rem 4rem;
+    background-color: #1d1d1d;
+}
+
 /* Contenedor de eventos */
 .eventos {
   display: grid;

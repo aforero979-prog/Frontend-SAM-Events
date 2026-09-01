@@ -15,12 +15,19 @@ import { AsyncPipe, DatePipe } from '@angular/common';
 export default class Home implements OnInit {
   eventList$ = new BehaviorSubject<any>([]);
   musicList$ = new BehaviorSubject<any[]>([]);
+  eventFeaturedList$ = new BehaviorSubject<any>([]);
 
   private httpEvents = inject(HttpEvents);
   private httpMusic = inject(HttpMusic);
 
   ngOnInit() {
-    this.httpEvents.getEvents().subscribe({
+    this.getEventsForInitialDate('initialDate', 3);
+    this.getEventsForFeatured(1);
+  }
+
+  getEventsForInitialDate(field: string, quantity: number) {
+
+        this.httpEvents.getEventsByField(field, quantity).subscribe({
       next: (res) => {
         console.log(res);
         this.eventList$.next(res);
@@ -41,6 +48,19 @@ export default class Home implements OnInit {
       error: (err) => {
         console.error('Error cargando música:', err);
       }
+    });
+  }
+  getEventsForFeatured(quantity: number) {
+    this.httpEvents.getFeaturedEvents(quantity).subscribe({
+      next: (res) => {
+        console.log(res);
+
+        this.eventFeaturedList$.next(res);
+      },
+      error: (err) => {
+        console.error(err);
+      },
+      complete: () => {},
     });
   }
 }

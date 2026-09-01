@@ -13,27 +13,97 @@
   <h2 class="panel-title">REGISTRAR MÚSICA</h2>
   <p class="panel-desc">Añade un enlace de YouTube a la plataforma.</p>
 
-  @if (successMsg) { 
-      <div style="color: #a3e635; margin-bottom: 10px; font-size: 12px;">✔ {{ successMsg }}</div> 
+  @if (successMsg) {
+  <div style="color: #a3e635; margin-bottom: 10px; font-size: 12px;">✔ {{ successMsg }}</div>
   }
-  @if (errorMsg) { 
-      <div style="color: #ff4444; margin-bottom: 10px; font-size: 12px;">❌ {{ errorMsg }}</div> 
+  @if (errorMsg) {
+  <div style="color: #ff4444; margin-bottom: 10px; font-size: 12px;">❌ {{ errorMsg }}</div>
   }
 
   <form class="admin-form" [formGroup]="formData" (ngSubmit)="onSubmit()">
 
     <div class="field">
-      <label class="field-label" for="youtubeUrl">URL de YouTube</label>
-      <input class="field-input" type="text" id="youtubeUrl" formControlName="youtubeUrl" placeholder="Ej: https://www.youtube.com/watch?v=...">
-      @if (formData.get('youtubeUrl')?.invalid && (formData.get('youtubeUrl')?.dirty || formData.get('youtubeUrl')?.touched)) {
-          @if (formData.get('youtubeUrl')?.errors?.['required']) {
-              <small class="field-error">La URL de YouTube es obligatoria</small>
-          }
-          @if (formData.get('youtubeUrl')?.errors?.['pattern']) {
-              <small class="field-error">Por favor ingresa una URL válida de YouTube</small>
-          }
+      <label class="field-label" for="name">Nombre de la canción</label>
+      <input class="field-input" type="text" id="name" formControlName="name" placeholder="Ej: xxxx-xxxx">
+      @if (formData.get('name')?.invalid && (formData.get('name')?.dirty || formData.get('name')?.touched)) {
+      @if (formData.get('name')?.errors?.['required']) {
+      <small class="field-error">El nombre es obligatorio</small>
+      }
       }
     </div>
+
+
+
+    <div class="field">
+      <label class="field-label" for="description">Descripción</label>
+      <textarea class="field-input field-textarea" id="description" formControlName="description"
+        placeholder="Información de la canción"></textarea>
+      @if (formData.get('description')?.invalid && (formData.get('description')?.dirty ||
+      formData.get('description')?.touched)) {
+      @if (formData.get('description')?.errors?.['required']) {
+      <small class="field-error">La descripción es obligatoria</small>
+      }
+      }
+    </div>
+
+
+
+    <div class="field">
+      <label class="field-label" for="genre">Género</label>
+      <input class="field-input" type="text" id="genre" formControlName="genre"
+        placeholder="Tecnho, House, HardTechno,...">
+      @if (formData.get('imageUrl')?.invalid && (formData.get('genre')?.dirty || formData.get('genre')?.touched))
+      {
+      @if (formData.get('genre')?.errors?.['required']) {
+      <small class="field-error">El género es obligatorio</small>
+      }
+      }
+    </div>
+
+
+
+
+    <div class="field">
+      <label class="field-label" for="imageUrl">URL de imagen</label>
+      <input class="field-input" type="text" id="imageUrl" formControlName="imageUrl" placeholder="https://...">
+      @if (formData.get('imageUrl')?.invalid && (formData.get('imageUrl')?.dirty || formData.get('imageUrl')?.touched))
+      {
+      @if (formData.get('imageUrl')?.errors?.['required']) {
+      <small class="field-error">La imagen es obligatoria</small>
+      }
+      }
+    </div>
+
+
+
+
+    <div class="field">
+      <label class="field-label" for="youtubeUrl">URL de YouTube</label>
+      <input class="field-input" type="text" id="youtubeUrl" formControlName="youtubeUrl"
+        placeholder="Ej: https://www.youtube.com/watch?v=...">
+      @if (formData.get('youtubeUrl')?.invalid && (formData.get('youtubeUrl')?.dirty ||
+      formData.get('youtubeUrl')?.touched)) {
+      @if (formData.get('youtubeUrl')?.errors?.['required']) {
+      <small class="field-error">La URL de YouTube es obligatoria</small>
+      }
+      @if (formData.get('youtubeUrl')?.errors?.['pattern']) {
+      <small class="field-error">Por favor ingresa una URL válida de YouTube</small>
+      }
+      }
+    </div>
+
+
+
+    <div class="field field-checkbox">
+      <label class="field-label">
+        <input type="checkbox" formControlName="isActive">
+        <span>Activo</span>
+      </label>
+    </div>
+
+
+
+
 
     <button class="btn-submit" type="submit" [disabled]="formData.invalid">
       GUARDAR MÚSICA →

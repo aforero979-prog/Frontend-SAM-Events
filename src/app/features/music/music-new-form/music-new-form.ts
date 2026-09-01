@@ -19,28 +19,58 @@ export default class MusicNewForm {
 
   constructor() {
     this.formData = new FormGroup({
+      name: new FormControl(''),
+      genre: new FormControl(''),
+      description: new FormControl(''),
+      isActive: new FormControl(''),
       youtubeUrl: new FormControl('', [
-        Validators.required, 
-        Validators.pattern(/^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$/)
+        Validators.required,
+        Validators.pattern(/^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$/),
       ]),
+      imageUrl: new FormControl(''),
     });
   }
 
+  // onSubmit() {
+  //   if (this.formData.valid) {
+  //     let payload = { ...this.formData.value };
+  //     this.httpMusic.createMusic(payload).subscribe({
+  //       next: (res) => {
+  //         this.successMsg = 'Música añadida correctamente';
+  //         this.errorMsg = '';
+  //         this.formData.reset();
+  //       },
+  //       error: (error) => {
+  //         console.error(error);
+  //         this.errorMsg = error.error?.msg || 'Error al añadir música';
+  //         this.successMsg = '';
+  //       }
+  //     });
+  //   }
+  // }
+
   onSubmit() {
     if (this.formData.valid) {
-      let payload = { ...this.formData.value };
-      this.httpMusic.createMusic(payload).subscribe({
-        next: (res) => {
-          this.successMsg = 'Música añadida correctamente';
-          this.errorMsg = '';
+      console.log(this.formData.value);
+      this.httpMusic.createMusic(this.formData.value).subscribe({
+        next: (data) => {
+          console.log(data);
           this.formData.reset();
+          this.router.navigateByUrl('/dashboard/music');
         },
-        error: (error) => {
-          console.error(error);
-          this.errorMsg = error.error?.msg || 'Error al añadir música';
-          this.successMsg = '';
-        }
+        error: (err) => {
+          console.error(err);
+        },
+        complete: () => {
+          console.log('Canción registrada');
+        },
       });
+    } else {
+      console.log('El formulario no es valido');
     }
+  }
+
+  get name() {
+    return this.formData.get('name');
   }
 }
