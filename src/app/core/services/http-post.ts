@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { map } from 'rxjs';
 import { ResponsePosts } from '../models/post';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 
 // servicio para obtener las publicaciones
 @Injectable({
