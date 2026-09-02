@@ -29,14 +29,21 @@
         <span class="btn-plus">➜</span>
       </a>
     } @else {
-      <div class="user-info">
-        <span class="user-name">{{ (auth.currentUser$ | async)?.name || 'Usuario' }}</span>
-        <span class="user-role">{{ (auth.currentUser$ | async)?.role || 'USER' }}</span>
-      </div>
-      <button class="btn-logout" (click)="logout()" title="Cerrar sesión">
-        <span class="logout-icon">⏻</span>
-        <span class="logout-txt">SALIR</span>
-      </button>
+      @if (auth.currentUser$ | async; as currentUser) {
+        <div class="user-info">
+          <div class="user-details">
+            <span class="user-name">{{ currentUser.name || 'Usuario' }}</span>
+            <span class="user-role">{{ currentUser.role || 'USER' }}</span>
+          </div>
+          <a [routerLink]="getDashboardRoute(currentUser.role)" class="btn-settings" title="Ir al panel/perfil">
+            <span class="settings-icon">⚙️</span>
+          </a>
+        </div>
+        <button class="btn-logout" (click)="logout()" title="Cerrar sesión">
+          <span class="logout-icon">⏻</span>
+          <span class="logout-txt">SALIR</span>
+        </button>
+      }
     }
   </div>
 

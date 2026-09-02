@@ -36,12 +36,15 @@ export default class Login {
           // Muestra un anuncio de confirmación al usuario
           alert('¡Inicio de sesión exitoso! Bienvenido.');
           
-          // Navega al dashboard dependiendo del rol
+          // Navega según el rol del usuario
           const userObj = this.httpAuth.getCurrentUser();
-          if (userObj?.role === 'BAR') {
+          if (userObj?.role === 'ADMIN') {
+            this.router.navigateByUrl('/dashboard');
+          } else if (userObj?.role === 'BAR') {
             this.router.navigateByUrl('/bar-dashboard');
           } else {
-            this.router.navigateByUrl('/dashboard');
+            // USER u otros roles → página principal (solo compras)
+            this.router.navigateByUrl('/home');
           }
         },
         error: (err) => {

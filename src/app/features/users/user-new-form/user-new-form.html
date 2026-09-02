@@ -51,12 +51,6 @@
             @if (confirmPassword?.errors?.['required']){
                 <small>la contraseña es requerida</small>
             }
-            @if (confirmPassword?.errors?.['minlength']){
-                <small>la contraseña debe tener al menos 3 caracteres</small>
-            }
-            @if (confirmPassword?.errors?.['maxlength']){
-                <small>la contraseña debe tener menos de 20 caracteres</small>
-            }
         }
     </div>
     <div class="checkbox">
@@ -68,6 +62,27 @@
             }
         </select>
     </div>
+
+    <!-- Campos condicionales de BAR -->
+    @if (isBarRole) {
+        <div class="bar-section">
+            <h3 class="bar-section-title">◐ Datos del Bar</h3>
+            <p class="bar-section-desc">Ingresa los datos básicos del bar. El usuario podrá completar el resto desde su panel.</p>
+            <div class="field">
+                <label for="barName">Nombre del bar *</label>
+                <input type="text" id="barName" formControlName="barName" placeholder="Ej: Octava Club">
+            </div>
+            <div class="field">
+                <label for="barDescription">Descripción del bar *</label>
+                <textarea id="barDescription" formControlName="barDescription" rows="3" placeholder="Describe el establecimiento..."></textarea>
+            </div>
+            <div class="field">
+                <label for="barImageUrl">URL de imagen del bar *</label>
+                <input type="text" id="barImageUrl" formControlName="barImageUrl" placeholder="https://...">
+            </div>
+        </div>
+    }
+
     <div class="field">
         <label for="avatar">Avatar</label>
         <input type="file" id="avatar" formControlName="avatar">

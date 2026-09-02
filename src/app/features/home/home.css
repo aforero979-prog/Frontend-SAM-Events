@@ -87,24 +87,109 @@ p {
 
 
 /* -------------------------------------------------- */
-/* MUSICA */
+/* MÚSICA - CINTA DE SUPERMERCADO (CONVEYOR BELT) */
 /* -------------------------------------------------- */
 
-.nombre{
-    margin: 1.5rem;
-}
-.musica {
-  display: flex;
-  text-align: center;
-  justify-content: center;
-  background-color: #141414;
-}
 .descubre {
   background-color: #141414;
   padding: 2rem 2rem 0rem 2rem;
   text-decoration: underline;
 }
 
+/* Contenedor principal con overflow oculto */
+.music-tape-container {
+  overflow: hidden;
+  background: #141414;
+  padding: 2rem 0 3rem;
+  position: relative;
+}
+
+/* Gradientes laterales para efecto de desvanecimiento */
+.music-tape-container::before,
+.music-tape-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 80px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.music-tape-container::before {
+  left: 0;
+  background: linear-gradient(to right, #141414, transparent);
+}
+
+.music-tape-container::after {
+  right: 0;
+  background: linear-gradient(to left, #141414, transparent);
+}
+
+/* Cinta que se mueve horizontalmente */
+.music-tape {
+  display: flex;
+  gap: 2rem;
+  width: max-content;
+  animation: scroll-tape 30s linear infinite;
+}
+
+.music-tape:hover {
+  animation-play-state: paused;
+}
+
+@keyframes scroll-tape {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Cada tarjeta de música */
+.music-tape-item {
+  flex-shrink: 0;
+  width: 260px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.music-tape-item:hover {
+  transform: scale(1.05);
+}
+
+.music-tape-img {
+  width: 260px;
+  height: 260px;
+  object-fit: cover;
+  border-radius: 12px;
+  transition: box-shadow 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.music-tape-item:hover .music-tape-img {
+  box-shadow:
+    0 0 15px 2px #e8ff00,
+    0 0 40px 8px rgba(232, 255, 0, 0.3);
+}
+
+.music-tape-name {
+  color: #c4c9ac;
+  font-size: 0.85rem;
+  margin-top: 1rem;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 260px;
+}
+
+.music-tape-item:hover .music-tape-name {
+  color: #e8ff00;
+}
 
 /* ------------------------------------------------- */
 /* --CLUBES-- */

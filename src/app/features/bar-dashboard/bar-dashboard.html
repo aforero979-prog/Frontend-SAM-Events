@@ -12,6 +12,13 @@
         <span class="nav-icon">◈</span>
         <span>PANEL</span>
       </a>
+      <a routerLink="/bar-dashboard/profile" routerLinkActive="nav-active" class="nav-item">
+        <span class="nav-icon">◐</span>
+        <span>MI BAR</span>
+        @if (!barComplete) {
+          <span class="nav-badge">!</span>
+        }
+      </a>
       <a routerLink="/bar-dashboard/events" routerLinkActive="nav-active" class="nav-item">
         <span class="nav-icon">◎</span>
         <span>MIS EVENTOS</span>
@@ -20,10 +27,17 @@
 
     <div class="sidebar-footer">
       <div class="user-welcome">Hola, {{ userName }}</div>
+      @if (barName) {
+        <div class="bar-name-badge">{{ barName }}</div>
+      }
       <a routerLink="/home" class="nav-item nav-item--back">
         <span class="nav-icon">←</span>
         <span>VOLVER AL SITIO</span>
       </a>
+      <button class="nav-item nav-item--logout" (click)="logout()">
+        <span class="nav-icon">⏻</span>
+        <span>CERRAR SESIÓN</span>
+      </button>
     </div>
   </aside>
 
@@ -36,6 +50,16 @@
         <span class="stat-number">{{ eventCount }}</span>
         <span class="stat-label">MIS EVENTOS</span>
         <a routerLink="/bar-dashboard/events" class="stat-link">VER →</a>
+      </div>
+      <div class="stat-card">
+        @if (barComplete) {
+          <span class="stat-number stat-number--ok">✓</span>
+          <span class="stat-label">BAR COMPLETO</span>
+        } @else {
+          <span class="stat-number stat-number--warn">!</span>
+          <span class="stat-label">BAR INCOMPLETO</span>
+        }
+        <a routerLink="/bar-dashboard/profile" class="stat-link">COMPLETAR →</a>
       </div>
     </div>
 

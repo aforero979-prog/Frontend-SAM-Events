@@ -68,6 +68,7 @@
                 <!-- MUSICA -->
 <!-- --------------------------------------------------------------------------------------------------------------- -->
 
+
 <!-- <a href=""><h1 class="descubre">MUSICA</h1></a>
 
     @for (event of (musciFeaturedList$ | async); track $index) {
@@ -87,6 +88,70 @@
 <!-- --------------------------------------------------------------------------------------------------------------- -->
 <!-- CLUBES -->
 <!-- --------------------------------------------------------------------------------------------------------------- -->
+
+
+<!-- Cinta de música dinámica desde la API -->
+<div class="music-tape-container">
+  <div class="music-tape">
+    @if (musicList$ | async; as musicItems) {
+      @if (musicItems.length > 0) {
+        <!-- Primera copia para animación infinita -->
+        @for (music of musicItems; track $index) {
+          <div class="music-tape-item">
+            <a [href]="music.externalUrl || music.audioUrl || '#'" target="_blank" rel="noopener">
+              <img class="music-tape-img" [src]="music.imageUrl" [alt]="music.name">
+            </a>
+            <h2 class="music-tape-name">{{ music.artist ? music.artist + ' - ' : '' }}{{ music.name }}</h2>
+          </div>
+        }
+        <!-- Segunda copia para loop continuo -->
+        @for (music of musicItems; track $index) {
+          <div class="music-tape-item">
+            <a [href]="music.externalUrl || music.audioUrl || '#'" target="_blank" rel="noopener">
+              <img class="music-tape-img" [src]="music.imageUrl" [alt]="music.name">
+            </a>
+            <h2 class="music-tape-name">{{ music.artist ? music.artist + ' - ' : '' }}{{ music.name }}</h2>
+          </div>
+        }
+      } @else {
+        <!-- Fallback estático si no hay datos de API -->
+        <div class="music-tape-item">
+          <a href="https://www.youtube.com/watch?v=8P6mlY3C2eg"><img class="music-tape-img" src="assets/imagenes/wandertohell.jpg" alt="WanderToHell"></a>
+          <h2 class="music-tape-name">Vaal - Wander To Hell</h2>
+        </div>
+        <div class="music-tape-item">
+          <a href="https://www.youtube.com/watch?v=UUdTzrFhHPw"><img class="music-tape-img" src="assets/imagenes/yourmind.jpg" alt="YourMind"></a>
+          <h2 class="music-tape-name">Adam Bayer - Your Mind</h2>
+        </div>
+        <div class="music-tape-item">
+          <a href="https://www.youtube.com/watch?v=WtLA7Aojz8Y"><img class="music-tape-img" src="assets/imagenes/minimal.jpg" alt="Minimal"></a>
+          <h2 class="music-tape-name">Deborah de Luca - Minimal</h2>
+        </div>
+        <div class="music-tape-item">
+          <a href="https://www.youtube.com/watch?v=Fwi1qgSaxZY"><img class="music-tape-img" src="assets/imagenes/hellonearth.jpg" alt="HellOnEarth"></a>
+          <h2 class="music-tape-name">KAS:ST - Hell on Earth</h2>
+        </div>
+        <!-- Duplicados para loop -->
+        <div class="music-tape-item">
+          <a href="https://www.youtube.com/watch?v=8P6mlY3C2eg"><img class="music-tape-img" src="assets/imagenes/wandertohell.jpg" alt="WanderToHell"></a>
+          <h2 class="music-tape-name">Vaal - Wander To Hell</h2>
+        </div>
+        <div class="music-tape-item">
+          <a href="https://www.youtube.com/watch?v=UUdTzrFhHPw"><img class="music-tape-img" src="assets/imagenes/yourmind.jpg" alt="YourMind"></a>
+          <h2 class="music-tape-name">Adam Bayer - Your Mind</h2>
+        </div>
+        <div class="music-tape-item">
+          <a href="https://www.youtube.com/watch?v=WtLA7Aojz8Y"><img class="music-tape-img" src="assets/imagenes/minimal.jpg" alt="Minimal"></a>
+          <h2 class="music-tape-name">Deborah de Luca - Minimal</h2>
+        </div>
+        <div class="music-tape-item">
+          <a href="https://www.youtube.com/watch?v=Fwi1qgSaxZY"><img class="music-tape-img" src="assets/imagenes/hellonearth.jpg" alt="HellOnEarth"></a>
+          <h2 class="music-tape-name">KAS:ST - Hell on Earth</h2>
+        </div>
+      }
+    }
+  </div>
+</div>
 
 
 <a href=""><h1 class="descubreclubes">Descubre clubes en Bogotá</h1></a>

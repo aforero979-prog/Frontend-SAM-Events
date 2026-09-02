@@ -55,4 +55,15 @@ export class HttpEvents {
   deleteEvent(id: string | null) {
     return this.http.delete<any>(`${environment.apiUrl}/events/${id}`);
   }
+
+  getEventsByBarId(barId: string) {
+    return this.http.get<any>(`${environment.apiUrl}/events/bar/${barId}`).pipe(
+      map((res) => (Array.isArray(res) ? res : res?.data || [])),
+      catchError((error) => {
+        console.error('Error fetching bar events:', error);
+        const errorMessage = error?.error?.message || 'Error al obtener los eventos del bar';
+        return throwError(() => errorMessage);
+      })
+    );
+  }
 }

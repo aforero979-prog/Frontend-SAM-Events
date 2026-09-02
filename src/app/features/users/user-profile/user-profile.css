@@ -1,0 +1,126 @@
+.profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 64px);
+    padding: 2rem;
+    background-color: #0a0a0a;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.profile-card {
+    background: #111;
+    width: 100%;
+    max-width: 500px;
+    padding: 2.5rem;
+    border-radius: 12px;
+    border: 1px solid #2a2a2a;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+}
+
+.profile-title {
+    margin-top: 0;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    color: #e8ff00;
+    text-align: center;
+    border-bottom: 1px solid #2a2a2a;
+    padding-bottom: 1rem;
+    font-family: 'Syne', sans-serif;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: #c4c9ac;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    font-size: 0.95rem;
+    color: #e4e2e1;
+    background-color: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #e8ff00;
+    box-shadow: 0 0 0 2px rgba(232, 255, 0, 0.1);
+}
+
+.error-msg {
+    color: #ff4444;
+    margin-top: 0.4rem;
+    font-size: 0.8rem;
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 1rem;
+    margin-top: 1rem;
+    background-color: #e8ff00;
+    color: #0a0a0a;
+    font-size: 0.95rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.btn-submit:hover:not(:disabled) {
+    background-color: #d4e600;
+    box-shadow: 0 0 20px rgba(232, 255, 0, 0.3);
+    transform: translateY(-1px);
+}
+
+.btn-submit:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.alert {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.alert-error {
+    background-color: rgba(255, 68, 68, 0.1);
+    border: 1px solid #ff4444;
+    color: #ff4444;
+}
+
+.alert-success {
+    background-color: rgba(232, 255, 0, 0.1);
+    border: 1px solid #e8ff00;
+    color: #e8ff00;
+}
+
+.loading-state {
+    text-align: center;
+    color: #c4c9ac;
+    padding: 2rem;
+}

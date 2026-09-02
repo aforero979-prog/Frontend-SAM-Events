@@ -1,53 +1,112 @@
+<div class="player-shell">
 
-<h1 class="titulo">DESCUBRE MUSICA</h1>
+  <!-- ── Hero / Now Playing ─────────────────────────── -->
+  <section class="player-hero">
 
-<div class="musica">
-    @for (music of (musicList$ | async); track $index) {
-    <div class="canciones">
-        
-        <div class="card-media-container">
-            <!-- La imagen siempre se muestra en la tarjeta -->
-            <a [routerLink]="[ 'dashboard', 'music-ditails', music._id ]">
-                <img 
-                    [src]="music.imageUrl" 
-                    [alt]="music.name" 
-                    class="img-music imagen-clickable"
-                    (click)="activarVideo($event, music)"> 
-            </a>
-        </div>
+    @if (currentTrack) {
+      <!-- Fondo difuminado con la carátula -->
+      <div class="hero-bg" [style.background-image]="'url(' + getHeroThumbnail(currentTrack) + ')'"></div>
 
-        <div class="music-name">
-            <h2 class="name">{{ music.name }}</h2>
-            <p class="description">{{ music.description}}</p>
-        </div>
+      <div class="hero-content">
 
-    </div>
-    }
-</div>
-
-<!-- ========================================== -->
-<!-- NUEVO: ESTRUCTURA DEL MODAL SUPERPUESTO    -->
-<!-- ========================================== -->
-
-@if (videoUrlActiva) {
-    <!-- El fondo oscuro. El (click) aquí permite cerrar al hacer clic afuera -->
-    <div class="modal-backdrop" (click)="cerrarModal()">
-        
-        <!-- Contenedor del video. $event.stopPropagation() evita que se cierre si haces clic en los bordes del video -->
-        <div class="modal-content" (click)="$event.stopPropagation()">
-            
-            <!-- Botón opcional de cerrar (buena práctica de UX) -->
-            <button class="btn-cerrar" (click)="cerrarModal()">X</button>
-
-            <!-- El iframe ahora ocupa el 100% del modal -->
-            <iframe 
-                width="100%" 
-                height="100%" 
-                [src]="videoUrlActiva | safeUrl" 
-                frameborder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen>
+        <!-- Área del video / carátula -->
+        <div class="player-viewport">
+          @if (isPlaying && embedUrl) {
+            <iframe
+              class="player-iframe"
+              [src]="embedUrl | safeUrl"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen>
             </iframe>
+          } @else {
+            <div class="player-cover" (click)="togglePlay()">
+              <img [src]="getHeroThumbnail(currentTrack)" [alt]="currentTrack.name" class="cover-img" />
+              <div class="play-overlay">
+                <div class="play-btn-big">▶</div>
+                <span class="play-hint">REPRODUCIR</span>
+              </div>
+            </div>
+          }
         </div>
+
+        <!-- Info del track actual -->
+        <div class="now-playing-info">
+          <span class="now-playing-label">REPRODUCIENDO AHORA</span>
+          <h1 class="track-title">{{ currentTrack.name }}</h1>
+          <p class="track-description">{{ currentTrack.description }}</p>
+
+          <!-- Controles -->
+          <div class="player-controls">
+            <button class="ctrl-btn" (click)="prevTrack()" title="Anterior">
+              <span class="ctrl-icon">⏮</span>
+            </button>
+            <button class="ctrl-btn ctrl-btn--play" (click)="togglePlay()" [title]="isPlaying ? 'Pausar' : 'Reproducir'">
+              <span class="ctrl-icon">{{ isPlaying ? '⏸' : '▶' }}</span>
+            </button>
+            <button class="ctrl-btn" (click)="nextTrack()" title="Siguiente">
+              <span class="ctrl-icon">⏭</span>
+            </button>
+          </div>
+
+          <div class="track-counter">
+            {{ currentTrackIndex + 1 }} / {{ musicList.length }}
+          </div>
+        </div>
+
+      </div>
+    } @else {
+      <div class="hero-empty">
+        <span class="empty-icon">♪</span>
+        <p>No hay música disponible</p>
+      </div>
+    }
+
+  </section>
+
+  <!-- ── Playlist ───────────────────────────────────── -->
+  <section class="playlist-section">
+    <h2 class="playlist-title">
+      <span class="playlist-accent">♫</span> PLAYLIST
+      <span class="playlist-count">{{ musicList.length }} tracks</span>
+    </h2>
+
+    <div class="playlist-grid">
+      @for (music of musicList; track $index) {
+        <div
+          class="playlist-card"
+          [class.playlist-card--active]="currentTrackIndex === $index"
+          (click)="playTrack($index)">
+
+          <div class="card-thumb-wrap">
+            <img [src]="getThumbnail(music)" [alt]="music.name" class="card-thumb" />
+            <div class="card-play-icon">
+              @if (currentTrackIndex === $index && isPlaying) {
+                <span class="equalizer">
+                  <span class="eq-bar"></span>
+                  <span class="eq-bar"></span>
+                  <span class="eq-bar"></span>
+                </span>
+              } @else {
+                <span>▶</span>
+              }
+            </div>
+          </div>
+
+          <div class="card-info">
+            <h3 class="card-name">{{ music.name }}</h3>
+            <p class="card-desc">{{ music.description }}</p>
+          </div>
+
+          <div class="card-index">{{ $index + 1 }}</div>
+
+        </div>
+      } @empty {
+        <div class="playlist-empty">
+          <p>No hay tracks en la playlist</p>
+        </div>
+      }
     </div>
-}
+  </section>
+
+</div>

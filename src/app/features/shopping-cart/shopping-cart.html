@@ -1,0 +1,98 @@
+<div class="cart-page">
+
+  <div class="cart-header">
+    <h1 class="cart-title">
+      <span class="title-icon">🛒</span>
+      CARRITO DE COMPRAS
+    </h1>
+    <p class="cart-subtitle">Revisa tus boletas antes de completar la compra</p>
+  </div>
+
+  @if (successMsg) {
+    <div class="msg msg--success">
+      <span>✓</span> {{ successMsg }}
+      <a routerLink="/home" class="msg-link">Volver al inicio →</a>
+    </div>
+  }
+  @if (errorMsg) {
+    <div class="msg msg--error">{{ errorMsg }}</div>
+  }
+
+  @if (items$ | async; as items) {
+
+    @if (items.length === 0 && !successMsg) {
+      <div class="cart-empty">
+        <span class="empty-icon">◎</span>
+        <p>Tu carrito está vacío</p>
+        <a routerLink="/home" class="btn btn--outline">EXPLORAR EVENTOS →</a>
+      </div>
+    } @else if (items.length > 0) {
+
+      <div class="cart-content">
+
+        <!-- Lista de items -->
+        <div class="cart-items">
+          @for (item of items; track $index) {
+            <div class="cart-item">
+              <img class="item-img" [src]="item.eventImageUrl" [alt]="item.eventName">
+              <div class="item-info">
+                <h3 class="item-name">{{ item.eventName }}</h3>
+                <span class="item-zone">{{ item.zone }}</span>
+              </div>
+              <div class="item-price">
+                {{ item.unitPrice | currency:'COP':'symbol-narrow':'1.0-0' }}
+              </div>
+              <div class="item-qty">
+                <label for="qty-{{$index}}">Cant:</label>
+                <input
+                  type="number"
+                  [id]="'qty-' + $index"
+                  [value]="item.quantity"
+                  min="1"
+                  max="10"
+                  (change)="updateQty($index, $event)">
+              </div>
+              <div class="item-subtotal">
+                {{ (item.unitPrice * item.quantity) | currency:'COP':'symbol-narrow':'1.0-0' }}
+              </div>
+              <button class="item-remove" (click)="removeItem($index)" title="Eliminar">✕</button>
+            </div>
+          }
+        </div>
+
+        <!-- Resumen -->
+        <div class="cart-summary">
+          <div class="summary-card">
+            <h3 class="summary-title">RESUMEN</h3>
+            <div class="summary-row">
+              <span>Subtotal</span>
+              <span>{{ getTotal() | currency:'COP':'symbol-narrow':'1.0-0' }}</span>
+            </div>
+            <div class="summary-row">
+              <span>Servicio</span>
+              <span>$0</span>
+            </div>
+            <div class="summary-divider"></div>
+            <div class="summary-row summary-row--total">
+              <span>TOTAL</span>
+              <span>{{ getTotal() | currency:'COP':'symbol-narrow':'1.0-0' }}</span>
+            </div>
+            <button
+              class="btn btn--checkout"
+              (click)="checkout()"
+              [disabled]="isProcessing">
+              @if (isProcessing) {
+                PROCESANDO...
+              } @else {
+                COMPRAR →
+              }
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    }
+  }
+
+</div>

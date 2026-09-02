@@ -2,6 +2,8 @@ import { Routes } from '@angular/router';
 
 import Home from './features/home/home';
 import PageNotFound from './features/page-not-found/page-not-found';
+import { adminGuard } from './core/guards/admin-guard';
+import { barGuard } from './core/guards/bar-guard';
 
 export const routes: Routes = [
   // ── 1. Redirección inicial ──────────────────────────────────────
@@ -34,6 +36,9 @@ export const routes: Routes = [
   // Bares y Posts públicos
   { path: 'posts', loadComponent: () => import('./features/posts/post-public-list/post-public-list') },
 
+  // Perfil de Usuario regular
+  { path: 'user/profile', loadComponent: () => import('./features/users/user-profile/user-profile') },
+
   // Legal y Soporte
   { path: 'terminos', loadComponent: () => import('./features/support/terms/terms') },
   { path: 'reembolsos', loadComponent: () => import('./features/support/refunds/refunds') },
@@ -44,6 +49,7 @@ export const routes: Routes = [
   // ── 3. Panel de Administración ) ──────────────────────
   {
     path: 'dashboard',
+    canActivate: [adminGuard],
     loadComponent: () => import('./features/dashboard/dashboard'),
     children: [
       // Usuarios
@@ -89,9 +95,12 @@ export const routes: Routes = [
   //Dashboard Bar
   {
     path: 'bar-dashboard',
+    canActivate: [barGuard],
     loadComponent: () => import('./features/bar-dashboard/bar-dashboard'),
     children: [
-      { path: 'events', loadComponent: () => import('./features/eventos/event-list/event-list') },
+      { path: 'events', loadComponent: () => import('./features/bar-dashboard/bar-event-list/event-list') },
+      { path: 'event/new', loadComponent: () => import('./features/bar-dashboard/bar-event-new-form/bar-event-new-form') },
+      { path: 'profile', loadComponent: () => import('./features/bar-dashboard/bar-profile/bar-profile') },
     ]
   },
   {
@@ -99,6 +108,8 @@ export const routes: Routes = [
     loadComponent: () => import('./features/events/event-details/event-details'),
   },
 
+  // Carrito de compras y Checkout
+  { path: 'cart', loadComponent: () => import('./features/shopping-cart/shopping-cart') },
 
 
   // ── 4. Manejo de Errores y Comodín ─────────────────────────────

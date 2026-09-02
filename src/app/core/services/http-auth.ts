@@ -105,6 +105,14 @@ export class HttpAuth {
     this.isLoggedIn.set(true)
   }
 
+  updateLocalUser(user: any) {
+    if (isPlatformBrowser(this.platformId)) {
+      const currentToken = localStorage.getItem('token');
+      localStorage.setItem('user', JSON.stringify(user));
+      this.currentUser$.next(user);
+    }
+  }
+
   getDataLocalStorage() {
 
     let token;

@@ -1,8 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { HttpEvents } from '../../core/services/http-events';
+import { HttpMusic } from '../../core/services/http-music';
 import { BehaviorSubject } from 'rxjs';
-import { AsyncPipe, DatePipe, JsonPipe } from '@angular/common';
+import { AsyncPipe, DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-home',
@@ -11,11 +12,13 @@ import { AsyncPipe, DatePipe, JsonPipe } from '@angular/common';
   styleUrl: './home.css',
 })
 
-export default class Home {
+export default class Home implements OnInit {
   eventList$ = new BehaviorSubject<any>([]);
+  musicList$ = new BehaviorSubject<any[]>([]);
   eventFeaturedList$ = new BehaviorSubject<any>([]);
 
   private httpEvents = inject(HttpEvents);
+  private httpMusic = inject(HttpMusic);
 
   ngOnInit() {
     this.getEventsForInitialDate('initialDate', 3);
@@ -27,7 +30,6 @@ export default class Home {
         this.httpEvents.getEventsByField(field, quantity).subscribe({
       next: (res) => {
         console.log(res);
-
         this.eventList$.next(res);
       },
       error: (err) => {
@@ -35,8 +37,19 @@ export default class Home {
       },
       complete: () => {},
     });
-  }
 
+    // Cargar música desde la API
+    this.httpMusic.getMusic().subscribe({
+      next: (res) => {
+        const musicItems = Array.isArray(res) ? res : (res?.data || []);
+        // Duplicar para efecto infinito
+        this.musicList$.next(musicItems);
+      },
+      error: (err) => {
+        console.error('Error cargando música:', err);
+      }
+    });
+  }
   getEventsForFeatured(quantity: number) {
     this.httpEvents.getFeaturedEvents(quantity).subscribe({
       next: (res) => {

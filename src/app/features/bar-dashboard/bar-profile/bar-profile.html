@@ -1,0 +1,106 @@
+<div class="bar-profile-page">
+
+  <h2 class="form-title">
+    <span class="title-icon">◐</span>
+    MI BAR — COMPLETAR DATOS
+  </h2>
+
+  <p class="form-subtitle">Completa la información de tu establecimiento para que aparezca en la plataforma.</p>
+
+  @if (successMsg) { <p class="msg msg--success">{{ successMsg }}</p> }
+  @if (errorMsg) { <p class="msg msg--error">{{ errorMsg }}</p> }
+
+  @if (isLoading) {
+    <div class="loading">
+      <span class="loading-dot"></span>
+      <span>Cargando datos del bar...</span>
+    </div>
+  } @else {
+
+  <form [formGroup]="formData" (ngSubmit)="onSubmit()" class="form">
+
+    <div class="form-grid">
+      <!-- Nombre -->
+      <div class="field">
+        <label for="bar-name">Nombre del bar *</label>
+        <input type="text" id="bar-name" formControlName="name" placeholder="Ej: Octava Club">
+      </div>
+
+      <!-- Imagen URL -->
+      <div class="field">
+        <label for="bar-imageUrl">URL de imagen *</label>
+        <input type="text" id="bar-imageUrl" formControlName="imageUrl" placeholder="https://...">
+      </div>
+
+      <!-- Descripción -->
+      <div class="field field--full">
+        <label for="bar-description">Descripción *</label>
+        <textarea id="bar-description" formControlName="description" rows="3" placeholder="Describe tu establecimiento..."></textarea>
+      </div>
+
+      <!-- Departamento -->
+      <div class="field">
+        <label for="bar-department">Departamento</label>
+        <select id="bar-department" formControlName="department">
+          <option value="">Selecciona...</option>
+          @for (dep of (departments$ | async); track dep.id) {
+            <option [value]="dep.name">{{ dep.name }}</option>
+          }
+        </select>
+      </div>
+
+      <!-- Ciudad -->
+      <div class="field">
+        <label for="bar-city">Ciudad *</label>
+        <select id="bar-city" formControlName="city">
+          <option value="">Selecciona...</option>
+          @for (city of (cities$ | async); track city.id) {
+            <option [value]="city.name">{{ city.name }}</option>
+          }
+        </select>
+      </div>
+
+      <!-- Dirección -->
+      <div class="field field--full">
+        <label for="bar-address">Dirección *</label>
+        <input type="text" id="bar-address" formControlName="address" placeholder="Cra. 8 #63-41, Chapinero">
+      </div>
+
+      <!-- Teléfono -->
+      <div class="field">
+        <label for="bar-phone">Teléfono de contacto</label>
+        <input type="text" id="bar-phone" formControlName="contactPhone" placeholder="+57 300 000 0000">
+      </div>
+
+      <!-- Capacidad -->
+      <div class="field">
+        <label for="bar-capacity">Capacidad (aforo)</label>
+        <input type="number" id="bar-capacity" formControlName="capacity" min="0" placeholder="0">
+      </div>
+
+      <!-- URL Página -->
+      <div class="field">
+        <label for="bar-urlPage">Sitio web / redes</label>
+        <input type="text" id="bar-urlPage" formControlName="urlPage" placeholder="https://instagram.com/...">
+      </div>
+
+      <!-- Activo -->
+      <div class="field field--checkbox">
+        <label for="bar-isActive">
+          <input type="checkbox" id="bar-isActive" formControlName="isActive">
+          Bar activo
+        </label>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn btn--save" type="submit">
+        GUARDAR DATOS
+      </button>
+    </div>
+
+  </form>
+
+  }
+
+</div>

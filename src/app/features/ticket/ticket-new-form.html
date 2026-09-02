@@ -1,61 +1,94 @@
-<div class="compra">
+<div class="ticket-page">
 
-  <h2>Comprar Ticket</h2>
+  <h2 class="form-title">
+    <span class="title-icon">🎫</span>
+    COMPRAR BOLETAS
+  </h2>
+  <p class="form-subtitle">Selecciona un evento, elige tu zona y agrega al carrito.</p>
 
-  @if (successMsg) { <p style="color:green">{{ successMsg }}</p> }
-  @if (errorMsg) { <p style="color:red">{{ errorMsg }}</p> }
-
-  <form (ngSubmit)='onSubmit()' [formGroup]="formData" class="form">
-
-    <div class="field">
-      <label for="name">Nombre:</label>
-      <input formControlName="name" type="text" id="name" placeholder="Ej: VIP, General, Back Stage">
+  @if (successMsg) {
+    <div class="msg msg--success">
+      <span>✓</span> {{ successMsg }}
+      <button class="msg-btn" (click)="goToCart()">IR AL CARRITO →</button>
     </div>
+  }
+  @if (errorMsg) {
+    <div class="msg msg--error">{{ errorMsg }}</div>
+  }
 
+  <form [formGroup]="formData" (ngSubmit)="addToCart()" class="form">
+
+    <!-- Seleccionar evento -->
     <div class="field">
-      <label for="name">Apellido:</label>
-      <input formControlName="name" type="text" id="name" placeholder="Ej: VIP, General, Back Stage">
-    </div>
-
-    <div class="field">
-      <label for="name">Email:</label>
-      <input formControlName="name" type="text" id="name" placeholder="Ej: VIP, General, Back Stage">
-    </div>
-
-    <div class="field">
-      <label for="category-location">Ubicación</label>
-      <select formControlName="ubicacion" id="category-location">
-
-        <option value="">Selecciona..</option>
-        <option value="">General</option>
-        <option value="">VIP</option>
-        <option value="">BackStage</option>
-        <option value="">Palco</option>
-
+      <label for="eventId">Evento *</label>
+      <select formControlName="eventId" id="eventId">
+        <option value="">Selecciona un evento...</option>
+        @for (event of (events$ | async); track event._id) {
+          <option [value]="event._id">{{ event.name }} — {{ event.city }}</option>
+        }
       </select>
     </div>
 
-    <div class="field">
-      <label for="price">Precio (COP):</label>
-      <input type="number" formControlName="price" id="price" placeholder="0" min="0">
+    <!-- Info del evento seleccionado -->
+    @if (selectedEvent) {
+      <div class="event-preview">
+        @if (selectedEvent.imageUrl) {
+          <img class="event-preview-img" [src]="selectedEvent.imageUrl" [alt]="selectedEvent.name">
+        }
+        <div class="event-preview-info">
+          <h3>{{ selectedEvent.name }}</h3>
+          <p>{{ selectedEvent.city }} · {{ selectedEvent.initialDate }}</p>
+          @if (getAvailableCapacity() > 0) {
+            <p class="event-capacity">
+              <span class="capacity-dot"></span>
+              Aforo disponible: <strong>{{ getAvailableCapacity() }}</strong> boletas
+            </p>
+          }
+        </div>
+      </div>
+    }
+
+    <div class="form-row">
+      <!-- Zona / Ubicación -->
+      <div class="field">
+        <label for="zone">Ubicación *</label>
+        <select formControlName="zone" id="zone">
+          @for (z of zones; track z) {
+            <option [value]="z">{{ z }}</option>
+          }
+        </select>
+      </div>
+
+      <!-- Cantidad -->
+      <div class="field">
+        <label for="quantity">Cantidad *</label>
+        <select formControlName="quantity" id="quantity">
+          @for (q of quantities; track q) {
+            <option [value]="q">{{ q }}</option>
+          }
+        </select>
+      </div>
     </div>
 
-    <div class="field">
-      <label for="category-location">Número de boletas:</label>
-      <select formControlName="ubicacion" id="category-location">
-
-        <option value="">Selecciona..</option>
-        <option value="">1</option>
-        <option value="">2</option>
-        <option value="">3</option>
-        <option value="">4</option>
-        <option value="">5</option>
-
-      </select>
+    <!-- Resumen de precio -->
+    <div class="price-summary">
+      <div class="price-row">
+        <span>Precio unitario:</span>
+        <span>{{ getUnitPrice() | currency:'COP':'symbol-narrow':'1.0-0' }}</span>
+      </div>
+      <div class="price-row price-row--total">
+        <span>Subtotal:</span>
+        <span>{{ getSubtotal() | currency:'COP':'symbol-narrow':'1.0-0' }}</span>
+      </div>
     </div>
 
-    <div class="button">
-      <button type="submit" [disabled]="formData.invalid">Comprar</button>
+    <div class="form-actions">
+      <button class="btn btn--add" type="submit" [disabled]="formData.invalid || !selectedEvent">
+        AGREGAR AL CARRITO 🛒
+      </button>
+      <button class="btn btn--cart" type="button" (click)="goToCart()">
+        VER CARRITO
+      </button>
     </div>
 
   </form>
