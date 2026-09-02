@@ -92,4 +92,8 @@ export default class Home implements OnInit {
   handleImageError(event: any) {
     event.target.src = '/assets/default-event.jpg';
   }
+
+  handleBarImageError(event: any) {
+    event.target.src = '/assets/default-bar.jpg';
+  }
 }

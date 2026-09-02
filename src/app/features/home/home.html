@@ -96,7 +96,7 @@
       @for (bar of bars | slice:0:4; track bar._id) {
         <a [routerLink]="['/bar-info', bar._id]" class="bar-card">
           <div class="bar-img-wrapper">
-            <img class="bar-img" [src]="bar.imageUrl" [alt]="bar.name" (error)="handleImageError($event)">
+            <img class="bar-img" [src]="bar.imageUrl" [alt]="bar.name" (error)="handleBarImageError($event)">
           </div>
           <div class="bar-info">
             <h3 class="bar-name">{{ bar.name }}</h3>

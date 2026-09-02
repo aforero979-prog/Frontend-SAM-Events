@@ -19,15 +19,11 @@ export default class MusicNewForm {
 
   constructor() {
     this.formData = new FormGroup({
-      name: new FormControl(''),
-      genre: new FormControl(''),
-      description: new FormControl(''),
-      isActive: new FormControl(''),
+      isActive: new FormControl(true),
       youtubeUrl: new FormControl('', [
         Validators.required,
         Validators.pattern(/^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$/),
-      ]),
-      imageUrl: new FormControl(''),
+      ])
     });
   }
 

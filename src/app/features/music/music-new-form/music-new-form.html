@@ -22,60 +22,6 @@
 
   <form class="admin-form" [formGroup]="formData" (ngSubmit)="onSubmit()">
 
-    <div class="field">
-      <label class="field-label" for="name">Nombre de la canción</label>
-      <input class="field-input" type="text" id="name" formControlName="name" placeholder="Ej: xxxx-xxxx">
-      @if (formData.get('name')?.invalid && (formData.get('name')?.dirty || formData.get('name')?.touched)) {
-      @if (formData.get('name')?.errors?.['required']) {
-      <small class="field-error">El nombre es obligatorio</small>
-      }
-      }
-    </div>
-
-
-
-    <div class="field">
-      <label class="field-label" for="description">Descripción</label>
-      <textarea class="field-input field-textarea" id="description" formControlName="description"
-        placeholder="Información de la canción"></textarea>
-      @if (formData.get('description')?.invalid && (formData.get('description')?.dirty ||
-      formData.get('description')?.touched)) {
-      @if (formData.get('description')?.errors?.['required']) {
-      <small class="field-error">La descripción es obligatoria</small>
-      }
-      }
-    </div>
-
-
-
-    <div class="field">
-      <label class="field-label" for="genre">Género</label>
-      <input class="field-input" type="text" id="genre" formControlName="genre"
-        placeholder="Tecnho, House, HardTechno,...">
-      @if (formData.get('imageUrl')?.invalid && (formData.get('genre')?.dirty || formData.get('genre')?.touched))
-      {
-      @if (formData.get('genre')?.errors?.['required']) {
-      <small class="field-error">El género es obligatorio</small>
-      }
-      }
-    </div>
-
-
-
-
-    <div class="field">
-      <label class="field-label" for="imageUrl">URL de imagen</label>
-      <input class="field-input" type="text" id="imageUrl" formControlName="imageUrl" placeholder="https://...">
-      @if (formData.get('imageUrl')?.invalid && (formData.get('imageUrl')?.dirty || formData.get('imageUrl')?.touched))
-      {
-      @if (formData.get('imageUrl')?.errors?.['required']) {
-      <small class="field-error">La imagen es obligatoria</small>
-      }
-      }
-    </div>
-
-
-
 
     <div class="field">
       <label class="field-label" for="youtubeUrl">URL de YouTube</label>
