@@ -1,31 +1,34 @@
-<div class="login-wrapper" style="margin: 5rem auto;">
+<div class="ticket-container">
   <span class="corner tl"></span>
   <span class="corner tr"></span>
   <span class="corner bl"></span>
   <span class="corner br"></span>
 
-  <div class="panel-header">
+  <div class="header-row">
     <span class="brand">S.A.M.</span>
     <span class="badge">TAQUILLA</span>
   </div>
 
-  <h2 class="panel-title">COMPRAR BOLETAS</h2>
-  <p class="panel-desc">Selecciona un evento, elige tu zona y agrega al carrito.</p>
+  <h2 class="title">ADQUIRIR ACCESO</h2>
+  <p class="subtitle">Selecciona el evento, elige tu ubicación y procesa tus boletas en el sistema.</p>
 
   @if (successMsg) { 
-    <p style="color:#e8ff00;font-size:12px;margin:4px 0;">
-      {{ successMsg }} <a style="color: #e8ff00; cursor:pointer; text-decoration: underline;" (click)="goToCart()">IR AL CARRITO →</a>
-    </p> 
+    <div class="msg msg-success">
+      <span>{{ successMsg }}</span>
+      <a (click)="goToCart()">IR AL CARRITO →</a>
+    </div>
   }
   @if (errorMsg) { 
-    <p style="color:#ff4444;font-size:12px;margin:4px 0;">{{ errorMsg }}</p> 
+    <div class="msg msg-error">
+      <span>{{ errorMsg }}</span>
+    </div>
   }
 
-  <form class="login-form" [formGroup]="formData" (ngSubmit)="addToCart()">
-    <div class="field">
-      <label class="field-label" for="eventId">Evento</label>
+  <form [formGroup]="formData" (ngSubmit)="addToCart()">
+    <div class="field" style="margin-bottom: 25px;">
+      <label class="field-label" for="eventId">Selecciona un Evento</label>
       <select class="field-input" formControlName="eventId" id="eventId">
-        <option value="">Selecciona un evento...</option>
+        <option value="">Despliega los eventos disponibles...</option>
         @for (event of (events$ | async); track event._id) {
           <option [value]="event._id">{{ event.name }} — {{ event.city }}</option>
         }
@@ -33,25 +36,26 @@
     </div>
 
     @if (selectedEvent) {
-      <div style="background: rgba(0,0,0,0.4); padding: 10px; border: 1px solid #2a2a2a; display: flex; gap: 15px; margin-bottom: 10px;">
+      <div class="event-preview">
         @if (selectedEvent.imageUrl) {
-          <img [src]="selectedEvent.imageUrl" [alt]="selectedEvent.name" style="width: 80px; height: 80px; object-fit: cover; border-radius: 4px;">
+          <img class="event-img" [src]="selectedEvent.imageUrl" [alt]="selectedEvent.name">
         }
-        <div>
-          <h3 style="color: #e4e2e1; margin:0 0 5px 0; font-size: 14px; font-family: 'Syne', sans-serif;">{{ selectedEvent.name }}</h3>
-          <p style="color: #c4c9ac; margin:0; font-size: 11px;">{{ selectedEvent.city }} · {{ selectedEvent.initialDate }}</p>
+        <div class="event-info">
+          <h3>{{ selectedEvent.name }}</h3>
+          <p>📍 {{ selectedEvent.city }}</p>
+          <p>📅 {{ selectedEvent.initialDate }}</p>
           @if (getAvailableCapacity() > 0) {
-            <p style="color: #e8ff00; margin: 5px 0 0 0; font-size: 11px;">
-              Aforo disponible: {{ getAvailableCapacity() }}
-            </p>
+            <span class="capacity">
+              ⚡ Aforo disp: {{ getAvailableCapacity() }}
+            </span>
           }
         </div>
       </div>
     }
 
-    <div style="display:flex; gap: 15px;">
-      <div class="field" style="flex:1;">
-        <label class="field-label" for="zone">Ubicación</label>
+    <div class="form-grid">
+      <div class="field">
+        <label class="field-label" for="zone">Zona / Ubicación</label>
         <select class="field-input" formControlName="zone" id="zone">
           @for (z of zones; track z) {
             <option [value]="z">{{ z }}</option>
@@ -59,8 +63,8 @@
         </select>
       </div>
 
-      <div class="field" style="flex:1;">
-        <label class="field-label" for="quantity">Cantidad</label>
+      <div class="field">
+        <label class="field-label" for="quantity">Entradas (Máx 4)</label>
         <select class="field-input" formControlName="quantity" id="quantity">
           @for (q of quantities; track q) {
             <option [value]="q">{{ q }}</option>
@@ -69,14 +73,21 @@
       </div>
     </div>
 
-    <div style="border-top: 1px solid #2a2a2a; padding-top: 15px; display:flex; justify-content: space-between; color: #c4c9ac; font-size: 12px;">
-      <span>Precio unitario: {{ getUnitPrice() | currency:'COP':'symbol-narrow':'1.0-0' }}</span>
-      <strong style="color: #e8ff00;">Total: {{ getSubtotal() | currency:'COP':'symbol-narrow':'1.0-0' }}</strong>
+    <div class="price-summary">
+      <span class="unit-price">Valor por unidad: <br><strong>{{ getUnitPrice() | currency:'COP':'symbol-narrow':'1.0-0' }}</strong></span>
+      <div style="text-align: right;">
+        <span class="unit-price">Total a pagar</span><br>
+        <span class="total-price">{{ getSubtotal() | currency:'COP':'symbol-narrow':'1.0-0' }}</span>
+      </div>
     </div>
 
-    <div style="display: flex; gap: 10px; margin-top: 10px;">
-      <button class="btn-submit" type="submit" [disabled]="formData.invalid || !selectedEvent" style="flex: 2;">AGREGAR 🛒</button>
-      <button class="btn-submit" type="button" (click)="goToCart()" style="flex: 1; background: transparent; border: 1px solid #e8ff00; color: #e8ff00;">CARRITO</button>
+    <div class="actions">
+      <button class="btn-primary" type="submit" [disabled]="formData.invalid || !selectedEvent">
+        COMPRAR AHORA
+      </button>
+      <button class="btn-secondary" type="button" (click)="goToCart()">
+        CARRITO
+      </button>
     </div>
   </form>
 </div>
