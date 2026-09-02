@@ -1,37 +1,43 @@
 /* You can add global styles to this file, and also import other style files */
-:host {
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=JetBrains+Mono:wght@500;700&display=swap');
+
+:root {
   --accent: #e8ff00;
   --text:   #e4e2e1;
   --muted:  #c4c9ac;
   --border: #2a2a2a;
+  --bg-dark: #111;
+}
 
-  display: block;
+body {
+  margin: 0;
+  padding: 0;
+  background: #000;
+  background-image: radial-gradient(#1a1a1a 1px, transparent 1px);
+  background-size: 20px 20px;
+  color: var(--text);
   font-family: 'JetBrains Mono', monospace;
   min-height: 100vh;
-  /* flex-wrap: wrap; */
-  margin-top: 6.4rem;
-} 
-
+}
 
 *{
-    padding: 0;
-    margin: 0;
     box-sizing: border-box;
 }
+
 html{
     font-size: 62.5%;
-    flex-wrap: wrap;
-    
 }
+
 main{
     display: flex;
     justify-content: center;
     align-items: center;
     display: block;
     min-height: 100vh;
+    padding-top: 6.4rem;
 }
-.active{
 
+.active{
 }
 
 .menu-link{
@@ -57,7 +63,10 @@ tr:nth-child(even) {
 }
 
 pre {
-  background-color: #dddddd;
+  background-color: #111;
+  color: var(--accent);
+  padding: 1rem;
+  border: 1px solid var(--border);
 }
 
 .pre {
@@ -65,5 +74,5 @@ pre {
 }
 
 .page {
-    margin: 6.4rem 2rem;
+    margin: 2rem 2rem;
 }

@@ -1,17 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=JetBrains+Mono:wght@500;700&display=swap');
 
 :host {
-  --accent: #e8ff00;
-  --text: #e4e2e1;
-  --muted: #c4c9ac;
-  --border: #2a2a2a;
-
   display: block;
-  font-family: 'JetBrains Mono', monospace;
-  min-height: 100vh;
-  flex-wrap: wrap;
-  margin-top: 6.4rem;
-  background-color: #2a2a2a;
   flex-wrap: wrap;
 }
 h1 {
