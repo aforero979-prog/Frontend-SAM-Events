@@ -55,5 +55,16 @@
       GUARDAR MÚSICA →
     </button>
   </form>
-
 </div>
+
+@if (showModal) {
+<div class="modal-overlay">
+  <div class="modal-content">
+    <h3 [style.color]="isSuccess ? '#a3e635' : '#ff4444'">
+      {{ isSuccess ? '¡ÉXITO!' : '¡ERROR!' }}
+    </h3>
+    <p>{{ modalMessage }}</p>
+    <button class="btn-submit modal-btn" (click)="closeModal()">CONTINUAR</button>
+  </div>
+</div>
+}

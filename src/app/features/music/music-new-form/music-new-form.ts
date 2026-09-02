@@ -45,24 +45,33 @@ export default class MusicNewForm {
   //   }
   // }
 
+  showModal = false;
+  modalMessage = '';
+  isSuccess = false;
+
   onSubmit() {
     if (this.formData.valid) {
-      console.log(this.formData.value);
       this.httpMusic.createMusic(this.formData.value).subscribe({
         next: (data) => {
-          console.log(data);
+          this.isSuccess = true;
+          this.modalMessage = 'La música se guardó correctamente.';
+          this.showModal = true;
           this.formData.reset();
-          this.router.navigateByUrl('/dashboard/music');
         },
         error: (err) => {
           console.error(err);
-        },
-        complete: () => {
-          console.log('Canción registrada');
-        },
+          this.isSuccess = false;
+          this.modalMessage = 'Error al guardar la música. Revisa la consola o asegúrate de que el backend esté actualizado.';
+          this.showModal = true;
+        }
       });
-    } else {
-      console.log('El formulario no es valido');
+    }
+  }
+
+  closeModal() {
+    this.showModal = false;
+    if (this.isSuccess) {
+      this.router.navigateByUrl('/dashboard/music');
     }
   }
 
