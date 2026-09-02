@@ -207,3 +207,10 @@
   cursor: pointer;
   flex: 1;
 }
+
+@media (max-width: 480px) {
+  .login-wrapper {
+    padding: 24px;
+    width: 90%;
+  }
+}

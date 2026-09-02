@@ -1,192 +1,113 @@
-<a href=""><h1 class="eventos">Eventos destacados</h1></a>
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SECCIÓN 1: HERO CARRUSEL DE EVENTOS DESTACADOS            -->
+<!-- ═══════════════════════════════════════════════════════════ -->
 
-<!-- <pre>{{ eventList$ | async | json }}</pre> -->
-
-<div class="destacados">
-
-    @for (event of (eventFeaturedList$ | async); track $index) {
-        <div class="destacado">
-
-            <a [routerLink]="['/event-info', event._id]">
-                <img class="img-event" [src]="event.imageUrl" [alt]="event.name"></a>
-
-            <div class="descripcion">
-                <h2>{{ event.name }}</h2>
-                <p>{{ event.initialDate | date }}</p>
-                <p>{{ event.location }}</p>
+<section class="hero-section">
+  @if (eventFeaturedList$ | async; as events) {
+    @if (events.length > 0) {
+      <div class="hero-carousel">
+        @for (event of events; track event._id) {
+          <div class="hero-slide" [class.active]="$index === currentSlide">
+            <img class="hero-img" [src]="event.imageUrl" [alt]="event.name" (error)="handleImageError($event)">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+              <span class="hero-tag">EVENTO DESTACADO</span>
+              <h1 class="hero-title">{{ event.name }}</h1>
+              <p class="hero-date">{{ event.initialDate | date:'fullDate' }}</p>
+              <p class="hero-location">📍 {{ event.location }}</p>
+              <a [routerLink]="['/event-info', event._id]" class="hero-cta">VER EVENTO →</a>
             </div>
+          </div>
+        }
+
+        <!-- Controles del carrusel -->
+        <button class="carousel-btn carousel-prev" (click)="prevSlide()">‹</button>
+        <button class="carousel-btn carousel-next" (click)="nextSlide()">›</button>
+
+        <!-- Indicadores -->
+        <div class="carousel-dots">
+          @for (event of events; track event._id) {
+            <button class="dot" [class.active]="$index === currentSlide" (click)="goToSlide($index)"></button>
+          }
         </div>
+      </div>
     }
+  }
 
-    <div class="eventosdestacadosgrupo">
+  <!-- Botón ver todos -->
+  <div class="section-link">
+    <a routerLink="/event/home" class="btn-section">EXPLORAR TODOS LOS EVENTOS →</a>
+  </div>
+</section>
 
-        <div class="destacado1">
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SECCIÓN 2: MÚSICA - CINTA DESLIZANTE                      -->
+<!-- ═══════════════════════════════════════════════════════════ -->
 
-            @for (event of (eventList$ | async); track $index) {
-                <div class="mindagainst">
-    
-                    <a [routerLink]="['/event-info', event._id]">
-                        <img class="img-event" [src]="event.imageUrl" [alt]="event.name"></a>
-    
-                    <div class="descripcion">
-                        <h2>{{ event.name }}</h2>
-                        <p>{{ event.initialDate | date }}</p>
-                    </div>
-                </div>
-            }
+<section class="music-section">
+  <div class="section-header">
+    <h2 class="section-title">MÚSICA</h2>
+    <div class="section-line"></div>
+  </div>
 
-        </div>
-
-        <!-- <div class="destacado2">
-
-            <div class="saralandry">
-
-                <a href=""><img class="saralandryimg" src="assets/imagenes/saralandry.jpg" alt="SaraLandry"></a>
-
-                <div class="descripcion">
-                    <h2>Sara Landry</h2>
-                    <p>Sáb, 12 de sept | Bogotá</p>
-                    <p>Coliseo Medplus</p>
-                </div>
+  <div class="music-tape-container">
+    <div class="music-tape">
+      @if (musicList$ | async; as musicItems) {
+        @if (musicItems.length > 0) {
+          @for (music of musicItems; track $index) {
+            <div class="music-tape-item">
+              <a [href]="music.externalUrl || music.audioUrl || '#'" target="_blank" rel="noopener">
+                <img class="music-tape-img" [src]="music.imageUrl" [alt]="music.name" (error)="handleImageError($event)">
+              </a>
+              <h3 class="music-tape-name">{{ music.artist ? music.artist + ' - ' : '' }}{{ music.name }}</h3>
             </div>
-
-            <div class="carlcox">
-
-                <a href=""><img class="carlcoximg" src="assets/imagenes/carlcox.jpg" alt="CarlCox"></a>
-
-                <div class="descripcion">
-                    <h2>Carl Cox</h2>
-                    <p>Aáb, 31 oct | Medellín</p>
-                    <p>Parque Norte</p>
-                </div>
+          }
+          <!-- Duplicado para loop continuo -->
+          @for (music of musicItems; track $index) {
+            <div class="music-tape-item">
+              <a [href]="music.externalUrl || music.audioUrl || '#'" target="_blank" rel="noopener">
+                <img class="music-tape-img" [src]="music.imageUrl" [alt]="music.name" (error)="handleImageError($event)">
+              </a>
+              <h3 class="music-tape-name">{{ music.artist ? music.artist + ' - ' : '' }}{{ music.name }}</h3>
             </div>
-        </div> -->
+          }
+        }
+      }
     </div>
-</div>
+  </div>
 
-<!-- --------------------------------------------------------------------------------------------------------------- -->
-                <!-- MUSICA -->
-<!-- --------------------------------------------------------------------------------------------------------------- -->
+  <div class="section-link">
+    <a routerLink="/music/home" class="btn-section">EXPLORAR TODA LA MÚSICA →</a>
+  </div>
+</section>
 
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SECCIÓN 3: CLUBES - CARDS UNIFORMES DESDE BACKEND         -->
+<!-- ═══════════════════════════════════════════════════════════ -->
 
-<!-- <a href=""><h1 class="descubre">MUSICA</h1></a>
+<section class="bars-section">
+  <div class="section-header">
+    <h2 class="section-title">CLUBES EN BOGOTÁ</h2>
+    <div class="section-line"></div>
+  </div>
 
-    @for (event of (musciFeaturedList$ | async); track $index) {
-        <div class="destacado">
-
-            <a [routerLink]="['/music/home', music._id]">
-                <img class="img-music" [src]="music.imageUrl" [alt]="music.name"></a>
-
-            <div class="descripcion">
-                <h2>{{ music.name }}</h2>
-                <p>{{ music.description | date }}</p>
-            </div>
-        </div>
-    } -->
-
-
-<!-- --------------------------------------------------------------------------------------------------------------- -->
-<!-- CLUBES -->
-<!-- --------------------------------------------------------------------------------------------------------------- -->
-
-
-<!-- Cinta de música dinámica desde la API -->
-<div class="music-tape-container">
-  <div class="music-tape">
-    @if (musicList$ | async; as musicItems) {
-      @if (musicItems.length > 0) {
-        <!-- Primera copia para animación infinita -->
-        @for (music of musicItems; track $index) {
-          <div class="music-tape-item">
-            <a [href]="music.externalUrl || music.audioUrl || '#'" target="_blank" rel="noopener">
-              <img class="music-tape-img" [src]="music.imageUrl" [alt]="music.name">
-            </a>
-            <h2 class="music-tape-name">{{ music.artist ? music.artist + ' - ' : '' }}{{ music.name }}</h2>
+  <div class="bars-grid">
+    @if (barList$ | async; as bars) {
+      @for (bar of bars | slice:0:4; track bar._id) {
+        <a [routerLink]="['/bar-info', bar._id]" class="bar-card">
+          <div class="bar-img-wrapper">
+            <img class="bar-img" [src]="bar.imageUrl" [alt]="bar.name" (error)="handleImageError($event)">
           </div>
-        }
-        <!-- Segunda copia para loop continuo -->
-        @for (music of musicItems; track $index) {
-          <div class="music-tape-item">
-            <a [href]="music.externalUrl || music.audioUrl || '#'" target="_blank" rel="noopener">
-              <img class="music-tape-img" [src]="music.imageUrl" [alt]="music.name">
-            </a>
-            <h2 class="music-tape-name">{{ music.artist ? music.artist + ' - ' : '' }}{{ music.name }}</h2>
+          <div class="bar-info">
+            <h3 class="bar-name">{{ bar.name }}</h3>
+            <p class="bar-address">📍 {{ bar.address || bar.location || 'Bogotá' }}</p>
           </div>
-        }
-      } @else {
-        <!-- Fallback estático si no hay datos de API -->
-        <div class="music-tape-item">
-          <a href="https://www.youtube.com/watch?v=8P6mlY3C2eg"><img class="music-tape-img" src="assets/imagenes/wandertohell.jpg" alt="WanderToHell"></a>
-          <h2 class="music-tape-name">Vaal - Wander To Hell</h2>
-        </div>
-        <div class="music-tape-item">
-          <a href="https://www.youtube.com/watch?v=UUdTzrFhHPw"><img class="music-tape-img" src="assets/imagenes/yourmind.jpg" alt="YourMind"></a>
-          <h2 class="music-tape-name">Adam Bayer - Your Mind</h2>
-        </div>
-        <div class="music-tape-item">
-          <a href="https://www.youtube.com/watch?v=WtLA7Aojz8Y"><img class="music-tape-img" src="assets/imagenes/minimal.jpg" alt="Minimal"></a>
-          <h2 class="music-tape-name">Deborah de Luca - Minimal</h2>
-        </div>
-        <div class="music-tape-item">
-          <a href="https://www.youtube.com/watch?v=Fwi1qgSaxZY"><img class="music-tape-img" src="assets/imagenes/hellonearth.jpg" alt="HellOnEarth"></a>
-          <h2 class="music-tape-name">KAS:ST - Hell on Earth</h2>
-        </div>
-        <!-- Duplicados para loop -->
-        <div class="music-tape-item">
-          <a href="https://www.youtube.com/watch?v=8P6mlY3C2eg"><img class="music-tape-img" src="assets/imagenes/wandertohell.jpg" alt="WanderToHell"></a>
-          <h2 class="music-tape-name">Vaal - Wander To Hell</h2>
-        </div>
-        <div class="music-tape-item">
-          <a href="https://www.youtube.com/watch?v=UUdTzrFhHPw"><img class="music-tape-img" src="assets/imagenes/yourmind.jpg" alt="YourMind"></a>
-          <h2 class="music-tape-name">Adam Bayer - Your Mind</h2>
-        </div>
-        <div class="music-tape-item">
-          <a href="https://www.youtube.com/watch?v=WtLA7Aojz8Y"><img class="music-tape-img" src="assets/imagenes/minimal.jpg" alt="Minimal"></a>
-          <h2 class="music-tape-name">Deborah de Luca - Minimal</h2>
-        </div>
-        <div class="music-tape-item">
-          <a href="https://www.youtube.com/watch?v=Fwi1qgSaxZY"><img class="music-tape-img" src="assets/imagenes/hellonearth.jpg" alt="HellOnEarth"></a>
-          <h2 class="music-tape-name">KAS:ST - Hell on Earth</h2>
-        </div>
+        </a>
       }
     }
   </div>
-</div>
 
-
-<a href=""><h1 class="descubreclubes">Descubre clubes en Bogotá</h1></a>
-
-<div class="clubes">
-
-    <div class="octava">
-
-        <a href=""></a><img class="octavaimg" src="assets/imagenes/octava.jpg" alt="OctavaClub">
-
-        <div class="descripcionoctava">
-            <h2>--Octava--</h2>
-            <p>Cra. 8 #63-41, Chapinero, Bogotá</p>
-        </div>
-    </div>
-
-    <div class="radioestrella">
-
-        <a href=""><img class="radioestrellaimg" src="assets/imagenes/radioestrella.jpg" alt="RadioEstrella"></a>
-        <div class="descripcionoctava">
-            <h2>--Radio Estrella--</h2>
-            <p>Ak. 15 #99-23, Chicó, Bogotá</p>
-        </div>
-    </div>
-
-    <div class="kinder">
-
-        <a href=""><img class="kinderimg" src="assets/imagenes/kinder.jpg" alt="Kinder"></a>
-
-        <div class="descripcionoctava">
-            <h2>--Kinder--</h2>
-            <p>Cll. 63 #15-70, Chapinero, Bogotá</p>
-        </div>
-    </div>
-
-
-
-</div>
+  <div class="section-link">
+    <a routerLink="/bares" class="btn-section">VER TODOS LOS CLUBES →</a>
+  </div>
+</section>

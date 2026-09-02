@@ -72,4 +72,7 @@ export default class EventHome {
     this.pendingDeleteId = '';
   }
 
+  handleImageError(event: any) {
+    event.target.src = '/assets/default-event.jpg';
+  }
 }

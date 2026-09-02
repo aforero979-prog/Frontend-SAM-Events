@@ -1,13 +1,13 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { HttpMusic } from '../../../core/services/http-music';
 import { Router, RouterLink } from '@angular/router';
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { SafeUrlPipe } from '../../../pipes/safe-url-pipe';
 
 @Component({
   selector: 'app-music-home',
-  imports: [RouterLink, AsyncPipe, SafeUrlPipe, NgIf],
+  imports: [RouterLink, AsyncPipe, SafeUrlPipe],
   templateUrl: './music-home.html',
   styleUrl: './music-home.css',
 })
@@ -21,16 +21,20 @@ export default class MusicHome implements OnInit {
 
   private httpMusic = inject(HttpMusic);
   private router = inject(Router);
+  private cdr = inject(ChangeDetectorRef);
 
   ngOnInit() {
     this.httpMusic.getMusic().subscribe({
       next: (res) => {
+        console.log('MÚSICA RAW RESPONSE:', res);
         const list = Array.isArray(res) ? res : (res?.data || []);
+        console.log('MÚSICA LIST:', list);
         this.musicList = list;
         // Auto-seleccionar primer track sin reproducir
         if (list.length > 0) {
           this.currentTrackIndex = 0;
         }
+        this.cdr.detectChanges();
       },
       error: (err) => {
         console.error('Error cargando música:', err);
@@ -70,6 +74,19 @@ export default class MusicHome implements OnInit {
     // youtube.com/embed/XXXX
     const embedMatch = url.match(/embed\/([a-zA-Z0-9_-]{11})/);
     if (embedMatch) return embedMatch[1];
+
+    // youtube.com/shorts/XXXX
+    const shortsMatch = url.match(/shorts\/([a-zA-Z0-9_-]{11})/);
+    if (shortsMatch) return shortsMatch[1];
+
+    // youtube.com/live/XXXX
+    const liveMatch = url.match(/live\/([a-zA-Z0-9_-]{11})/);
+    if (liveMatch) return liveMatch[1];
+
+    // Si es solo el ID puro de 11 caracteres
+    if (/^[a-zA-Z0-9_-]{11}$/.test(url)) {
+      return url;
+    }
 
     return null;
   }
@@ -115,6 +132,10 @@ export default class MusicHome implements OnInit {
     this.isPlaying = true;
     const track = this.musicList[index];
     this.embedUrl = this.getEmbedUrl(track);
+    console.log('INTENTANDO REPRODUCIR TRACK:', track);
+    console.log('YOUTUBE URL ORIGINAL:', track?.youtubeUrl);
+    console.log('VIDEO ID EXTRAIDO:', this.extractVideoId(track?.youtubeUrl));
+    console.log('EMBED URL GENERADA:', this.embedUrl);
   }
 
   /**
@@ -127,6 +148,9 @@ export default class MusicHome implements OnInit {
     } else if (this.currentTrack) {
       this.isPlaying = true;
       this.embedUrl = this.getEmbedUrl(this.currentTrack);
+      console.log('TOGGLE PLAY TRACK:', this.currentTrack);
+      console.log('VIDEO ID EXTRAIDO:', this.extractVideoId(this.currentTrack?.youtubeUrl));
+      console.log('EMBED URL GENERADA:', this.embedUrl);
     }
   }
 
