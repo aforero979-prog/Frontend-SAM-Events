@@ -140,3 +140,70 @@
   color: #888;
   cursor: not-allowed;
 }
+
+/* Modales S.A.M. */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
+}
+.modal-box {
+  background: #111;
+  border: 1px solid #444;
+  padding: 40px;
+  max-width: 420px;
+  width: 90%;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%);
+  position: relative;
+}
+.modal-box::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: 14px;
+  height: 14px;
+  border-top: 2px solid #e8ff00;
+  border-left: 2px solid #e8ff00;
+}
+.modal-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: #e8ff00;
+  text-transform: uppercase;
+  margin: 0 0 12px;
+}
+.modal-msg {
+  font-size: 13px;
+  color: #c4c9ac;
+  margin: 0 0 28px;
+  line-height: 1.6;
+}
+.modal-actions {
+  display: flex;
+  gap: 12px;
+}
+.modal-box.success::before {
+  border-top: 2px solid #a3e635;
+  border-left: 2px solid #a3e635;
+}
+.modal-title.success {
+  color: #a3e635;
+}
+.btn-modal-close {
+  padding: 10px 16px;
+  background: #a3e635;
+  color: #000;
+  border: none;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 12px;
+  cursor: pointer;
+  flex: 1;
+}
