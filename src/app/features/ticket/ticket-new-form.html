@@ -1,27 +1,30 @@
-<div class="ticket-page">
+<div class="login-wrapper" style="margin: 5rem auto;">
+  <span class="corner tl"></span>
+  <span class="corner tr"></span>
+  <span class="corner bl"></span>
+  <span class="corner br"></span>
 
-  <h2 class="form-title">
-    <span class="title-icon">🎫</span>
-    COMPRAR BOLETAS
-  </h2>
-  <p class="form-subtitle">Selecciona un evento, elige tu zona y agrega al carrito.</p>
+  <div class="panel-header">
+    <span class="brand">S.A.M.</span>
+    <span class="badge">TAQUILLA</span>
+  </div>
 
-  @if (successMsg) {
-    <div class="msg msg--success">
-      <span>✓</span> {{ successMsg }}
-      <button class="msg-btn" (click)="goToCart()">IR AL CARRITO →</button>
-    </div>
+  <h2 class="panel-title">COMPRAR BOLETAS</h2>
+  <p class="panel-desc">Selecciona un evento, elige tu zona y agrega al carrito.</p>
+
+  @if (successMsg) { 
+    <p style="color:#e8ff00;font-size:12px;margin:4px 0;">
+      {{ successMsg }} <a style="color: #e8ff00; cursor:pointer; text-decoration: underline;" (click)="goToCart()">IR AL CARRITO →</a>
+    </p> 
   }
-  @if (errorMsg) {
-    <div class="msg msg--error">{{ errorMsg }}</div>
+  @if (errorMsg) { 
+    <p style="color:#ff4444;font-size:12px;margin:4px 0;">{{ errorMsg }}</p> 
   }
 
-  <form [formGroup]="formData" (ngSubmit)="addToCart()" class="form">
-
-    <!-- Seleccionar evento -->
+  <form class="login-form" [formGroup]="formData" (ngSubmit)="addToCart()">
     <div class="field">
-      <label for="eventId">Evento *</label>
-      <select formControlName="eventId" id="eventId">
+      <label class="field-label" for="eventId">Evento</label>
+      <select class="field-input" formControlName="eventId" id="eventId">
         <option value="">Selecciona un evento...</option>
         @for (event of (events$ | async); track event._id) {
           <option [value]="event._id">{{ event.name }} — {{ event.city }}</option>
@@ -29,40 +32,36 @@
       </select>
     </div>
 
-    <!-- Info del evento seleccionado -->
     @if (selectedEvent) {
-      <div class="event-preview">
+      <div style="background: rgba(0,0,0,0.4); padding: 10px; border: 1px solid #2a2a2a; display: flex; gap: 15px; margin-bottom: 10px;">
         @if (selectedEvent.imageUrl) {
-          <img class="event-preview-img" [src]="selectedEvent.imageUrl" [alt]="selectedEvent.name">
+          <img [src]="selectedEvent.imageUrl" [alt]="selectedEvent.name" style="width: 80px; height: 80px; object-fit: cover; border-radius: 4px;">
         }
-        <div class="event-preview-info">
-          <h3>{{ selectedEvent.name }}</h3>
-          <p>{{ selectedEvent.city }} · {{ selectedEvent.initialDate }}</p>
+        <div>
+          <h3 style="color: #e4e2e1; margin:0 0 5px 0; font-size: 14px; font-family: 'Syne', sans-serif;">{{ selectedEvent.name }}</h3>
+          <p style="color: #c4c9ac; margin:0; font-size: 11px;">{{ selectedEvent.city }} · {{ selectedEvent.initialDate }}</p>
           @if (getAvailableCapacity() > 0) {
-            <p class="event-capacity">
-              <span class="capacity-dot"></span>
-              Aforo disponible: <strong>{{ getAvailableCapacity() }}</strong> boletas
+            <p style="color: #e8ff00; margin: 5px 0 0 0; font-size: 11px;">
+              Aforo disponible: {{ getAvailableCapacity() }}
             </p>
           }
         </div>
       </div>
     }
 
-    <div class="form-row">
-      <!-- Zona / Ubicación -->
-      <div class="field">
-        <label for="zone">Ubicación *</label>
-        <select formControlName="zone" id="zone">
+    <div style="display:flex; gap: 15px;">
+      <div class="field" style="flex:1;">
+        <label class="field-label" for="zone">Ubicación</label>
+        <select class="field-input" formControlName="zone" id="zone">
           @for (z of zones; track z) {
             <option [value]="z">{{ z }}</option>
           }
         </select>
       </div>
 
-      <!-- Cantidad -->
-      <div class="field">
-        <label for="quantity">Cantidad *</label>
-        <select formControlName="quantity" id="quantity">
+      <div class="field" style="flex:1;">
+        <label class="field-label" for="quantity">Cantidad</label>
+        <select class="field-input" formControlName="quantity" id="quantity">
           @for (q of quantities; track q) {
             <option [value]="q">{{ q }}</option>
           }
@@ -70,27 +69,14 @@
       </div>
     </div>
 
-    <!-- Resumen de precio -->
-    <div class="price-summary">
-      <div class="price-row">
-        <span>Precio unitario:</span>
-        <span>{{ getUnitPrice() | currency:'COP':'symbol-narrow':'1.0-0' }}</span>
-      </div>
-      <div class="price-row price-row--total">
-        <span>Subtotal:</span>
-        <span>{{ getSubtotal() | currency:'COP':'symbol-narrow':'1.0-0' }}</span>
-      </div>
+    <div style="border-top: 1px solid #2a2a2a; padding-top: 15px; display:flex; justify-content: space-between; color: #c4c9ac; font-size: 12px;">
+      <span>Precio unitario: {{ getUnitPrice() | currency:'COP':'symbol-narrow':'1.0-0' }}</span>
+      <strong style="color: #e8ff00;">Total: {{ getSubtotal() | currency:'COP':'symbol-narrow':'1.0-0' }}</strong>
     </div>
 
-    <div class="form-actions">
-      <button class="btn btn--add" type="submit" [disabled]="formData.invalid || !selectedEvent">
-        AGREGAR AL CARRITO 🛒
-      </button>
-      <button class="btn btn--cart" type="button" (click)="goToCart()">
-        VER CARRITO
-      </button>
+    <div style="display: flex; gap: 10px; margin-top: 10px;">
+      <button class="btn-submit" type="submit" [disabled]="formData.invalid || !selectedEvent" style="flex: 2;">AGREGAR 🛒</button>
+      <button class="btn-submit" type="button" (click)="goToCart()" style="flex: 1; background: transparent; border: 1px solid #e8ff00; color: #e8ff00;">CARRITO</button>
     </div>
-
   </form>
-
 </div>
