@@ -37,37 +37,11 @@ p {
 /* --------------------------------------------------- */
 
 
-.eventosdestacadosgrupo {
-  display: flex;
-  margin-top: 5rem;
-}
+
 
 /* --------------------------------------------------- */
 
-.destacado2 {
-  text-align: center;
-  display: block;
-  background-color: #2a2a2a;
-}
-.photon {
-  padding: 8.5rem 5rem 5rem 4rem;
-  margin: 0.5rem solid #e8ff00;
-  background-color: #2a2a2a;
-}
-.photonimg {
-  width: 70rem;
-  height: 70rem;
-  transition: transform 0.4s ease;
-  cursor: pointer;
-  box-shadow: #141414 0px 0px 10px 5px;
-}
-.photonimg:hover {
-  transform: scale(1.03);
-  box-shadow: 
-    0px 0px 15px 2px #e8ff00,
-    0px 0px 35px 6px rgba(232, 255, 0, 0.5);
 
-}
 
 /* --------------------------------------------------- */
 
@@ -130,90 +104,7 @@ p {
   padding: 2rem 2rem 0rem 2rem;
   text-decoration: underline;
 }
-.wandertohell {
-  margin: 0.5rem solid #e8ff00;
-  padding: 3rem 5rem 5rem 5rem;
-  background-color: #141414;
-}
-.wandertohellimg {
-  width: 26rem;
-  height: 25rem;
-  margin: 0.5rem solid #e8ff00;
-  transition: transform 0.2s ease;
-  cursor: pointer;
-  box-shadow: #141414 0px 0px 10px 5px;
-}
-.wandertohellimg:hover {
-  transform: scale(1.03);
-  box-shadow: 
-    0px 0px 15px 1px #e8ff00,
-    0px 0px 35px 4px rgba(232, 255, 0, 0.5);
-}
 
-/* ------------------------------------------------- */
-.yourmind {
-  margin: 0.5rem solid #e8ff00;
-  padding: 3rem 5rem 5rem 5rem;
-  background-color: #141414;
-}
-.yourmindimg {
-  width: 26rem;
-  height: 25rem;
-  margin: 0.5rem solid #e8ff00;
-  transition: transform 0.2s ease;
-  cursor: pointer;
-  box-shadow: #141414 0px 0px 10px 5px;
-}
-.yourmindimg:hover {
-  transform: scale(1.03);
-  box-shadow: 
-    0px 0px 15px 1px #e8ff00,
-    0px 0px 35px 4px rgba(232, 255, 0, 0.5);
-}
-
-/* ------------------------------------------------- */
-
-.minimal {
-  margin: 0.5rem solid #e8ff00;
-  padding: 3rem 5rem 5rem 5rem;
-  background-color: #141414;
-}
-.minimalimg {
-  width: 26rem;
-  height: 25rem;
-  margin: 0.5rem solid #e8ff00;
-  transition: transform 0.2s ease;
-  cursor: pointer;
-  box-shadow: #141414 0px 0px 10px 5px;
-}
-.minimalimg:hover {
-  transform: scale(1.03);
-  box-shadow: 
-    0px 0px 15px 1px #e8ff00,
-    0px 0px 35px 4px rgba(232, 255, 0, 0.5);
-}
-
-/* ------------------------------------------------- */
-
-.hellonearth {
-  margin: 0.5rem solid #e8ff00;
-  padding: 3rem 5rem 5rem 5rem;
-  background-color: #141414;
-}
-.hellonearthimg {
-  width: 26rem;
-  height: 25rem;
-  margin: 0.5rem solid #e8ff00;
-  transition: transform 0.2s ease;
-  cursor: pointer;
-  box-shadow: #141414 0px 0px 10px 5px;
-}
-.hellonearthimg:hover {
-  transform: scale(1.03);
-  box-shadow: 
-    0px 0px 15px 1px #e8ff00,
-    0px 0px 35px 4px rgba(232, 255, 0, 0.5);
-}
 
 /* ------------------------------------------------- */
 /* --CLUBES-- */

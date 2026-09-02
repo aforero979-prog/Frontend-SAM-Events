@@ -31,8 +31,10 @@ p {
 }
 
 .img-event{
+  margin-top: 4rem;
     width: 50%;
     height: 50%;
+    border-radius: 1rem;
 }
 
 .titulo{

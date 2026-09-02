@@ -21,22 +21,23 @@ export const routes: Routes = [
   // Bares públicos
   { path: 'bar/home', loadComponent: () => import('./features/bars/bar-home/bar-home') },
   { path: 'club-new', loadComponent: () => import('./features/bars/bar-new-form/bar-new-form') },
+  { path: 'bar-info/:id', loadComponent: () => import( './features/bars/bar-details/bar-details')},
+  { path: 'bares', loadComponent: () => import('./features/bars/bar-home/bar-home') },
 
+  
   // Tickets publico
   { path: 'buy-ticket', loadComponent: () => import('./features/ticket/ticket-new-form') },
-
+  
   // Musica pública
   { path: 'music/home', loadComponent: () => import('./features/music/music-home/music-home') },
-
+  
   // Bares y Posts públicos
-  { path: 'bares', loadComponent: () => import('./features/bars/bar-home/bar-home') },
   { path: 'posts', loadComponent: () => import('./features/posts/post-public-list/post-public-list') },
 
   // Legal y Soporte
   { path: 'terminos', loadComponent: () => import('./features/support/terms/terms') },
   { path: 'reembolsos', loadComponent: () => import('./features/support/refunds/refunds') },
 
-  { path: 'bar/home', loadComponent: () => import('./features/bars/bar-home/bar-home') },
 
 
   

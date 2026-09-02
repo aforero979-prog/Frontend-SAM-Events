@@ -9,7 +9,7 @@
                 <h2 class="name">{{ bar.name }}</h2>
             </div>
 
-            <a [routerLink]="['dashboard', 'bar-ditails', bar._id]">
+            <a [routerLink]="[ '/bar-info', bar._id]">
                 <img [src]="bar.imageUrl" [alt]="bar.name" class="img-bar">
             </a>
 

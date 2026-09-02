@@ -2,12 +2,12 @@ import { Component, inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { HttpBar } from '../../../core/services/http-bar';
 import { Router, RouterLink } from '@angular/router';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, JsonPipe } from '@angular/common';
 
 
 @Component({
     selector: 'bar-home',
-    imports: [RouterLink, AsyncPipe],
+    imports: [RouterLink, AsyncPipe, JsonPipe],
     templateUrl: './bar-home.html',
     styleUrl: './bar-home.css',
 })

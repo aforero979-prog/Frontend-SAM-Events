@@ -1,0 +1,15 @@
+<div class="page">
+
+    <div class="infobar">
+
+        @if ( bar$ | async; as bar ) {
+
+            <div class="bar">
+                <img class="img-bar" [src]="bar.imageUrl" [alt]="bar.name">
+            </div>
+            <h1 class="titulo">{{ bar.name }}</h1>
+
+            <p class="descripcion">{{ bar.description }}</p>
+        }
+    </div>
+</div>

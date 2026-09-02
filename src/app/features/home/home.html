@@ -64,45 +64,30 @@
     </div>
 </div>
 
-<a href=""><h1 class="descubre">Descubre</h1></a>
+<!-- --------------------------------------------------------------------------------------------------------------- -->
+                <!-- MUSICA -->
+<!-- --------------------------------------------------------------------------------------------------------------- -->
 
-<div class="musica">
+<!-- <a href=""><h1 class="descubre">MUSICA</h1></a>
 
-    <div class="wandertohell">
+    @for (event of (musciFeaturedList$ | async); track $index) {
+        <div class="destacado">
 
-        <a href="https://www.youtube.com/watch?v=8P6mlY3C2eg&list=RD8P6mlY3C2eg&start_radio=1"><img
-                class="wandertohellimg" src="assets/imagenes/wandertohell.jpg" alt="WanderToHell"></a>
+            <a [routerLink]="['/music/home', music._id]">
+                <img class="img-music" [src]="music.imageUrl" [alt]="music.name"></a>
 
-        <h2 class="nombre">AL002 - Vaal - Wander To Hell</h2>
+            <div class="descripcion">
+                <h2>{{ music.name }}</h2>
+                <p>{{ music.description | date }}</p>
+            </div>
+        </div>
+    } -->
 
-    </div>
 
-    <div class="yourmind">
+<!-- --------------------------------------------------------------------------------------------------------------- -->
+<!-- CLUBES -->
+<!-- --------------------------------------------------------------------------------------------------------------- -->
 
-        <a href="https://www.youtube.com/watch?v=UUdTzrFhHPw&list=RDUUdTzrFhHPw&start_radio=1"><img class="yourmindimg"
-                src="assets/imagenes/yourmind.jpg" alt="YourMind"></a>
-
-        <h2 class="nombre">Adam Bayer - Your Mind</h2>
-
-    </div>
-
-    <div class="minimal">
-
-        <a href="https://www.youtube.com/watch?v=WtLA7Aojz8Y&list=RDWtLA7Aojz8Y&start_radio=1"><img class="minimalimg"
-                src="assets/imagenes/minimal.jpg" alt="Minimal"></a>
-
-        <h2 class="nombre">Deborah de Luca - Minimal</h2>
-    </div>
-
-    <div class="hellonearth">
-
-        <a href="https://www.youtube.com/watch?v=Fwi1qgSaxZY&list=RDFwi1qgSaxZY&start_radio=1"><img
-                class="hellonearthimg" src="assets/imagenes/hellonearth.jpg" alt="HellOnEarth"></a>
-
-        <h2 class="nombre">KAS:ST - Hell on Earth</h2>
-
-    </div>
-</div>
 
 <a href=""><h1 class="descubreclubes">Descubre clubes en Bogotá</h1></a>
 
