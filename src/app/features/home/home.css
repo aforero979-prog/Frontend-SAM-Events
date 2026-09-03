@@ -36,19 +36,27 @@ p {
 
 /* --------------------------------------------------- */
 
+.img-featured {
+  width: 70rem;
+  height: 70rem;
+  margin: 1rem 6rem 1rem 6rem;
+  margin-top: 4.5rem;
+  transition: transform 0.4s ease;
+  cursor: pointer;
+  box-shadow: #141414 0px 0px 10px 5px;
+}
 
-
+.descripcionfeatured {
+  margin: 0rem 6rem 2rem;
+}
 
 /* --------------------------------------------------- */
-
-
 
 /* --------------------------------------------------- */
 
 .mindagainst {
-  padding: 0rem 5rem 1rem 5rem;
-  margin: 0.5rem solid #e8ff00;
-  /* background-color: #2a2a2a; */
+  padding: 2.6rem 1.6rem;
+  border-radius: 0.5rem;
   background-color: #141414;
 }
 .mindagainstimg {
@@ -61,17 +69,14 @@ p {
 }
 .mindagainstimg:hover {
   transform: scale(1.03);
-  box-shadow: 
+  box-shadow:
     0px 0px 15px 1px #c4c9ac,
     0px 0px 35px 4px rgba(232, 255, 0, 0.5);
-  /* rgba(0, 0, 0, 0.7); */
 }
 
 /* --------------------------------------------------- */
 
-
 /* --------------------------------------------------- */
-
 
 .descripcion {
   text-align: left;
@@ -84,7 +89,6 @@ p {
   transition: color 0.4s ease;
   color: #e8ff00;
 }
-
 
 /* -------------------------------------------------- */
 /* MÚSICA - CINTA DE SUPERMERCADO (CONVEYOR BELT) */
@@ -206,12 +210,19 @@ p {
 
 /* ------------------------------------------------- */
 
+.clubes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+
 .octava {
   background-color: #2a2a2a;
   text-align: center;
 }
 .octavaimg {
-  width: 70rem;
+  width: 45rem;
+  height: 30rem;
   border-radius: 2rem;
   transition: transform 0.4s ease;
   cursor: pointer;
@@ -219,84 +230,40 @@ p {
 }
 .octavaimg:hover {
   transform: scale(1.03);
-  box-shadow: 
+  box-shadow:
     0px 0px 15px 2px #e8ff00,
     0px 0px 35px 6px rgba(232, 255, 0, 0.5);
 }
 
 /* ------------------------------------------------ */
-
-.radioestrella {
-  background-color: #2a2a2a;
-  text-align: center;
-}
-.radioestrellaimg {
-  width: 70rem;
-  border-radius: 2rem;
-  transition: transform 0.4s ease;
-  cursor: pointer;
-  box-shadow: #141414 0px 0px 10px 5px;
-}
-.radioestrellaimg:hover {
-  transform: scale(1.03);
-  box-shadow: 
-    0px 0px 15px 2px #e8ff00,
-    0px 0px 35px 6px rgba(232, 255, 0, 0.5);
-}
-
-/* ------------------------------------------------ */
-
-.kinder {
-  background-color: #2a2a2a;
-  text-align: center;
-}
-.kinderimg {
-  width: 35rem;
-  border-radius: 2rem;
-  transition: transform 0.4s ease;
-  cursor: pointer;
-  box-shadow: #141414 0px 0px 10px 5px;
-}
-.kinderimg:hover {
-  transform: scale(1.03);
-  box-shadow: 
-    0px 0px 15px 2px #e8ff00,
-    0px 0px 35px 6px rgba(232, 255, 0, 0.5); 
-}
-
-
-/* ----------------------------------------------- */
-
-/* .destacado1 {
-  text-align: center;
-  display: block;
-  background-color: #2a2a2a;
-} */
 
 .destacado1 {
-  background-color: #2a2a2a;
+  margin: 1rem 0;
   text-align: center;
-  
-  /* Convierte el contenedor en una cuadrícula */
   display: grid;
-  
-  
-  /* Crea columnas automáticas de mínimo 200px (ajusta este valor a tu gusto) */
-  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
-  
-  /* Espacio de separación entre cada imagen */
-  gap: 16px; 
-  
-  /* Espaciado interno para que las imágenes no peguen a los bordes del fondo */
-  padding: 16px; 
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  grid-template-rows: repeat(2, 1fr);
+  grid-auto-flow: column dense;
 }
 
 /* Opcional: Asegura que las imágenes no sobrepasen su espacio */
 .destacado1 img {
   width: 20rem;
   height: 20rem;
-  margin-top: 3rem;
   object-fit: cover;
   border-radius: 8px; /* Opcional: bordes redondeados */
 }
 
+.destacado1 img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  max-width: 20rem;
+  max-height: 20rem;
+}
+
+.destacados {
+  align-items: center;
+}
