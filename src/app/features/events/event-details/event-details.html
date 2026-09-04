@@ -1,49 +1,83 @@
-<h1 class="titulo">Comprar tickets:</h1>
+<div class="ticket-container">
+  <span class="corner tl"></span>
+  <span class="corner tr"></span>
+  <span class="corner bl"></span>
+  <span class="corner br"></span>
 
+  <div class="header-row">
+    <span class="brand">S.A.M.</span>
+    <span class="badge">EVENTO</span>
+  </div>
 
-<div class="infoEvento">
+  @if (event$ | async; as event) {
+    <h2 class="title">{{ event.name }}</h2>
+    <p class="subtitle">Adquiere tus accesos para este evento exclusivo.</p>
 
-    @if ( event$ | async; as event ) {
-
-    <div class="evento">
-        <img class="img-event" [alt]="event.name" [src]="event.imageUrl">
+    <div class="event-preview">
+      @if (event.imageUrl) {
+        <img class="event-img" [src]="event.imageUrl" [alt]="event.name">
+      }
+      <div class="event-info">
+        <h3>{{ event.name }}</h3>
+        <p>📍 {{ event.city || 'Ubicación por confirmar' }}</p>
+        <p>📅 {{ event.initialDate || 'Fecha por confirmar' }}</p>
+        @if (getAvailableCapacity() > 0) {
+          <span class="capacity">
+            ⚡ Aforo disp: {{ getAvailableCapacity() }}
+          </span>
+        }
+      </div>
     </div>
-    }
+  }
 
-</div>
+  @if (successMsg) { 
+    <div class="msg msg-success">
+      <span>{{ successMsg }}</span>
+      <a (click)="goToCart()">IR AL CARRITO →</a>
+    </div>
+  }
+  @if (errorMsg) { 
+    <div class="msg msg-error">
+      <span>{{ errorMsg }}</span>
+    </div>
+  }
 
-<div class="modulodecompra">
-
-    <div class="field">
-
-        <label for="localidad">Localidad:</label>
-        <select formControlName="localidad" id="localidad">
-
-            <option value="">General</option>
-            <option value="">VIP</option>
-            <option value="">Backstage</option>
-
+  <form [formGroup]="formData" (ngSubmit)="addToCart()">
+    <div class="form-grid">
+      <div class="field">
+        <label class="field-label" for="zone">Zona / Localidad</label>
+        <select class="field-input" formControlName="zone" id="zone">
+          @for (z of zones; track z) {
+            <option [value]="z">{{ z }}</option>
+          }
         </select>
+      </div>
 
-        <div class="field1">
-            <label for="ticket">Numero de entradas:</label>
-            <select formControlName="ticket" id="ticket">
-
-                <option value="">0</option>
-                <option value="">1</option>
-                <option value="">2</option>
-                <option value="">3</option>
-                <option value="">4</option>
-
-            </select>
-        </div>
-
-        <div class="button">
-            <a class="btn-accent" 
-            /* [routerLink]="[ 'xxxxxxxxxxxxx', event._id]" */
-            >COMPRAR</a>
-        </div>
-
+      <div class="field">
+        <label class="field-label" for="quantity">Entradas (Máx 4)</label>
+        <select class="field-input" formControlName="quantity" id="quantity">
+          @for (q of quantities; track q) {
+            <option [value]="q">{{ q }}</option>
+          }
+        </select>
+      </div>
     </div>
 
-    
+    <div class="price-summary">
+      <span class="unit-price">Valor por unidad: <br><strong>{{ getUnitPrice() | currency:'COP':'symbol-narrow':'1.0-0' }}</strong></span>
+      <div style="text-align: right;">
+        <span class="unit-price">Total a pagar</span><br>
+        <span class="total-price">{{ getSubtotal() | currency:'COP':'symbol-narrow':'1.0-0' }}</span>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn-primary" type="submit" [disabled]="formData.invalid || !(event$ | async)">
+        COMPRAR AHORA
+      </button>
+      <button class="btn-secondary" type="button" (click)="goToCart()">
+        CARRITO
+      </button>
+    </div>
+  </form>
+</div>

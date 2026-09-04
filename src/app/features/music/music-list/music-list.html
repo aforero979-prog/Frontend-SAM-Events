@@ -6,21 +6,21 @@
 <table class="admin-table">
     <thead>
         <tr>
-            <th>ID</th>
-            <th>URL YouTube</th>
+            <th>Nombre</th>
+            <th>Artista</th>
             <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
         @for (music of (musicList$ | async); track music._id || music.id || $index) {
             <tr>
-                <td>{{ music._id || music.id }}</td>
+                <td>{{ music._name || music.name }}</td>
                 <td>
-                  <a [href]="music.youtubeUrl" target="_blank" style="color: var(--accent);">{{ music.youtubeUrl }}</a>
+                  <a [href]="music.artist" target="_blank" style="color: var(--accent);">{{ music.artist }}</a>
                 </td>
                 <td class="actions">
-                    <button class="btn-edit" (click)="onEdit(music._id || music.id)">Editar</button>
-                    <button class="btn-delete" (click)="onDelete(music._id || music.id)">Eliminar</button>
+                    <button class="btn-edit" (click)="onEdit(music._name || music.name)">Editar</button>
+                    <button class="btn-delete" (click)="onDelete(music._name || music.name)">Eliminar</button>
                 </td>
             </tr>
         } @empty {

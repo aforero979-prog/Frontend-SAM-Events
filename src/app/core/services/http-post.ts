@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { map } from 'rxjs';
-import { ResponsePosts } from '../models/post';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 
 // servicio para obtener las publicaciones
 @Injectable({
@@ -17,8 +16,8 @@ export class HttpPost {
 
   // Obtener todas las publicaciones
   getPosts() {
-    return this.http.get<ResponsePosts>(this.BASE_URL + '/posts').pipe(
-      map((response: ResponsePosts) => {
+    return this.http.get<any>(this.BASE_URL + '/posts').pipe(
+      map((response: any) => {
         return response.data;
       })
     );
@@ -26,17 +25,17 @@ export class HttpPost {
 
   // Obtener una publicacion por ID
   getPostById(id: string) {
-    return this.http.get<ResponsePosts>(this.BASE_URL + '/posts/' + id);
+    return this.http.get<any>(this.BASE_URL + '/posts/' + id);
   }
 
   // Crear una nueva publicacion
   createPost(newPost: any) {
-    return this.http.post<ResponsePosts>(this.BASE_URL + '/posts', newPost);
+    return this.http.post<any>(this.BASE_URL + '/posts', newPost);
   }
 
   // Actualizar una publicacion existente
   updatePost(id: string, post: any) {
-    return this.http.put<ResponsePosts>(this.BASE_URL + '/posts/' + id, post);
+    return this.http.put<any>(this.BASE_URL + '/posts/' + id, post);
   }
 
   // Eliminar una publicacion

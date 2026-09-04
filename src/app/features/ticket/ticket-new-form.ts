@@ -27,7 +27,7 @@ export default class TicketNewForm implements OnInit {
   errorMsg = '';
 
   zones = ['General', 'VIP', 'BackStage', 'Palco'];
-  quantities = [1, 2, 3, 4, 5];
+  quantities = [1, 2, 3, 4];
 
   // Precios por zona (estos se podrían configurar por evento)
   zonePrices: Record<string, number> = {
@@ -41,7 +41,7 @@ export default class TicketNewForm implements OnInit {
     this.formData = new FormGroup({
       eventId:  new FormControl('', [Validators.required]),
       zone:     new FormControl('General', [Validators.required]),
-      quantity: new FormControl(1, [Validators.required, Validators.min(1), Validators.max(5)]),
+      quantity: new FormControl(1, [Validators.required, Validators.min(1), Validators.max(4)]),
     });
   }
 

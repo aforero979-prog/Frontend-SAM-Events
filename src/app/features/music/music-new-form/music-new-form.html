@@ -22,9 +22,10 @@
 
   <form class="admin-form" [formGroup]="formData" (ngSubmit)="onSubmit()">
 
+
     <div class="field">
-      <label class="field-label" for="name">Nombre de la canción</label>
-      <input class="field-input" type="text" id="name" formControlName="name" placeholder="Ej: xxxx-xxxx">
+      <label class="field-label" for="name">Nombre</label>
+      <input class="field-input" type="text" id="name" formControlName="name" placeholder="Ej: xxxxxxxxxxx">
       @if (formData.get('name')?.invalid && (formData.get('name')?.dirty || formData.get('name')?.touched)) {
       @if (formData.get('name')?.errors?.['required']) {
       <small class="field-error">El nombre es obligatorio</small>
@@ -33,43 +34,40 @@
     </div>
 
 
-
     <div class="field">
-      <label class="field-label" for="description">Descripción</label>
-      <textarea class="field-input field-textarea" id="description" formControlName="description"
-        placeholder="Información de la canción"></textarea>
-      @if (formData.get('description')?.invalid && (formData.get('description')?.dirty ||
-      formData.get('description')?.touched)) {
-      @if (formData.get('description')?.errors?.['required']) {
-      <small class="field-error">La descripción es obligatoria</small>
+      <label class="field-label" for="artist">Artista</label>
+      <input class="field-input" type="text" id="artist" formControlName="artist" placeholder="Ej: xxxxxxxxxxx">
+      @if (formData.get('artist')?.invalid && (formData.get('artist')?.dirty || formData.get('artist')?.touched)) {
+      @if (formData.get('artist')?.errors?.['required']) {
+      <small class="field-error">El Artista es obligatorio</small>
       }
       }
     </div>
 
 
-
     <div class="field">
-      <label class="field-label" for="genre">Género</label>
-      <input class="field-input" type="text" id="genre" formControlName="genre"
-        placeholder="Tecnho, House, HardTechno,...">
-      @if (formData.get('imageUrl')?.invalid && (formData.get('genre')?.dirty || formData.get('genre')?.touched))
-      {
+      <label class="field-label" for="genre">Genero</label>
+      <input class="field-input" type="text" id="genre" formControlName="genre" placeholder="Ej: Techno">
+      @if (formData.get('genre')?.invalid && (formData.get('genre')?.dirty || formData.get('genre')?.touched)) {
       @if (formData.get('genre')?.errors?.['required']) {
-      <small class="field-error">El género es obligatorio</small>
+      <small class="field-error">El genero es obligatorio</small>
       }
       }
     </div>
 
 
 
-
     <div class="field">
-      <label class="field-label" for="imageUrl">URL de imagen</label>
-      <input class="field-input" type="text" id="imageUrl" formControlName="imageUrl" placeholder="https://...">
-      @if (formData.get('imageUrl')?.invalid && (formData.get('imageUrl')?.dirty || formData.get('imageUrl')?.touched))
-      {
+      <label class="field-label" for="imageUrl">URL de la imagen</label>
+      <input class="field-input" type="text" id="imageUrl" formControlName="imageUrl"
+        placeholder="Ej: https://www.youtube.com/watch?v=...">
+      @if (formData.get('imageUrl')?.invalid && (formData.get('imageUrl')?.dirty ||
+      formData.get('imageUrl')?.touched)) {
       @if (formData.get('imageUrl')?.errors?.['required']) {
-      <small class="field-error">La imagen es obligatoria</small>
+      <small class="field-error">La URL de la imagen es obligatoria</small>
+      }
+      @if (formData.get('imageUrl')?.errors?.['pattern']) {
+      <small class="field-error">Por favor ingresa una URL válida</small>
       }
       }
     </div>
@@ -109,5 +107,16 @@
       GUARDAR MÚSICA →
     </button>
   </form>
-
 </div>
+
+@if (showModal) {
+<div class="modal-overlay">
+  <div class="modal-content">
+    <h3 [style.color]="isSuccess ? '#a3e635' : '#ff4444'">
+      {{ isSuccess ? '¡ÉXITO!' : '¡ERROR!' }}
+    </h3>
+    <p>{{ modalMessage }}</p>
+    <button class="btn-submit modal-btn" (click)="closeModal()">CONTINUAR</button>
+  </div>
+</div>
+}

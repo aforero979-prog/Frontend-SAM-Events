@@ -1,68 +1,71 @@
-<div class="ticket-page">
+<div class="ticket-container">
+  <span class="corner tl"></span>
+  <span class="corner tr"></span>
+  <span class="corner bl"></span>
+  <span class="corner br"></span>
 
-  <h2 class="form-title">
-    <span class="title-icon">🎫</span>
-    COMPRAR BOLETAS
-  </h2>
-  <p class="form-subtitle">Selecciona un evento, elige tu zona y agrega al carrito.</p>
+  <div class="header-row">
+    <span class="brand">S.A.M.</span>
+    <span class="badge">TAQUILLA</span>
+  </div>
 
-  @if (successMsg) {
-    <div class="msg msg--success">
-      <span>✓</span> {{ successMsg }}
-      <button class="msg-btn" (click)="goToCart()">IR AL CARRITO →</button>
+  <h2 class="title">ADQUIRIR ACCESO</h2>
+  <p class="subtitle">Selecciona el evento, elige tu ubicación y procesa tus boletas en el sistema.</p>
+
+  @if (successMsg) { 
+    <div class="msg msg-success">
+      <span>{{ successMsg }}</span>
+      <a (click)="goToCart()">IR AL CARRITO →</a>
     </div>
   }
-  @if (errorMsg) {
-    <div class="msg msg--error">{{ errorMsg }}</div>
+  @if (errorMsg) { 
+    <div class="msg msg-error">
+      <span>{{ errorMsg }}</span>
+    </div>
   }
 
-  <form [formGroup]="formData" (ngSubmit)="addToCart()" class="form">
-
-    <!-- Seleccionar evento -->
-    <div class="field">
-      <label for="eventId">Evento *</label>
-      <select formControlName="eventId" id="eventId">
-        <option value="">Selecciona un evento...</option>
+  <form [formGroup]="formData" (ngSubmit)="addToCart()">
+    <div class="field" style="margin-bottom: 25px;">
+      <label class="field-label" for="eventId">Selecciona un Evento</label>
+      <select class="field-input" formControlName="eventId" id="eventId">
+        <option value="">Despliega los eventos disponibles...</option>
         @for (event of (events$ | async); track event._id) {
           <option [value]="event._id">{{ event.name }} — {{ event.city }}</option>
         }
       </select>
     </div>
 
-    <!-- Info del evento seleccionado -->
     @if (selectedEvent) {
       <div class="event-preview">
         @if (selectedEvent.imageUrl) {
-          <img class="event-preview-img" [src]="selectedEvent.imageUrl" [alt]="selectedEvent.name">
+          <img class="event-img" [src]="selectedEvent.imageUrl" [alt]="selectedEvent.name">
         }
-        <div class="event-preview-info">
+        <div class="event-info">
           <h3>{{ selectedEvent.name }}</h3>
-          <p>{{ selectedEvent.city }} · {{ selectedEvent.initialDate }}</p>
+          <p>📍 {{ selectedEvent.city }}</p>
+          <p>📅 {{ selectedEvent.initialDate }}</p>
           @if (getAvailableCapacity() > 0) {
-            <p class="event-capacity">
-              <span class="capacity-dot"></span>
-              Aforo disponible: <strong>{{ getAvailableCapacity() }}</strong> boletas
-            </p>
+            <span class="capacity">
+              ⚡ Aforo disp: {{ getAvailableCapacity() }}
+            </span>
           }
         </div>
       </div>
     }
 
-    <div class="form-row">
-      <!-- Zona / Ubicación -->
+    <div class="form-grid">
       <div class="field">
-        <label for="zone">Ubicación *</label>
-        <select formControlName="zone" id="zone">
+        <label class="field-label" for="zone">Zona / Ubicación</label>
+        <select class="field-input" formControlName="zone" id="zone">
           @for (z of zones; track z) {
             <option [value]="z">{{ z }}</option>
           }
         </select>
       </div>
 
-      <!-- Cantidad -->
       <div class="field">
-        <label for="quantity">Cantidad *</label>
-        <select formControlName="quantity" id="quantity">
+        <label class="field-label" for="quantity">Entradas (Máx 4)</label>
+        <select class="field-input" formControlName="quantity" id="quantity">
           @for (q of quantities; track q) {
             <option [value]="q">{{ q }}</option>
           }
@@ -70,27 +73,21 @@
       </div>
     </div>
 
-    <!-- Resumen de precio -->
     <div class="price-summary">
-      <div class="price-row">
-        <span>Precio unitario:</span>
-        <span>{{ getUnitPrice() | currency:'COP':'symbol-narrow':'1.0-0' }}</span>
-      </div>
-      <div class="price-row price-row--total">
-        <span>Subtotal:</span>
-        <span>{{ getSubtotal() | currency:'COP':'symbol-narrow':'1.0-0' }}</span>
+      <span class="unit-price">Valor por unidad: <br><strong>{{ getUnitPrice() | currency:'COP':'symbol-narrow':'1.0-0' }}</strong></span>
+      <div style="text-align: right;">
+        <span class="unit-price">Total a pagar</span><br>
+        <span class="total-price">{{ getSubtotal() | currency:'COP':'symbol-narrow':'1.0-0' }}</span>
       </div>
     </div>
 
-    <div class="form-actions">
-      <button class="btn btn--add" type="submit" [disabled]="formData.invalid || !selectedEvent">
-        AGREGAR AL CARRITO 🛒
+    <div class="actions">
+      <button class="btn-primary" type="submit" [disabled]="formData.invalid || !selectedEvent">
+        COMPRAR AHORA
       </button>
-      <button class="btn btn--cart" type="button" (click)="goToCart()">
-        VER CARRITO
+      <button class="btn-secondary" type="button" (click)="goToCart()">
+        CARRITO
       </button>
     </div>
-
   </form>
-
 </div>

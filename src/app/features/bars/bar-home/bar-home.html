@@ -10,7 +10,7 @@
             </div>
 
             <a [routerLink]="[ '/bar-info', bar._id]">
-                <img [src]="bar.imageUrl" [alt]="bar.name" class="img-bar">
+                <img [src]="bar.imageUrl" [alt]="bar.name" class="img-bar" (error)="handleBarImageError($event)">
             </a>
 
             <div class="description">

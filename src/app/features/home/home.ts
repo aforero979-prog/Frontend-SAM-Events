@@ -1,43 +1,45 @@
-import { Component, inject, OnInit, OnDestroy } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { HttpEvents } from '../../core/services/http-events';
 import { HttpMusic } from '../../core/services/http-music';
-import { BehaviorSubject } from 'rxjs';
-import { AsyncPipe, DatePipe } from '@angular/common';
 import { HttpBar } from '../../core/services/http-bar';
+import { BehaviorSubject } from 'rxjs';
+import { AsyncPipe, DatePipe, SlicePipe } from '@angular/common';
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink, AsyncPipe, DatePipe],
+  imports: [RouterLink, AsyncPipe, DatePipe, SlicePipe],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
 export default class Home implements OnInit {
   eventList$ = new BehaviorSubject<any>([]);
   musicList$ = new BehaviorSubject<any[]>([]);
-  barList$ = new BehaviorSubject<any>([]);
+  barList$ = new BehaviorSubject<any[]>([]);
   eventFeaturedList$ = new BehaviorSubject<any>([]);
+
+  currentSlide = 0;
 
   private httpEvents = inject(HttpEvents);
   private httpMusic = inject(HttpMusic);
   private httpBar = inject(HttpBar);
 
   ngOnInit() {
+
     this.getEventsForInitialDate('initialDate', 4);
     this.getEventsForFeatured(1);
     this.getBarsForQuantity(6)
+
   }
 
   getEventsForInitialDate(field: string, quantity: number) {
     this.httpEvents.getEventsByField(field, quantity).subscribe({
       next: (res) => {
-        console.log(res);
         this.eventList$.next(res);
       },
       error: (err) => {
         console.error(err);
       },
-      complete: () => {},
     });
 
     // Cargar música desde la API
@@ -45,6 +47,7 @@ export default class Home implements OnInit {
       next: (res) => {
         const musicItems = Array.isArray(res) ? res : res?.data || [];
         // Duplicar para efecto infinito
+
         this.musicList$.next(musicItems);
       },
       error: (err) => {
@@ -64,16 +67,17 @@ export default class Home implements OnInit {
       },
     });
   }
+
   getEventsForFeatured(quantity: number) {
     this.httpEvents.getFeaturedEvents(quantity).subscribe({
       next: (res) => {
         console.log(res);
+
         this.eventFeaturedList$.next(res);
       },
       error: (err) => {
         console.error(err);
       },
-      complete: () => {},
     });
   }
 
@@ -89,4 +93,38 @@ export default class Home implements OnInit {
       complete: () => {},
     });
     }
+
+  loadBars() {
+    this.httpBar.getBars().subscribe({
+      next: (res) => {
+        this.barList$.next(res);
+      },
+      error: (err) => {
+        console.error('Error cargando bares:', err);
+      }
+    });
+  }
+
+  prevSlide() {
+    const events = this.eventFeaturedList$.value;
+    this.currentSlide = (this.currentSlide - 1 + events.length) % events.length;
+  }
+
+  nextSlide() {
+    const events = this.eventFeaturedList$.value;
+    this.currentSlide = (this.currentSlide + 1) % events.length;
+  }
+
+  goToSlide(index: number) {
+    this.currentSlide = index;
+  }
+
+  handleImageError(event: any) {
+    event.target.src = '/assets/default-event.jpg';
+  }
+
+  handleBarImageError(event: any) {
+    event.target.src = '/assets/default-bar.jpg';
+  }
+
 }

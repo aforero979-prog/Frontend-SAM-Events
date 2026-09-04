@@ -10,10 +10,12 @@ import { HttpMusic } from '../../../core/services/http-music';
   styleUrl: './music-edit-form.css',
 })
 export default class MusicEditForm implements OnInit {
+  
   private httpMusic = inject(HttpMusic);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 
+  selectedId!: string | null
   successMsg = '';
   errorMsg = '';
   formData: FormGroup;
@@ -21,9 +23,14 @@ export default class MusicEditForm implements OnInit {
 
   constructor() {
     this.formData = new FormGroup({
+      name: new FormControl(''),
+      artist: new FormControl(''),
+      imageUrl: new FormControl(''),
+      genre: new FormControl(''),
+      isActive: new FormControl(true),
       youtubeUrl: new FormControl('', [
-        Validators.required, 
-        Validators.pattern(/^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$/)
+        Validators.required,
+        Validators.pattern(/^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$/),
       ]),
     });
   }
@@ -39,7 +46,31 @@ export default class MusicEditForm implements OnInit {
         error: (err) => {
           console.error(err);
           this.errorMsg = 'No se pudo cargar la canción';
-        }
+        },
+      });
+    }
+
+    if (this.selectedId) {
+      this.httpMusic.getMusicById(this.selectedId).subscribe({
+        next: (res) => {
+          const music = res.data ?? res;
+          console.log('Música cargada para edición:', music);
+
+          // Buscar coincidencia del género (por nombre o id)
+          // const matchedGenre = genre.find((g) =>
+          //     String(g.name).toLowerCase().trim() === String(music.genre).toLowerCase().trim() ||
+          //     String(g.id) === String(music.genre),
+          // );
+
+          this.formData.patchValue({
+            name: music.name || '',
+            artist: music.artist || '',
+            imageUrl: music.imageUrl || '',
+            youtubeUrl: music.youtubeUrl || '',
+            genre: music.genre || '',
+            isActive: music.isActive ?? true,
+          });
+        },
       });
     }
   }
@@ -56,7 +87,7 @@ export default class MusicEditForm implements OnInit {
           console.error(error);
           this.errorMsg = error.error?.msg || 'Error al actualizar música';
           this.successMsg = '';
-        }
+        },
       });
     }
   }

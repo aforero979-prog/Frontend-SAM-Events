@@ -18,6 +18,7 @@ export default class Register {
   formData: FormGroup;
   successMsg = '';
   errorMsg = '';
+  showSuccessModal = false;
   
   constructor() {
     this.formData = new FormGroup({
@@ -34,7 +35,7 @@ export default class Register {
           console.log(res);
           this.successMsg = res?.msg || 'Usuario registrado correctamente';
           this.errorMsg = '';
-          this.router.navigateByUrl('/login');
+          this.showSuccessModal = true;
         },
         error: (err) => {
           console.error(err);
@@ -45,5 +46,10 @@ export default class Register {
     } else {
       console.log( 'Formulario inválido' );
     }
+  }
+
+  closeModal() {
+    this.showSuccessModal = false;
+    this.router.navigateByUrl('/login');
   }
 }

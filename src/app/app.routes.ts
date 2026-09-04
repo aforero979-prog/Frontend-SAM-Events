@@ -4,6 +4,7 @@ import Home from './features/home/home';
 import PageNotFound from './features/page-not-found/page-not-found';
 import { adminGuard } from './core/guards/admin-guard';
 import { barGuard } from './core/guards/bar-guard';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   // ── 1. Redirección inicial ──────────────────────────────────────
@@ -12,6 +13,7 @@ export const routes: Routes = [
   // ── 2. Rutas Públicas / Principales ──────────────────────────────
   { path: 'home', loadComponent: () => import('./features/home/home') },
   { path: 'login', loadComponent: () => import('./features/login/login') },
+  { path: 'login-required', loadComponent: () => import('./features/login-required/login-required') },
   { path: 'register', loadComponent: () => import('./features/register/register') },
 
   // Eventos públicos
@@ -27,8 +29,8 @@ export const routes: Routes = [
   { path: 'bares', loadComponent: () => import('./features/bars/bar-home/bar-home') },
 
   
-  // Tickets publico
-  { path: 'buy-ticket', loadComponent: () => import('./features/ticket/ticket-new-form') },
+  // Tickets protegido
+  { path: 'buy-ticket', canActivate: [authGuard], loadComponent: () => import('./features/ticket/ticket-new-form') },
   
   // Musica pública
   { path: 'music/home', loadComponent: () => import('./features/music/music-home/music-home') },

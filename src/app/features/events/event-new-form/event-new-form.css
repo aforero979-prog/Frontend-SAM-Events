@@ -1,3 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=JetBrains+Mono:wght@500;700&display=swap');
+
+:host {
+  --accent: #e8ff00;
+  --text:   #e4e2e1;
+  --muted:  #c4c9ac;
+  --border: #2a2a2a;
+}
 
 /* ==========================================================================
    Contenedor Principal y Estructura
@@ -8,28 +16,39 @@
   align-items: center;
   min-height: 100vh;
   padding: 2rem 1rem;
-  background-color: #f4f6f9;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #000;
+  background-image: radial-gradient(#1a1a1a 1px, transparent 1px);
+  background-size: 20px 20px;
+  font-family: 'JetBrains Mono', monospace;
   box-sizing: border-box;
 }
 
 .event-form {
-  background: #ffffff;
+  position: relative;
   width: 100%;
   max-width: 650px;
   padding: 2.5rem;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  background: rgba(17, 17, 17, 0.6);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  clip-path: polygon(
+    0 0, 100% 0, 100% calc(100% - 16px),
+    calc(100% - 16px) 100%, 0 100%
+  );
+  color: var(--text);
+  margin-top: 5rem;
 }
 
 .event-form h2 {
   margin-top: 0;
   margin-bottom: 1.5rem;
+  font-family: 'Syne', sans-serif;
   font-size: 1.75rem;
-  color: #1e293b;
+  color: var(--text);
   text-align: center;
-  border-bottom: 2px solid #e2e8f0;
+  border-bottom: 2px solid var(--border);
   padding-bottom: 0.75rem;
+  text-transform: uppercase;
 }
 
 /* ==========================================================================
@@ -42,29 +61,40 @@
 }
 
 .form-group label,
-.field > label {
-  font-weight: 600;
-  font-size: 0.9rem;
-  color: #475569;
-  margin-bottom: 0.4rem;
+.field > label,
+.form-section legend {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
 }
 
 .form-control {
-  padding: 0.75rem 0.9rem;
-  font-size: 0.95rem;
-  color: #334155;
-  background-color: #f8fafc;
-  border: 1.5px solid #cbd5e1;
-  border-radius: 8px;
-  transition: all 0.2s ease-in-out;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 14px 18px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.3s;
+  border-radius: 0;
   box-sizing: border-box;
+  width: 100%;
 }
 
 .form-control:focus {
-  outline: none;
-  border-color: #2563eb;
-  background-color: #ffffff;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+  border-color: var(--accent);
+  box-shadow: 0 0 10px rgba(232, 255, 0, 0.15);
+}
+
+.form-control:disabled {
+  opacity: 0.5;
+  background: #111;
+  cursor: not-allowed;
 }
 
 textarea.form-control {
@@ -81,27 +111,24 @@ textarea.form-control {
 
 .form-row .col {
   flex: 1;
-  margin-bottom: 0; /* Anula el margin del form-group */
+  margin-bottom: 0; 
 }
 
 /* ==========================================================================
    Fieldsets / Grupos de Fechas
    ========================================================================== */
 .form-section {
-  border: 1.5px solid #e2e8f0;
-  border-radius: 8px;
+  border: 1px solid var(--border);
   padding: 1rem 1.25rem;
   margin-bottom: 1.25rem;
-  background-color: #fafafa;
+  background-color: transparent;
+  border-radius: 0;
 }
 
 .form-section legend {
-  font-weight: 600;
-  font-size: 0.85rem;
-  color: #2563eb;
+  color: var(--accent);
   padding: 0 0.5rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  background: transparent;
 }
 
 /* ==========================================================================
@@ -122,7 +149,7 @@ textarea.form-control {
 
 .options input[type="radio"],
 .checkbox-group input[type="checkbox"] {
-  accent-color: #2563eb;
+  accent-color: var(--accent);
   width: 1.1rem;
   height: 1.1rem;
   cursor: pointer;
@@ -130,8 +157,7 @@ textarea.form-control {
 
 .options label,
 .checkbox-group label {
-  font-weight: 500;
-  color: #334155;
+  color: var(--text);
   cursor: pointer;
   user-select: none;
 }
@@ -140,48 +166,56 @@ textarea.form-control {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+  text-transform: none;
+  letter-spacing: 0;
 }
 
 /* ==========================================================================
    Botón y Mensajes de Validación
    ========================================================================== */
 .error-msg {
-  color: #dc2626 !important;
+  color: #ff4444 !important;
   margin-top: 0.35rem;
-  font-weight: 500;
+  font-size: 12px;
 }
 
 .error-msg.alert {
-  background-color: #fef2f2;
-  border: 1px solid #fecaca;
+  background-color: rgba(255, 68, 68, 0.1);
+  border: 1px solid #ff4444;
   padding: 0.75rem;
-  border-radius: 8px;
   text-align: center;
+  border-radius: 0;
 }
 
 .btn-submit {
   width: 100%;
-  padding: 0.85rem 1.5rem;
-  background-color: #2563eb;
-  color: #ffffff;
-  font-size: 1rem;
-  font-weight: 600;
+  padding: 14px 20px;
+  background: var(--accent);
+  color: #000;
   border: none;
-  border-radius: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.1s ease;
+  transition: box-shadow 0.2s, opacity 0.2s;
+  border-radius: 0;
 }
 
 .btn-submit:hover:not(:disabled) {
-  background-color: #1d4ed8;
+  box-shadow: 0 0 22px rgba(232, 255, 0, 0.45);
 }
 
 .btn-submit:active:not(:disabled) {
-  transform: scale(0.99);
+  opacity: 0.85;
 }
 
 .btn-submit:disabled {
-  background-color: #94a3b8;
+  background: #555;
+  color: #888;
   cursor: not-allowed;
   opacity: 0.7;
 }
@@ -194,17 +228,17 @@ textarea.form-control {
 
 .option {
     width: calc(50% - 0.5rem);
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
+    background: transparent;
+    border: 1px solid var(--border);
     padding: 0.75rem 1rem;
     box-sizing: border-box;
+    border-radius: 0;
 }
 
 .localidad-name {
     font-weight: 700;
-    font-size: 0.95rem;
-    color: #1e293b;
+    font-size: 14px;
+    color: var(--accent);
     margin-bottom: 0.5rem;
     display: block;
     cursor: pointer;
@@ -217,7 +251,7 @@ textarea.form-control {
 }
 
 .localidad-chk {
-    accent-color: #2563eb;
+    accent-color: var(--accent);
     width: 1.25rem;
     height: 1.25rem;
     margin-top: 1.8rem;
@@ -233,9 +267,8 @@ textarea.form-control {
 
 .field-inline label {
     display: block;
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: #475569;
+    font-size: 11px;
+    color: var(--muted);
     margin-bottom: 0.25rem;
 }
 

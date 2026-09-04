@@ -1,3 +1,216 @@
-.titulo{
-    margin-top: 8.5rem;
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=JetBrains+Mono:wght@500;700&display=swap');
+
+:host {
+  --accent: #e8ff00;
+  --text:   #e4e2e1;
+  --muted:  #c4c9ac;
+  --border: #2a2a2a;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #000;
+  background-image: radial-gradient(#1a1a1a 1px, transparent 1px);
+  background-size: 20px 20px;
+  font-family: 'JetBrains Mono', monospace;
+  width: 100%;
+}
+
+.login-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  padding: 48px;
+  background: rgba(17, 17, 17, 0.6);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  clip-path: polygon(
+    0 0, 100% 0, 100% calc(100% - 16px),
+    calc(100% - 16px) 100%, 0 100%
+  );
+  margin-top: 5rem;
+  margin-bottom: 5rem;
+}
+
+.corner {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: var(--accent);
+  border-style: solid;
+  pointer-events: none;
+}
+.corner.tl { top: -1px;  left:  -1px; border-width: 2px 0 0 2px; }
+.corner.tr { top: -1px;  right: -1px; border-width: 2px 2px 0 0; }
+.corner.bl { bottom: -1px; left:  -1px; border-width: 0 0 2px 2px; }
+.corner.br { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.brand {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: var(--accent);
+  text-shadow: 0 0 18px rgba(232, 255, 0, 0.3);
+}
+
+.badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 9px;
+  color: #000;
+  background: var(--accent);
+  padding: 4px 8px;
+}
+
+.panel-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: var(--text);
+  margin: 0 0 10px;
+}
+
+.panel-desc {
+  color: var(--muted);
+  font-size: 13px;
+  margin-bottom: 28px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+.field-label {
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.field-input {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 14px 18px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.field-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 10px rgba(232, 255, 0, 0.15);
+}
+
+.btn-submit {
+  width: 100%;
+  padding: 14px 20px;
+  background: var(--accent);
+  color: #000;
+  border: none;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 12px;
+  cursor: pointer;
+  margin-top: 4px;
+}
+
+.btn-submit:hover:not(:disabled) {
+  box-shadow: 0 0 22px rgba(232, 255, 0, 0.45);
+}
+
+.btn-submit:disabled {
+  background: #555;
+  color: #888;
+  cursor: not-allowed;
+}
+
+/* Modales S.A.M. */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
+}
+.modal-box {
+  background: #111;
+  border: 1px solid #444;
+  padding: 40px;
+  max-width: 420px;
+  width: 90%;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%);
+  position: relative;
+}
+.modal-box::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: 14px;
+  height: 14px;
+  border-top: 2px solid #e8ff00;
+  border-left: 2px solid #e8ff00;
+}
+.modal-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: #e8ff00;
+  text-transform: uppercase;
+  margin: 0 0 12px;
+}
+.modal-msg {
+  font-size: 13px;
+  color: #c4c9ac;
+  margin: 0 0 28px;
+  line-height: 1.6;
+}
+.modal-actions {
+  display: flex;
+  gap: 12px;
+}
+.modal-box.success::before {
+  border-top: 2px solid #a3e635;
+  border-left: 2px solid #a3e635;
+}
+.modal-title.success {
+  color: #a3e635;
+}
+.btn-modal-close {
+  padding: 10px 16px;
+  background: #a3e635;
+  color: #000;
+  border: none;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 12px;
+  cursor: pointer;
+  flex: 1;
+}
+
+@media (max-width: 480px) {
+  .login-wrapper {
+    padding: 24px;
+    width: 90%;
+  }
 }

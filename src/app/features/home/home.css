@@ -5,110 +5,250 @@
   --text: #e4e2e1;
   --muted: #c4c9ac;
   --border: #2a2a2a;
+  --bg: #0a0a0a;
+  --card-bg: #111;
 
   display: block;
   font-family: 'JetBrains Mono', monospace;
-  min-height: 100vh;
-  /* flex-wrap: wrap; */
-  margin-top: 6.4rem;
-}
-h1 {
-  color: #c4c9ac;
-}
-h2 {
-  color: #c4c9ac;
-}
-p {
-  color: #c4c9ac;
+  background: var(--bg);
+  margin-top: 64px;
 }
 
-.eventos {
-  padding: 2rem;
-  background-color: black;
-  text-decoration: underline;
-}
-/* --------------------------------------------------- */
+/* ═══════════════════════════════════════════════════════ */
+/* SECCIÓN 1: HERO CARRUSEL                               */
+/* ═══════════════════════════════════════════════════════ */
 
-.destacados {
+.hero-section {
+  position: relative;
+  background: #000;
+}
+
+.hero-carousel {
+  position: relative;
+  width: 100%;
+  height: 85vh;
+  min-height: 500px;
+  overflow: hidden;
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
+
+.hero-slide.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.95) 0%,
+    rgba(0, 0, 0, 0.4) 40%,
+    rgba(0, 0, 0, 0.1) 100%
+  );
+}
+
+.hero-content {
+  position: absolute;
+  bottom: 80px;
+  left: 6vw;
+  z-index: 2;
+  max-width: 600px;
+}
+
+.hero-tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: #000;
+  background: var(--accent);
+  padding: 4px 12px;
+  margin-bottom: 16px;
+}
+
+.hero-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  color: var(--text);
+  text-transform: uppercase;
+  line-height: 1.1;
+  margin: 0 0 12px;
+}
+
+.hero-date {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin: 0 0 4px;
+  text-transform: capitalize;
+}
+
+.hero-location {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin: 0 0 24px;
+}
+
+.hero-cta {
+  display: inline-block;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: #000;
+  background: var(--accent);
+  padding: 14px 28px;
+  text-decoration: none;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.hero-cta:hover {
+  box-shadow: 0 0 30px rgba(232, 255, 0, 0.5);
+  transform: translateY(-2px);
+}
+
+/* Botones de carrusel */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  width: 50px;
+  height: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  color: var(--text);
+  font-size: 24px;
+  cursor: pointer;
+  transition: all 0.2s;
   display: flex;
-  background-color: #2a2a2a;
+  align-items: center;
+  justify-content: center;
 }
 
-/* --------------------------------------------------- */
+.carousel-btn:hover {
+  background: rgba(232, 255, 0, 0.15);
+  border-color: var(--accent);
+  color: var(--accent);
+}
 
-.img-featured {
-  width: 70rem;
-  height: 70rem;
-  margin: 1rem 6rem 1rem 6rem;
-  margin-top: 4.5rem;
-  transition: transform 0.4s ease;
+.carousel-prev { left: 20px; }
+.carousel-next { right: 20px; }
+
+/* Indicadores (dots) */
+.carousel-dots {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 3;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border: 1px solid var(--muted);
+  background: transparent;
   cursor: pointer;
-  box-shadow: #141414 0px 0px 10px 5px;
 }
-
-.descripcionfeatured {
-  margin: 0rem 6rem 2rem;
-}
-
-/* --------------------------------------------------- */
-
-/* --------------------------------------------------- */
-
-.mindagainst {
-  padding: 2.6rem 1.6rem;
-  border-radius: 0.5rem;
-  background-color: #141414;
-}
-.mindagainstimg {
-  width: 25rem;
-  height: 25rem;
-  margin-top: 4.5rem;
-  transition: transform 0.4s ease;
-  cursor: pointer;
-  box-shadow: #141414 0px 0px 10px 5px;
-}
-.mindagainstimg:hover {
-  transform: scale(1.03);
-  box-shadow:
-    0px 0px 15px 1px #c4c9ac,
-    0px 0px 35px 4px rgba(232, 255, 0, 0.5);
-}
-
-/* --------------------------------------------------- */
-
-/* --------------------------------------------------- */
-
-.descripcion {
-  text-align: left;
-  cursor: pointer;
-  transition: color 0.4s ease;
-  margin-top: 2rem;
-}
-.descripcion:hover h2,
-.descrpicion:hover p {
-  transition: color 0.4s ease;
-  color: #e8ff00;
-}
-
-/* -------------------------------------------------- */
-/* MÚSICA - CINTA DE SUPERMERCADO (CONVEYOR BELT) */
-/* -------------------------------------------------- */
-
 .descubre {
-  background-color: #141414;
-  padding: 2rem 2rem 0rem 2rem;
-  text-decoration: underline;
+  transition: all 0.3s;
+  padding: 0;
 }
 
-/* Contenedor principal con overflow oculto */
+.dot.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 8px rgba(232, 255, 0, 0.5);
+}
+
+/* ═══════════════════════════════════════════════════════ */
+/* ENLACES DE SECCIÓN                                     */
+/* ═══════════════════════════════════════════════════════ */
+
+.section-link {
+  text-align: center;
+  padding: 2rem 0 3rem;
+  background: var(--bg);
+}
+
+.btn-section {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-decoration: none;
+  padding: 14px 32px;
+  border: 1px solid var(--accent);
+  background: transparent;
+  transition: all 0.25s;
+}
+
+.btn-section:hover {
+  background: rgba(232, 255, 0, 0.08);
+  box-shadow: 0 0 20px rgba(232, 255, 0, 0.3);
+}
+
+/* ═══════════════════════════════════════════════════════ */
+/* TÍTULOS DE SECCIÓN                                     */
+/* ═══════════════════════════════════════════════════════ */
+
+.section-header {
+  padding: 3rem 6vw 1.5rem;
+  background: var(--bg);
+}
+
+.section-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 1.8rem;
+  color: var(--text);
+  letter-spacing: 0.04em;
+  margin: 0 0 12px;
+}
+
+.section-line {
+  width: 60px;
+  height: 3px;
+  background: var(--accent);
+  box-shadow: 0 0 10px rgba(232, 255, 0, 0.4);
+}
+
+/* ═══════════════════════════════════════════════════════ */
+/* SECCIÓN 2: MÚSICA - CINTA CONVEYOR BELT                */
+/* ═══════════════════════════════════════════════════════ */
+
+.music-section {
+  background: var(--bg);
+}
+
 .music-tape-container {
   overflow: hidden;
-  background: #141414;
-  padding: 2rem 0 3rem;
+  background: var(--bg);
+  padding: 0 0 2rem;
   position: relative;
 }
 
-/* Gradientes laterales para efecto de desvanecimiento */
+/* Gradientes laterales */
 .music-tape-container::before,
 .music-tape-container::after {
   content: '';
@@ -122,20 +262,20 @@ p {
 
 .music-tape-container::before {
   left: 0;
-  background: linear-gradient(to right, #141414, transparent);
+  background: linear-gradient(to right, var(--bg), transparent);
 }
 
 .music-tape-container::after {
   right: 0;
-  background: linear-gradient(to left, #141414, transparent);
+  background: linear-gradient(to left, var(--bg), transparent);
 }
 
-/* Cinta que se mueve horizontalmente */
 .music-tape {
   display: flex;
-  gap: 2rem;
+  gap: 1.5rem;
   width: max-content;
-  animation: scroll-tape 30s linear infinite;
+  animation: scroll-tape 35s linear infinite;
+  padding: 0 2rem;
 }
 
 .music-tape:hover {
@@ -143,127 +283,172 @@ p {
 }
 
 @keyframes scroll-tape {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
-/* Cada tarjeta de música */
 .music-tape-item {
   flex-shrink: 0;
-  width: 260px;
+  width: 200px;
   text-align: center;
   cursor: pointer;
   transition: transform 0.3s ease;
 }
 
 .music-tape-item:hover {
-  transform: scale(1.05);
+  transform: scale(1.06);
 }
 
 .music-tape-img {
-  width: 260px;
-  height: 260px;
+  width: 200px;
+  height: 200px;
   object-fit: cover;
-  border-radius: 12px;
+  border-radius: 10px;
   transition: box-shadow 0.3s ease;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
 }
 
 .music-tape-item:hover .music-tape-img {
   box-shadow:
-    0 0 15px 2px #e8ff00,
-    0 0 40px 8px rgba(232, 255, 0, 0.3);
+    0 0 12px 2px var(--accent),
+    0 0 30px 6px rgba(232, 255, 0, 0.25);
 }
 
 .music-tape-name {
-  color: #c4c9ac;
-  font-size: 0.85rem;
-  margin-top: 1rem;
+  color: var(--muted);
+  font-size: 0.75rem;
+  margin-top: 0.8rem;
   font-weight: 500;
   transition: color 0.3s ease;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 260px;
+  max-width: 200px;
 }
 
 .music-tape-item:hover .music-tape-name {
-  color: #e8ff00;
+  color: var(--accent);
 }
 
-/* ------------------------------------------------- */
-/* --CLUBES-- */
-/* ------------------------------------------------- */
+/* ═══════════════════════════════════════════════════════ */
+/* SECCIÓN 3: CLUBES / BARES                              */
+/* ═══════════════════════════════════════════════════════ */
 
-.descubreclubes {
-  background-color: #2a2a2a;
-  padding: 1.5rem 1.5rem 4rem 2rem;
-  text-decoration: underline;
-}
-.descripcionoctava {
-  padding: 2rem;
+.bars-section {
+  background: var(--bg);
 }
 
-/* ------------------------------------------------- */
-
-.clubes {
+.bars-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  padding: 0 6vw 2rem;
 }
 
-.octava {
-  background-color: #2a2a2a;
-  text-align: center;
-}
-.octavaimg {
-  width: 45rem;
-  height: 30rem;
-  border-radius: 2rem;
-  transition: transform 0.4s ease;
-  cursor: pointer;
-  box-shadow: #141414 0px 0px 10px 5px;
-}
-.octavaimg:hover {
-  transform: scale(1.03);
-  box-shadow:
-    0px 0px 15px 2px #e8ff00,
-    0px 0px 35px 6px rgba(232, 255, 0, 0.5);
+.bar-card {
+  display: block;
+  text-decoration: none;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
 }
 
-/* ------------------------------------------------ */
-
-.destacado1 {
-  margin: 1rem 0;
-  text-align: center;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2rem;
-  grid-template-rows: repeat(2, 1fr);
-  grid-auto-flow: column dense;
+.bar-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--accent);
+  box-shadow: 0 8px 30px rgba(232, 255, 0, 0.12);
 }
 
-/* Opcional: Asegura que las imágenes no sobrepasen su espacio */
-.destacado1 img {
-  width: 20rem;
-  height: 20rem;
-  object-fit: cover;
-  border-radius: 8px; /* Opcional: bordes redondeados */
+.bar-img-wrapper {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
 }
 
-.destacado1 img {
+.bar-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 8px;
-  max-width: 20rem;
-  max-height: 20rem;
+  transition: transform 0.4s ease;
 }
 
 .destacados {
   align-items: center;
+
+.bar-card:hover .bar-img {
+  transform: scale(1.05);
+}
+}
+
+.bar-info {
+  padding: 16px;
+}
+
+.bar-name {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 1rem;
+  color: var(--accent);
+  margin: 0 0 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.bar-address {
+  color: var(--muted);
+  font-size: 0.7rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ═══════════════════════════════════════════════════════ */
+/* RESPONSIVE                                             */
+/* ═══════════════════════════════════════════════════════ */
+
+@media (max-width: 1024px) {
+  .bars-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-carousel {
+    height: 70vh;
+    min-height: 400px;
+  }
+
+  .hero-content {
+    bottom: 60px;
+    left: 5vw;
+    right: 5vw;
+    max-width: none;
+  }
+
+  .hero-title {
+    font-size: 1.8rem;
+  }
+
+  .carousel-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+
+  .carousel-prev { left: 10px; }
+  .carousel-next { right: 10px; }
+
+  .bars-grid {
+    grid-template-columns: 1fr;
+    padding: 0 4vw 2rem;
+  }
+
+  .section-header {
+    padding: 2rem 4vw 1rem;
+  }
+
+  .music-tape-item { width: 160px; }
+  .music-tape-img { width: 160px; height: 160px; }
+  .music-tape-name { max-width: 160px; }
 }

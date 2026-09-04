@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { map } from 'rxjs';
-import { environment } from '../../../environments/environment.development';
+import { map, of, tap } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +14,9 @@ export class HttpMusic {
 
   getMusic() {
     return this.http.get<any>(this.BASE_URL + '/music').pipe(
+      tap( (response ) => {
+        console.log('Response from getMusic:', response);
+      } ),
       map((response: any) => {
         return response.data;
       })
@@ -24,7 +27,7 @@ export class HttpMusic {
     return this.http.get<any>(this.BASE_URL + '/music/' + id);
   }
 
-  createMusic(newMusic: any) {
+  createMusic(newMusic: any) { 
     return this.http.post<any>(this.BASE_URL + '/music', newMusic);
   }
 

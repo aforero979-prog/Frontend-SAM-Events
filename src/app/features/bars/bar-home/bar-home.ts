@@ -31,4 +31,8 @@ export default class BarHome {
             complete: () => {}
         })
     }
+
+    handleBarImageError(event: any) {
+        event.target.src = '/assets/default-bar.jpg';
+    }
 }

@@ -8,7 +8,7 @@
     <div class="evento">
 
         <a [routerLink]="[ '/event-info', event._id]">
-            <img class="img-event" [alt]="event.name" [src]="event.imageUrl">
+            <img class="img-event" [alt]="event.name" [src]="event.imageUrl" (error)="handleImageError($event)">
         </a>
 
         <div class="descripcion">
