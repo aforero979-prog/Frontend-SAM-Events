@@ -35,7 +35,13 @@ export default class Home implements OnInit {
   getEventsForInitialDate(field: string, quantity: number) {
     this.httpEvents.getEventsByField(field, quantity).subscribe({
       next: (res) => {
-        this.eventList$.next(res);
+
+        // ✅ Hacemos lo mismo aquí
+        const events = Array.isArray(res) ? res : res?.data || res?.events || [];
+        this.eventList$.next(events);
+
+
+        // this.eventList$.next(res);
       },
       error: (err) => {
         console.error(err);
@@ -71,9 +77,14 @@ export default class Home implements OnInit {
   getEventsForFeatured(quantity: number) {
     this.httpEvents.getFeaturedEvents(quantity).subscribe({
       next: (res) => {
-        console.log(res);
 
-        this.eventFeaturedList$.next(res);
+        console.log('Eventos destacados:', res); 
+        // ✅ Extraemos el arreglo (ajusta res?.data según cómo responda tu backend)
+        const events = Array.isArray(res) ? res : res?.data || res?.events || [];
+        this.eventFeaturedList$.next(events);
+
+        // console.log(res);
+        // this.eventFeaturedList$.next(res);
       },
       error: (err) => {
         console.error(err);

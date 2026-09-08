@@ -56,7 +56,7 @@
         @if (musicItems.length > 0) {
           @for (music of musicItems; track $index) {
             <div class="music-tape-item">
-              <a [href]="music.externalUrl || music.audioUrl || '#'" target="_blank" rel="noopener">
+              <a [routerLink]="['/music/home']" [href]="music.externalUrl || music.audioUrl || '#'" target="_blank" rel="noopener">
                 <img class="music-tape-img" [src]="music.imageUrl" [alt]="music.name" (error)="handleImageError($event)">
               </a>
               <h3 class="music-tape-name">{{ music.artist ? music.artist + ' - ' : '' }}{{ music.name }}</h3>
