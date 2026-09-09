@@ -1,75 +1,57 @@
-import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { HttpMusic } from '../../../core/services/http-music';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { AsyncPipe, JsonPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { SafeUrlPipe } from '../../../pipes/safe-url-pipe';
 
 @Component({
-  selector: 'app-music-home',
-  imports: [RouterLink, AsyncPipe, SafeUrlPipe, JsonPipe],
-  templateUrl: './music-home.html',
-  styleUrl: './music-home.css',
+  selector: 'app-music-info',
+  imports: [AsyncPipe, SafeUrlPipe, RouterLink],
+  templateUrl: './music-info.html',
+  styleUrl: './music-info.css',
 })
-
-export default class MusicHome implements OnInit {
-
-  currentTracks: any = null;
+export default class MusicInfo {
+  currentTrack = new BehaviorSubject<any>(null);
   selectedMusicId: string | null = null;
   musicList: any[] = [];
   currentTrackIndex = -1;
   isPlaying = false;
   embedUrl: string | null = null;
+  music$ = new BehaviorSubject<any>({});
+  selectedId!: string | null;
 
   private httpMusic = inject(HttpMusic);
-  private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
-  private cdr = inject(ChangeDetectorRef);
 
   ngOnInit() {
-    // Obtenemos el ID de la música desde la URL
+    this.selectedId = this.activatedRoute.snapshot.paramMap.get('id');
+
+    console.log(this.selectedId);
+    this.httpMusic.getMusicById(this.selectedId!).subscribe({
+      next: (res) => {
+        console.log(res.data);
+        this.music$.next(res.data);
+      },
+      error: (err) => {
+        console.error(err);
+      },
+    });
+
     this.selectedMusicId = this.activatedRoute.snapshot.paramMap.get('id');
 
     this.httpMusic.getMusicById(this.selectedMusicId || '').subscribe({
       next: (res) => {
         console.log('MÚSICA DETALLE RAW RESPONSE:', res);
-        this.currentTracks = res?.data || res || null;
-        console.log('MÚSICA DETALLE:', this.currentTracks);
+        this.currentTrack.next(res?.data || res || null);
+        console.log('MÚSICA DETALLE:', this.currentTrack.getValue());
       },
       error: (err) => {
         console.error('Error cargando detalle de música:', err);
-      }
-    });
-
-    this.httpMusic.getMusic().subscribe({
-      next: (res) => {
-        console.log('MÚSICA RAW RESPONSE:', res);
-        const list = Array.isArray(res) ? res : (res?.data || []);
-        console.log('MÚSICA LIST:', list);
-        this.musicList = list;
-        // Auto-seleccionar primer track sin reproducir
-        if (list.length > 0) {
-          this.currentTrackIndex = 0;
-        }
-        this.cdr.detectChanges();
       },
-      error: (err) => {
-        console.error('Error cargando música:', err);
-      }
     });
   }
 
-
-  get currentTrack(): any {
-    if (this.currentTrackIndex >= 0 && this.currentTrackIndex < this.musicList.length) {
-      return this.musicList[this.currentTrackIndex];
-    }
-    return null;
-  }
-
-  /**
-   * Extrae el videoId de una URL de YouTube
-   */
   extractVideoId(url: string): string | null {
     if (!url) return null;
 
@@ -163,11 +145,11 @@ export default class MusicHome implements OnInit {
     if (this.isPlaying) {
       this.isPlaying = false;
       this.embedUrl = null;
-    } else if (this.currentTrack) {
+    } else if (this.currentTrack.getValue()) {
       this.isPlaying = true;
-      this.embedUrl = this.getEmbedUrl(this.currentTrack);
-      console.log('TOGGLE PLAY TRACK:', this.currentTrack);
-      console.log('VIDEO ID EXTRAIDO:', this.extractVideoId(this.currentTrack?.youtubeUrl));
+      this.embedUrl = this.getEmbedUrl(this.currentTrack.getValue());
+      console.log('TOGGLE PLAY TRACK:', this.currentTrack.getValue());
+      console.log('VIDEO ID EXTRAIDO:', this.extractVideoId(this.currentTrack.getValue()?.youtubeUrl));
       console.log('EMBED URL GENERADA:', this.embedUrl);
     }
   }
@@ -177,9 +159,10 @@ export default class MusicHome implements OnInit {
    */
   prevTrack() {
     if (this.musicList.length === 0) return;
-    this.currentTrackIndex = (this.currentTrackIndex - 1 + this.musicList.length) % this.musicList.length;
+    this.currentTrackIndex =
+      (this.currentTrackIndex - 1 + this.musicList.length) % this.musicList.length;
     if (this.isPlaying) {
-      this.embedUrl = this.getEmbedUrl(this.currentTrack);
+      this.embedUrl = this.getEmbedUrl(this.currentTrack.getValue());
     }
   }
 
@@ -190,7 +173,7 @@ export default class MusicHome implements OnInit {
     if (this.musicList.length === 0) return;
     this.currentTrackIndex = (this.currentTrackIndex + 1) % this.musicList.length;
     if (this.isPlaying) {
-      this.embedUrl = this.getEmbedUrl(this.currentTrack);
+      this.embedUrl = this.getEmbedUrl(this.currentTrack.getValue());
     }
   }
 }

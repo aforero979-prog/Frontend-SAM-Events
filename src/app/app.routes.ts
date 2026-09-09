@@ -45,6 +45,7 @@ export const routes: Routes = [
   
   // Musica pública
   { path: 'music/home', loadComponent: () => import('./features/music/music-home/music-home') },
+  { path: 'music/info/:id', loadComponent: () => import('./features/music/music-info/music-info') },
 
 
   
