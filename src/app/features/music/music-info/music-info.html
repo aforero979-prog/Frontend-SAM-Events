@@ -1,8 +1,7 @@
 <div class="page">
 
-    <!-- -------------------now playing------------------- -->
-
-      <section class="player-hero">
+  <!-- ──────────────── NOW PLAYING HERO ──────────────── -->
+  <section class="player-hero">
 
     @if (currentTrack | async; as track) {
       <!-- Fondo difuminado con la carátula -->
@@ -50,7 +49,7 @@
           </div>
 
           <div class="track-counter">
-            {{ currentTrackIndex + 1 }} / {{ musicList.length }}
+            {{ currentTrackIndex >= 0 ? currentTrackIndex + 1 : 1 }} / {{ musicList.length }}
           </div>
         </div>
 
@@ -64,51 +63,57 @@
 
   </section>
 
+  <!-- ──────────────── PLAYLIST SECTION ──────────────── -->
+  <section class="playlist-section">
+    <h2 class="playlist-title">
+      <span class="playlist-accent">♫</span> PLAYLIST
+      <span class="playlist-count">{{ musicList.length }} tracks</span>
+    </h2>
 
-    <!-- ------------Playlist----------------- -->
+    <div class="playlist-grid">
+      @for (music of musicList; track $index) {
+        <div
+          class="playlist-card"
+          [class.playlist-card--active]="currentTrackIndex === $index"
+          [class.playlist-card--playing]="currentTrackIndex === $index && isPlaying"
+          (click)="playTrack($index)">
 
-    <section class="playlist-section">
-        <h2 class="playlist-title">
-            <span class="playlist-accent">♫</span> PLAYLIST
-            <span class="playlist-count">{{ musicList.length }} tracks</span>
-        </h2>
-
-        <div class="playlist-grid">
-            @for (music of musicList; track $index) {
-            <div class="playlist-card" [class.playlist-card--active]="currentTrackIndex === $index"
-                (click)="playTrack($index)">
-
-                <div class="card-thumb-wrap">
-                    <img [src]="getThumbnail(music)" [alt]="music.name" class="card-thumb" />
-                    <div class="card-play-icon">
-                        @if (currentTrackIndex === $index && isPlaying) {
-                        <span class="equalizer">
-                            <span class="eq-bar"></span>
-                            <span class="eq-bar"></span>
-                            <span class="eq-bar"></span>
-                        </span>
-                        } @else {
-                        <span>▶</span>
-                        }
-                    </div>
-                </div>
-
-                <div class="card-info">
-                    <h3 class="card-name">{{ music.name }}</h3>
-                    <p class="card-desc">{{ music.description }}</p>
-                </div>
-
-                <div class="card-index">{{ $index + 1 }}</div>
-
+          <div class="card-thumb-wrap">
+            <img [src]="getThumbnail(music)" [alt]="music.name" class="card-thumb" />
+            <div class="card-play-icon">
+              @if (currentTrackIndex === $index && isPlaying) {
+                <span class="equalizer">
+                  <span class="eq-bar"></span>
+                  <span class="eq-bar"></span>
+                  <span class="eq-bar"></span>
+                </span>
+              } @else {
+                <span>▶</span>
+              }
             </div>
-            } @empty {
-            <div class="playlist-empty">
-                <p>No hay tracks en la playlist</p>
+          </div>
+
+          <div class="card-info">
+            <div class="card-header">
+              <h3 class="card-name">{{ music.name }}</h3>
+              @if (currentTrackIndex === $index) {
+                <span class="active-badge">
+                  {{ isPlaying ? 'REPRODUCIENDO' : 'REPRODUCIENDO AHORA' }}
+                </span>
+              }
             </div>
-            }
+            <p class="card-desc">{{ music.description }}</p>
+          </div>
+
+          <div class="card-index">{{ $index + 1 }}</div>
+
         </div>
-    </section>
-
-
+      } @empty {
+        <div class="playlist-empty">
+          <p>No hay tracks en la playlist</p>
+        </div>
+      }
+    </div>
+  </section>
 
 </div>

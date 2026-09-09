@@ -1,79 +1,57 @@
-import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { HttpMusic } from '../../../core/services/http-music';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { AsyncPipe, JsonPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { SafeUrlPipe } from '../../../pipes/safe-url-pipe';
 
 @Component({
   selector: 'app-music-home',
-  imports: [RouterLink, AsyncPipe, SafeUrlPipe, JsonPipe],
+  imports: [RouterLink, AsyncPipe, SafeUrlPipe],
   templateUrl: './music-home.html',
   styleUrl: './music-home.css',
 })
-
 export default class MusicHome implements OnInit {
-
-  currentTracks: any = null;
-  selectedMusicId: string | null = null;
+  currentTrack = new BehaviorSubject<any>(null);
   musicList: any[] = [];
   currentTrackIndex = -1;
   isPlaying = false;
   embedUrl: string | null = null;
 
   private httpMusic = inject(HttpMusic);
-  private router = inject(Router);
-  private activatedRoute = inject(ActivatedRoute);
-  private cdr = inject(ChangeDetectorRef);
 
   ngOnInit() {
-    // Obtenemos el ID de la música desde la URL
-    this.selectedMusicId = this.activatedRoute.snapshot.paramMap.get('id');
-
-    this.httpMusic.getMusicById(this.selectedMusicId || '').subscribe({
-      next: (res) => {
-        console.log('MÚSICA DETALLE RAW RESPONSE:', res);
-        this.currentTracks = res?.data || res || null;
-        console.log('MÚSICA DETALLE:', this.currentTracks);
-      },
-      error: (err) => {
-        console.error('Error cargando detalle de música:', err);
-      }
-    });
-
-    this.httpMusic.getMusic().subscribe({
-      next: (res) => {
-        console.log('MÚSICA RAW RESPONSE:', res);
-        const list = Array.isArray(res) ? res : (res?.data || []);
-        console.log('MÚSICA LIST:', list);
-        this.musicList = list;
-        // Auto-seleccionar primer track sin reproducir
-        if (list.length > 0) {
-          this.currentTrackIndex = 0;
-        }
-        this.cdr.detectChanges();
-      },
-      error: (err) => {
-        console.error('Error cargando música:', err);
-      }
-    });
-  }
-
-
-  get currentTrack(): any {
-    if (this.currentTrackIndex >= 0 && this.currentTrackIndex < this.musicList.length) {
-      return this.musicList[this.currentTrackIndex];
-    }
-    return null;
+    this.loadAllMusic();
   }
 
   /**
-   * Extrae el videoId de una URL de YouTube
+   * Carga todo el catálogo de música
    */
+  loadAllMusic() {
+    // Cambia getMusic() por el método de tu servicio que trae la lista completa (ej: getAllMusic(), getMusicList(), etc.)
+    this.httpMusic.getMusic().subscribe({
+      next: (res) => {
+        console.log('CATÁLOGO DE MÚSICA:', res);
+        
+        // Asignamos la lista devuelta
+        const list = res?.data || res || [];
+        this.musicList = Array.isArray(list) ? list : [];
+
+        // Si existen canciones, seleccionamos la primera por defecto
+        if (this.musicList.length > 0) {
+          this.currentTrackIndex = 0;
+          this.currentTrack.next(this.musicList[0]);
+        }
+      },
+      error: (err) => {
+        console.error('Error cargando el catálogo de música:', err);
+      },
+    });
+  }
+
   extractVideoId(url: string): string | null {
     if (!url) return null;
 
-    // Manejo de iframes embebidos
     if (url.includes('<iframe')) {
       const match = url.match(/src="([^"]+)"/);
       if (match && match[1]) {
@@ -81,27 +59,21 @@ export default class MusicHome implements OnInit {
       }
     }
 
-    // youtu.be/XXXX
     const shortMatch = url.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/);
     if (shortMatch) return shortMatch[1];
 
-    // youtube.com/watch?v=XXXX
     const watchMatch = url.match(/[?&]v=([a-zA-Z0-9_-]{11})/);
     if (watchMatch) return watchMatch[1];
 
-    // youtube.com/embed/XXXX
     const embedMatch = url.match(/embed\/([a-zA-Z0-9_-]{11})/);
     if (embedMatch) return embedMatch[1];
 
-    // youtube.com/shorts/XXXX
     const shortsMatch = url.match(/shorts\/([a-zA-Z0-9_-]{11})/);
     if (shortsMatch) return shortsMatch[1];
 
-    // youtube.com/live/XXXX
     const liveMatch = url.match(/live\/([a-zA-Z0-9_-]{11})/);
     if (liveMatch) return liveMatch[1];
 
-    // Si es solo el ID puro de 11 caracteres
     if (/^[a-zA-Z0-9_-]{11}$/.test(url)) {
       return url;
     }
@@ -109,88 +81,69 @@ export default class MusicHome implements OnInit {
     return null;
   }
 
-  /**
-   * Genera la URL del thumbnail de YouTube
-   */
   getThumbnail(music: any): string {
+    if (!music) return '';
     const videoId = this.extractVideoId(music.youtubeUrl);
-    if (videoId) {
-      return `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`;
-    }
-    return music.imageUrl || '';
+    return videoId ? `https://img.youtube.com/vi/${videoId}/mqdefault.jpg` : (music.imageUrl || '');
   }
 
-  /**
-   * Genera la URL del thumbnail de alta resolución para el player principal
-   */
   getHeroThumbnail(music: any): string {
+    if (!music) return '';
     const videoId = this.extractVideoId(music.youtubeUrl);
-    if (videoId) {
-      return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
-    }
-    return music.imageUrl || '';
+    return videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : (music.imageUrl || '');
   }
 
-  /**
-   * Genera la URL de embed de YouTube con autoplay
-   */
   getEmbedUrl(music: any): string | null {
+    if (!music) return null;
     const videoId = this.extractVideoId(music.youtubeUrl);
-    if (videoId) {
-      return `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
-    }
-    return null;
+    return videoId ? `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0` : null;
   }
 
   /**
-   * Selecciona y reproduce un track
+   * Selecciona y reproduce un track de la playlist
    */
   playTrack(index: number) {
+    if (index < 0 || index >= this.musicList.length) return;
+
     this.currentTrackIndex = index;
-    this.isPlaying = true;
     const track = this.musicList[index];
+
+    // Emitimos el nuevo track al BehaviorSubject para actualizar la vista principal
+    this.currentTrack.next(track);
+    this.isPlaying = true;
     this.embedUrl = this.getEmbedUrl(track);
-    console.log('INTENTANDO REPRODUCIR TRACK:', track);
-    console.log('YOUTUBE URL ORIGINAL:', track?.youtubeUrl);
-    console.log('VIDEO ID EXTRAIDO:', this.extractVideoId(track?.youtubeUrl));
-    console.log('EMBED URL GENERADA:', this.embedUrl);
   }
 
   /**
-   * Pausa la reproducción (oculta el iframe)
+   * Alterna reproducir / pausar
    */
   togglePlay() {
+    const activeTrack = this.currentTrack.getValue();
+
     if (this.isPlaying) {
       this.isPlaying = false;
       this.embedUrl = null;
-    } else if (this.currentTrack) {
+    } else if (activeTrack) {
       this.isPlaying = true;
-      this.embedUrl = this.getEmbedUrl(this.currentTrack);
-      console.log('TOGGLE PLAY TRACK:', this.currentTrack);
-      console.log('VIDEO ID EXTRAIDO:', this.extractVideoId(this.currentTrack?.youtubeUrl));
-      console.log('EMBED URL GENERADA:', this.embedUrl);
+      this.embedUrl = this.getEmbedUrl(activeTrack);
     }
   }
 
   /**
-   * Track anterior
+   * Pista anterior
    */
   prevTrack() {
     if (this.musicList.length === 0) return;
-    this.currentTrackIndex = (this.currentTrackIndex - 1 + this.musicList.length) % this.musicList.length;
-    if (this.isPlaying) {
-      this.embedUrl = this.getEmbedUrl(this.currentTrack);
-    }
+    const prevIndex = (this.currentTrackIndex - 1 + this.musicList.length) % this.musicList.length;
+    this.playTrack(prevIndex);
   }
 
   /**
-   * Siguiente track
+   * Siguiente pista
    */
   nextTrack() {
     if (this.musicList.length === 0) return;
-    this.currentTrackIndex = (this.currentTrackIndex + 1) % this.musicList.length;
-    if (this.isPlaying) {
-      this.embedUrl = this.getEmbedUrl(this.currentTrack);
-    }
+    const nextIndex = (this.currentTrackIndex + 1) % this.musicList.length;
+    this.playTrack(nextIndex);
   }
 }

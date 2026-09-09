@@ -1,15 +1,11 @@
-
-<pre>{{ currentTrack | async | json }}</pre>
-
 <div class="player-shell">
-
 
   <!-- ── Hero / Now Playing ─────────────────────────── -->
   <section class="player-hero">
 
-    @if (currentTrack) {
+    @if (currentTrack | async; as track) {
       <!-- Fondo difuminado con la carátula -->
-      <div class="hero-bg" [style.background-image]="'url(' + getHeroThumbnail(currentTrack) + ')'"></div>
+      <div class="hero-bg" [style.background-image]="'url(' + getHeroThumbnail(track) + ')'"></div>
 
       <div class="hero-content">
 
@@ -25,7 +21,7 @@
             </iframe>
           } @else {
             <div class="player-cover" (click)="togglePlay()">
-              <img [src]="getHeroThumbnail(currentTrack)" [alt]="currentTrack.name" class="cover-img" />
+              <img [src]="getHeroThumbnail(track)" [alt]="track.name" class="cover-img" />
               <div class="play-overlay">
                 <div class="play-btn-big">▶</div>
                 <span class="play-hint">REPRODUCIR</span>
@@ -37,8 +33,7 @@
         <!-- Info del track actual -->
         <div class="now-playing-info">
           <span class="now-playing-label">REPRODUCIENDO AHORA</span>
-          <h1 class="track-title">{{ currentTrack.name }}</h1>
-          <p class="track-description">{{ currentTrack.description }}</p>
+          <h1 class="track-title">{{ track.name }} - {{ track.artist }}</h1>
 
           <!-- Controles -->
           <div class="player-controls">

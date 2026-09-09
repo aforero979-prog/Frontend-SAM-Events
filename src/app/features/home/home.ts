@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { HttpEvents } from '../../core/services/http-events';
 import { HttpMusic } from '../../core/services/http-music';
@@ -12,122 +12,113 @@ import { AsyncPipe, DatePipe, SlicePipe } from '@angular/common';
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
-export default class Home implements OnInit {
-  eventList$ = new BehaviorSubject<any>([]);
+export default class Home implements OnInit, OnDestroy {
+  eventList$ = new BehaviorSubject<any[]>([]);
   musicList$ = new BehaviorSubject<any[]>([]);
   barList$ = new BehaviorSubject<any[]>([]);
-  eventFeaturedList$ = new BehaviorSubject<any>([]);
+  eventFeaturedList$ = new BehaviorSubject<any[]>([]);
 
   currentSlide = 0;
+  private autoSlideTimer: any = null;
 
   private httpEvents = inject(HttpEvents);
   private httpMusic = inject(HttpMusic);
   private httpBar = inject(HttpBar);
 
   ngOnInit() {
-
     this.getEventsForInitialDate('initialDate', 4);
-    this.getEventsForFeatured(3);
-    this.getBarsForQuantity(4)
+    this.getEventsForFeatured(5);
+    this.loadMusicData();
+    this.getBarsForQuantity(4);
+  }
 
+  ngOnDestroy() {
+    this.stopAutoSlide();
   }
 
   getEventsForInitialDate(field: string, quantity: number) {
     this.httpEvents.getEventsByField(field, quantity).subscribe({
       next: (res) => {
-
-        // ✅ Hacemos lo mismo aquí
         const events = Array.isArray(res) ? res : res?.data || res?.events || [];
         this.eventList$.next(events);
-
-
-        // this.eventList$.next(res);
       },
-      error: (err) => {
-        console.error(err);
-      },
-    });
-
-    // Cargar música desde la API
-    this.httpMusic.getMusic().subscribe({
-      next: (res) => {
-        const musicItems = Array.isArray(res) ? res : res?.data || [];
-        // Duplicar para efecto infinito
-
-        this.musicList$.next(musicItems);
-      },
-      error: (err) => {
-        console.error('Error cargando música:', err);
-      },
-    });
-
-    // Carga bares desde la API
-    this.httpBar.getBars().subscribe({
-      next: (res) => {
-        const barItems = Array.isArray(res) ? res : res?.data || [];
-        // Duplicar para efecto infinito
-        this.barList$.next(barItems);
-      },
-      error: (err) => {
-        console.error('Error cargando bares:', err);
-      },
+      error: (err) => console.error('Error cargando eventos:', err),
     });
   }
 
+  /**
+   * Carga los eventos destacados e inicia el carrusel automático
+   */
   getEventsForFeatured(quantity: number) {
     this.httpEvents.getFeaturedEvents(quantity).subscribe({
       next: (res) => {
-
-        console.log('Eventos destacados:', res);
-        // ✅ Extraemos el arreglo (ajusta res?.data según cómo responda tu backend)
         const events = Array.isArray(res) ? res : res?.data || res?.events || [];
-        this.eventFeaturedList$.next(events.slice(0, 3));
+        this.eventFeaturedList$.next(events);
+        
+        if (events.length > 0) {
+          this.startAutoSlide();
+        }
+      },
+      error: (err) => console.error('Error cargando destacados:', err),
+    });
+  }
 
-        // console.log(res);
-        // this.eventFeaturedList$.next(res);
+  /**
+   * Carga la música y duplica la lista para efecto infinito continuo
+   */
+  loadMusicData() {
+    this.httpMusic.getMusic().subscribe({
+      next: (res) => {
+        const musicItems = Array.isArray(res) ? res : res?.data || [];
+        // Se duplica la lista para dar el efecto de ciclo infinito sin huecos en CSS
+        const infiniteList = musicItems.length > 0 ? [...musicItems, ...musicItems] : [];
+        this.musicList$.next(infiniteList);
       },
-      error: (err) => {
-        console.error(err);
-      },
+      error: (err) => console.error('Error cargando música:', err),
     });
   }
 
   getBarsForQuantity(quantity: number) {
     this.httpBar.getBarsByField(quantity).subscribe({
       next: (res) => {
-        console.log(res);
-        this.barList$.next(res);
+        const bars = Array.isArray(res) ? res : res?.data || [];
+        this.barList$.next(bars);
       },
-      error: (err) => {
-        console.error(err);
-      },
-      complete: () => { },
+      error: (err) => console.error('Error cargando bares:', err),
     });
   }
 
-  loadBars() {
-    this.httpBar.getBars().subscribe({
-      next: (res) => {
-        this.barList$.next(res);
-      },
-      error: (err) => {
-        console.error('Error cargando bares:', err);
-      }
-    });
+  // ── CARRUSEL DESTACADOS ───────────────────────────
+
+  startAutoSlide() {
+    this.stopAutoSlide();
+    this.autoSlideTimer = setInterval(() => {
+      this.nextSlide();
+    }, 8000); // Cambia automáticamente cada 5 segundos
+  }
+
+  stopAutoSlide() {
+    if (this.autoSlideTimer) {
+      clearInterval(this.autoSlideTimer);
+    }
   }
 
   prevSlide() {
     const events = this.eventFeaturedList$.value;
+    if (!events.length) return;
     this.currentSlide = (this.currentSlide - 1 + events.length) % events.length;
+    this.startAutoSlide();
   }
 
   nextSlide() {
     const events = this.eventFeaturedList$.value;
+    if (!events.length) return;
     this.currentSlide = (this.currentSlide + 1) % events.length;
   }
 
   goToSlide(index: number) {
     this.currentSlide = index;
+    this.startAutoSlide();
   }
 
   handleImageError(event: any) {
@@ -137,5 +128,4 @@ export default class Home implements OnInit {
   handleBarImageError(event: any) {
     event.target.src = '/assets/default-bar.jpg';
   }
-
 }

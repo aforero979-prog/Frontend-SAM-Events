@@ -2,11 +2,11 @@
 <!-- SECCIÓN 1: HERO CARRUSEL DE EVENTOS DESTACADOS            -->
 <!-- ═══════════════════════════════════════════════════════════ -->
 
-<section class="hero-section">
+<section class="hero-section" (mouseenter)="stopAutoSlide()" (mouseleave)="startAutoSlide()">
   @if (eventFeaturedList$ | async; as events) {
     @if (events.length > 0) {
       <div class="hero-carousel">
-        @for (event of events; track event._id) {
+        @for (event of events; track event._id || $index) {
           <div class="hero-slide" [class.active]="$index === currentSlide">
             <img class="hero-img" [src]="event.imageUrl" [alt]="event.name" (error)="handleImageError($event)">
             <div class="hero-overlay"></div>
@@ -15,6 +15,7 @@
               <h1 class="hero-title">{{ event.name }}</h1>
               <p class="hero-date">{{ event.initialDate | date:'fullDate' }}</p>
               <p class="hero-location">📍 {{ event.location }}</p>
+              <!-- Navegación interna en la misma pestaña -->
               <a [routerLink]="['/event-info', event._id]" class="hero-cta">VER EVENTO →</a>
             </div>
           </div>
@@ -26,7 +27,7 @@
 
         <!-- Indicadores -->
         <div class="carousel-dots">
-          @for (event of events; track event._id) {
+          @for (event of events; track event._id || $index) {
             <button class="dot" [class.active]="$index === currentSlide" (click)="goToSlide($index)"></button>
           }
         </div>
@@ -56,10 +57,11 @@
         @if (musicItems.length > 0) {
           @for (music of musicItems; track $index) {
             <div class="music-tape-item">
-              <a [routerLink]="['/music/info', music._id]" [href]="music.externalUrl || music.audioUrl || '#'" target="_blank" rel="noopener">
+              <!-- Navegación interna con routerLink (Misma pestaña) -->
+              <a [routerLink]="['/music/info', music._id]" class="music-tape-link">
                 <img class="music-tape-img" [src]="music.imageUrl" [alt]="music.name" (error)="handleImageError($event)">
+                <h3 class="music-tape-name">{{ music.artist ? music.artist + ' - ' : '' }}{{ music.name }}</h3>
               </a>
-              <h3 class="music-tape-name">{{ music.artist ? music.artist + ' - ' : '' }}{{ music.name }}</h3>
             </div>
           }
         }
@@ -71,7 +73,6 @@
     <a routerLink="/music/home" class="btn-section">EXPLORAR TODA LA MÚSICA →</a>
   </div>
 </section>
-
 
 <!-- ═══════════════════════════════════════════════════════════ -->
 <!-- SECCIÓN 3: CLUBES - CARDS UNIFORMES DESDE BACKEND         -->
@@ -85,7 +86,7 @@
 
   <div class="bars-grid">
     @if (barList$ | async; as bars) {
-      @for (bar of bars | slice:0:4; track bar._id) {
+      @for (bar of bars | slice:0:4; track bar._id || $index) {
         <a [routerLink]="['/bar-info', bar._id]" class="bar-card">
           <div class="bar-img-wrapper">
             <img class="bar-img" [src]="bar.imageUrl" [alt]="bar.name" (error)="handleBarImageError($event)">
@@ -96,32 +97,10 @@
           </div>
         </a>
       }
-
     }
   </div>
 
-
-
-<h1 class="descubreclubes">Descubre clubes en Bogotá</h1>
-
-
-<div class="clubes">
-
-  <!-- @for (bar of (barList$ | async); track $index) {
-  <div class="octava">
-
-    <a [routerLink]="['/bar-info', bar._id]">
-      <img class="octavaimg" [src]="bar.imageUrl" [alt]="bar.name"></a>
-
-    <div class="descripcionoctava">
-      <h2>{{ bar.name }}</h2>
-    </div>
-  </div>
-  } -->
-
-</div>
   <div class="section-link">
     <a routerLink="/bares" class="btn-section">VER TODOS LOS CLUBES →</a>
   </div>
 </section>
-
