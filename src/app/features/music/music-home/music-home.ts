@@ -1,19 +1,21 @@
 import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { HttpMusic } from '../../../core/services/http-music';
-import { Router, RouterLink } from '@angular/router';
-import { AsyncPipe } from '@angular/common';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { AsyncPipe, JsonPipe } from '@angular/common';
 import { SafeUrlPipe } from '../../../pipes/safe-url-pipe';
 
 @Component({
   selector: 'app-music-home',
-  imports: [RouterLink, AsyncPipe, SafeUrlPipe],
+  imports: [RouterLink, AsyncPipe, SafeUrlPipe, JsonPipe],
   templateUrl: './music-home.html',
   styleUrl: './music-home.css',
 })
 
 export default class MusicHome implements OnInit {
 
+  currentTrack: any = null;
+  selectedMusicId: string | null = null;
   musicList: any[] = [];
   currentTrackIndex = -1;
   isPlaying = false;
@@ -21,33 +23,49 @@ export default class MusicHome implements OnInit {
 
   private httpMusic = inject(HttpMusic);
   private router = inject(Router);
+  private activatedRoute = inject(ActivatedRoute);
   private cdr = inject(ChangeDetectorRef);
 
   ngOnInit() {
-    this.httpMusic.getMusic().subscribe({
+    // Obtenemos el ID de la música desde la URL
+    this.selectedMusicId = this.activatedRoute.snapshot.paramMap.get('id');
+
+    this.httpMusic.getMusicById(this.selectedMusicId || '').subscribe({
       next: (res) => {
-        console.log('MÚSICA RAW RESPONSE:', res);
-        const list = Array.isArray(res) ? res : (res?.data || []);
-        console.log('MÚSICA LIST:', list);
-        this.musicList = list;
-        // Auto-seleccionar primer track sin reproducir
-        if (list.length > 0) {
-          this.currentTrackIndex = 0;
-        }
-        this.cdr.detectChanges();
+        console.log('MÚSICA DETALLE RAW RESPONSE:', res);
+        this.currentTrack = res?.data || res || null;
+        console.log('MÚSICA DETALLE:', this.currentTrack);
       },
       error: (err) => {
-        console.error('Error cargando música:', err);
+        console.error('Error cargando detalle de música:', err);
       }
     });
+
+    // this.httpMusic.getMusic().subscribe({
+    //   next: (res) => {
+    //     console.log('MÚSICA RAW RESPONSE:', res);
+    //     const list = Array.isArray(res) ? res : (res?.data || []);
+    //     console.log('MÚSICA LIST:', list);
+    //     this.musicList = list;
+    //     // Auto-seleccionar primer track sin reproducir
+    //     if (list.length > 0) {
+    //       this.currentTrackIndex = 0;
+    //     }
+    //     this.cdr.detectChanges();
+    //   },
+    //   error: (err) => {
+    //     console.error('Error cargando música:', err);
+    //   }
+    // });
   }
 
-  get currentTrack(): any {
-    if (this.currentTrackIndex >= 0 && this.currentTrackIndex < this.musicList.length) {
-      return this.musicList[this.currentTrackIndex];
-    }
-    return null;
-  }
+
+  // get currentTrack(): any {
+  //   if (this.currentTrackIndex >= 0 && this.currentTrackIndex < this.musicList.length) {
+  //     return this.musicList[this.currentTrackIndex];
+  //   }
+  //   return null;
+  // }
 
   /**
    * Extrae el videoId de una URL de YouTube

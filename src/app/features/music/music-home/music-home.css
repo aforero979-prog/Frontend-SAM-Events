@@ -491,3 +491,14 @@
     font-size: 0.82rem;
   }
 }
+
+pre {
+  color: yellow;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  background: var(--bg-card);
+  padding: 12px;
+  border-radius: 6px;
+  overflow-x: auto;
+  margin-top: 5rem;
+}

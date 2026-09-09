@@ -32,19 +32,19 @@ export const routes: Routes = [
   // Tickets protegido
   { path: 'buy-ticket', canActivate: [authGuard], loadComponent: () => import('./features/ticket/ticket-new-form') },
   
-  // Musica pública
-  { path: 'music/home', loadComponent: () => import('./features/music/music-home/music-home') },
   
   // Bares y Posts públicos
   { path: 'posts', loadComponent: () => import('./features/posts/post-public-list/post-public-list') },
-
+  
   // Perfil de Usuario regular
   { path: 'user/profile', loadComponent: () => import('./features/users/user-profile/user-profile') },
 
   // Legal y Soporte
   { path: 'terminos', loadComponent: () => import('./features/support/terms/terms') },
   { path: 'reembolsos', loadComponent: () => import('./features/support/refunds/refunds') },
-
+  
+  // Musica pública
+  { path: 'music/home', loadComponent: () => import('./features/music/music-home/music-home') },
 
 
   
