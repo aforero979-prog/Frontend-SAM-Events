@@ -27,8 +27,8 @@ export default class Home implements OnInit {
   ngOnInit() {
 
     this.getEventsForInitialDate('initialDate', 4);
-    this.getEventsForFeatured(1);
-    this.getBarsForQuantity(6)
+    this.getEventsForFeatured(3);
+    this.getBarsForQuantity(4)
 
   }
 
@@ -78,10 +78,10 @@ export default class Home implements OnInit {
     this.httpEvents.getFeaturedEvents(quantity).subscribe({
       next: (res) => {
 
-        console.log('Eventos destacados:', res); 
+        console.log('Eventos destacados:', res);
         // ✅ Extraemos el arreglo (ajusta res?.data según cómo responda tu backend)
         const events = Array.isArray(res) ? res : res?.data || res?.events || [];
-        this.eventFeaturedList$.next(events);
+        this.eventFeaturedList$.next(events.slice(0, 3));
 
         // console.log(res);
         // this.eventFeaturedList$.next(res);
@@ -92,8 +92,8 @@ export default class Home implements OnInit {
     });
   }
 
- getBarsForQuantity(quantity: number) {
-        this.httpBar.getBarsByField(quantity).subscribe({
+  getBarsForQuantity(quantity: number) {
+    this.httpBar.getBarsByField(quantity).subscribe({
       next: (res) => {
         console.log(res);
         this.barList$.next(res);
@@ -101,9 +101,9 @@ export default class Home implements OnInit {
       error: (err) => {
         console.error(err);
       },
-      complete: () => {},
+      complete: () => { },
     });
-    }
+  }
 
   loadBars() {
     this.httpBar.getBars().subscribe({
