@@ -2,53 +2,71 @@
 
 :host {
   display: block;
-  flex-wrap: wrap;
 }
-h1 {
-  color: #c4c9ac;
-}
-h2 {
-  color: #c4c9ac;
-}
-p {
+
+h1, h2, p {
   color: #c4c9ac;
 }
 
-/* ------------------------------------------------ */
+/* ------------------- ESTRUCTURA DEL BAR ------------------- */
 
-.bar{
-    text-align: center;
+.bar {
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.img-bar{
-    margin-top: 4rem;
-    width: 60%;
-    height: 60%;
-    border-radius: 1rem;
+.img-bar {
+  margin-top: 4rem;
+  width: 60%;
+  height: auto;
+  max-width: 800px; /* Evita que la imagen se expanda en exceso en monitores muy grandes */
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 1rem;
 }
 
-.titulo{
-    text-align: center;
-    justify-content: center;
-    font-size: 40px;
-    padding: 1rem;
+.titulo {
+  text-align: center;
+  font-size: clamp(1.8rem, 5vw, 2.5rem); /* Tamaño fluido según la pantalla */
+  padding: 1rem;
+  word-break: break-word;
 }
 
-.descripcion{
-    /* text-align: center; */
-    text-align: justify;
-    font-size: 17px;
-    padding: 1rem 10rem 5rem 10rem;
+.descripcion {
+  text-align: justify;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  max-width: 850px; /* Sustituye el padding fijo de 10rem para centrar el bloque */
+  margin: 0 auto;
+  padding: 1rem 1.5rem 4rem 1.5rem; /* Padding lateral seguro para dispositivos móviles */
 }
 
+/* ------------------- MEDIA QUERIES (DISPOSITIVOS MÓVILES) ------------------- */
 
+@media (max-width: 768px) {
+  .img-bar {
+    margin-top: 2rem;
+    width: 85%; /* Se amplía en tablets y pantallas medianas */
+  }
 
+  .descripcion {
+    font-size: 0.95rem;
+    padding: 0.75rem 1rem 3rem 1rem;
+  }
+}
 
-/* ------------------------------------------------- */
+@media (max-width: 480px) {
+  .img-bar {
+    width: 100%; /* Ocupa todo el ancho en teléfonos móviles */
+    border-radius: 0.5rem;
+  }
 
+  .titulo {
+    padding: 0.75rem 0.5rem;
+  }
 
-
-
-
-
-
+  .descripcion {
+    padding: 0.5rem 1rem 2.5rem 1rem;
+  }
+}
