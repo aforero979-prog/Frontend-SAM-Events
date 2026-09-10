@@ -94,7 +94,7 @@ export default class Home implements OnInit, OnDestroy {
     this.stopAutoSlide();
     this.autoSlideTimer = setInterval(() => {
       this.nextSlide();
-    }, 8000); // Cambia automáticamente cada 5 segundos
+    }, 8000); // Cambia automáticamente cada 8 segundos
   }
 
   stopAutoSlide() {

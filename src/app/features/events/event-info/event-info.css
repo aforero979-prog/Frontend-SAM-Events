@@ -2,60 +2,62 @@
 
 :host {
   display: block;
-  flex-wrap: wrap;
 }
-h1 {
-  color: #c4c9ac;
-}
-h2 {
-  color: #c4c9ac;
-}
-p {
+
+h1, h2, p {
   color: #c4c9ac;
 }
 
-/* ------------------------------------------------ */
+/* ------------------- ESTRUCTURA DEL EVENTO ------------------- */
 
-.evento{
-    text-align: center;
+.evento {
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.img-event{
-  margin-top: 4rem;
-    width: 50%;
-    height: 50%;
-    border-radius: 1rem;
+.img-event {
+  margin-top: 2rem;
+  width: 50rem;
+  max-width: 700px; /* Controla el tamaño máximo en pantallas grandes */
+  height: 60rem;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 1rem;
 }
 
-.titulo{
-    text-align: center;
-    justify-content: center;
-    font-size: 40px;
-    padding: 1rem;
+.titulo {
+  text-align: center;
+  font-size: clamp(1.8rem, 5vw, 2.5rem); /* Se escala fluidamente entre móvil y pantalla de escritorio */
+  padding: 1rem;
+  word-break: break-word;
 }
 
-.descripcion{
-    /* text-align: center; */
-    text-align: justify;
-    font-size: 17px;
-    padding: 1rem 10rem 1rem 10rem;
+.descripcion {
+  text-align: justify;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  max-width: 850px; /* Sustituye el padding fijo de 10rem */
+  margin: 0 auto; /* Centra el bloque de texto */
+  padding: 1rem 1.5rem; /* Padding seguro para móviles */
 }
 
-.info{
+.info {
   display: flex;
   justify-content: center;
-  gap: 2rem;
+  align-items: center;
+  flex-wrap: wrap; /* Permite que los datos bajen si no caben en una fila */
+  gap: 1.5rem;
   padding: 1rem;
-  font-size: 15px;
+  font-size: 0.95rem;
 }
 
+/* ------------------- BOTÓN ACCIÓN ------------------- */
 
-/* ------------------------------------------------- */
-
-.button{
-    text-align: center;
-    padding: 2rem;
-    background-color: #000000;
+.button {
+  text-align: center;
+  padding: 2rem 1rem;
+  background-color: #000000;
 }
 
 .btn-accent {
@@ -68,9 +70,10 @@ p {
   letter-spacing: 1.5px;
   padding: 14px 28px;
   border: 2px solid #e8ff00;
-  border-radius: 0px; /* Esquinas totalmente rectas para un estilo técnico */
+  border-radius: 0px;
   cursor: pointer;
   transition: all 0.25s ease;
+  max-width: 100%;
 }
 
 .btn-accent:hover {
@@ -79,11 +82,33 @@ p {
   box-shadow: 0 0 20px rgba(232, 255, 0, 0.5);
 }
 
+/* ------------------- MEDIA QUERIES (DISPOSITIVOS MÓVILES) ------------------- */
 
+@media (max-width: 768px) {
+  .img-event {
+    margin-top: 1.5rem;
+    width: 90%; /* Ocupa casi todo el ancho en tablets y móviles */
+  }
 
+  .descripcion {
+    font-size: 0.95rem;
+    padding: 0.75rem 1rem;
+  }
+}
 
+@media (max-width: 480px) {
+  .img-event {
+    width: 100%;
+    border-radius: 0.5rem;
+  }
 
+  .info {
+    flex-direction: column; /* Apila la información (fecha, ubicación, etc.) en vertical */
+    gap: 0.75rem;
+  }
 
-
-
-
+  .btn-accent {
+    width: 100%; /* Botón de ancho completo en teléfonos para facilitar la pulsación */
+    padding: 14px 16px;
+  }
+}

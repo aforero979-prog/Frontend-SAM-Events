@@ -274,7 +274,7 @@
   display: flex;
   gap: 1.5rem;
   width: max-content;
-  animation: scroll-tape 35s linear infinite;
+  animation: scroll-tape 200s linear infinite;
   padding: 0 2rem;
 }
 
